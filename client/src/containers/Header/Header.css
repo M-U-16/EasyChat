@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.app__homepage-header {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, rgba(225, 0, 255, 0.332) 0%, transparent 50%);
+}
+.app__landing-section {
+    max-width: 35rem;
+    height: auto;
+    width: 70%;
+    aspect-ratio: 1 / 1;
+    background-color: rgba(0, 0, 0, 0.541);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-radius: 1rem;
+    backdrop-filter: blur(20px);
+    box-shadow: 
+        inset 3px 3px 5px rgba(255, 255, 255, 0.331),
+        inset 0px 0px 3px rgba(255, 255, 255, 0.266);
+    position: relative;
+    z-index: 1;
+    border-bottom-right-radius: 0;
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.367))
+}
+.app__landing-section::before {
+    content: "";
+    position: absolute;
+    bottom: -1.7rem;
+    right: -1.5rem;
+    display: none;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50% 50% 0rem;
+    background-color: rgb(8, 8, 8);
+    box-shadow: inset 0px 0px 5px rgba(255, 255, 255, 0.507);
+}
+.app__landing-headings h1 {
+    color: #fff;
+    font-size: 3rem;
+    transform: translateY(25px);
+    font-style: italic;
+}
+.app__landing-headings h2 {
+    color: #AF00FF;
+    font-size: 7rem;
+    font-style: italic;
+    transform: translateY(-25px);
+}
+.app__landing-section p {
+    font-size: 1.2rem;
+    /* text-align: justify; */
+    transform: translateY(-25px);
+    font-family: Verdana;
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.516);
+    border-radius: 1rem;
+    border-bottom-right-radius: 0;
+    box-shadow:
+        inset 0px 0px 3px rgba(156, 156, 156, 0.458),
+        inset 2px 2px 5px rgba(255, 255, 255, 0.273);
+}
+.app__landing-button {
+    padding: 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    background: linear-gradient(45deg, purple, violet);
+    border: none;
+    width: 50%;
+    position: relative;
+    font-size: 1.2rem;
+    font-weight: 400;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.app__landing-button img {
+    width: 2.5rem;
+    position: absolute;
+    padding: 0.5rem;
+    rotate: 320deg;
+    right: 1rem;
+    transform: translateY(-3px);
+    transition: var(--normal-transition);
+}
+.app__landing-button:hover img {
+    transform: translateY(-4px) translateX(5px);
+}
+
+@media screen and (max-width: 750px) {
+    
+    .app__landing-section {
+        width: 80%;
+    }
+    .app__landing-button {
+        width: 100%;
+    }
+}

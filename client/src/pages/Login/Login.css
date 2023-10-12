@@ -1,0 +1,41 @@
+.app__login-form {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(24, 24, 24);
+    padding: 2rem;
+    border-radius: 1rem;
+    max-width: 25rem;
+    width: 70%;
+    box-shadow: 0px 0px 3px rgba(255, 255, 255, 0.526);
+}
+.app__login-form h1 {
+    text-align: center;
+}
+.app__login-form input {
+    padding: 0.8rem;
+    border: none;
+    border-radius: 1rem;
+    margin: 0.8rem 0;
+    font-size: 1.2rem;
+    outline: none;
+}
+.app__login-form button {
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-top: 1rem;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(45deg, purple, violet);
+}
+.app__login-register {
+    margin: 1rem 0;
+    display: flex;
+}
+.app__login-register :nth-child(1) {
+    margin-right: 0.5rem;
+}
+@media screen and (max-width: 400px) {
+    .app__login-form {
+        width: 85%;
+    }
+}

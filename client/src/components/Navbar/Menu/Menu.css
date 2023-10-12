@@ -1,0 +1,14 @@
+.app__menu {
+    display: flex;
+    align-items: center;
+}
+.app__menu-link {
+    margin: 0 1rem 0 1rem;
+    font-size: 1.2rem;
+    font-weight: normal;
+    transition: var(--normal-transition);
+}
+.app__menu-link:hover {
+    color: rgb(144, 144, 144);
+    cursor: pointer;
+}

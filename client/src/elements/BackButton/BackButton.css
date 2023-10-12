@@ -1,0 +1,22 @@
+.app__back-button {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    padding: 1rem;
+    background: rgb(17, 17, 17);
+    border-radius: 1rem;
+    box-shadow: inset 0px 0px 5px black;
+}
+.app__back-button img {
+    width: 1rem;
+    aspect-ratio: 1 / 1;
+    rotate: 180deg;
+}
+.app__back-button span {
+    font-size: 1.2rem;
+    margin-left: 0.2rem;
+}
