@@ -8,9 +8,9 @@
     align-items: center;
 }
 .app__landing-section {
-    max-width: 35rem;
+    max-width: 50rem;
     height: auto;
-    width: 70%;
+    width: 90%;
     aspect-ratio: 1 / 1;
    /*  background-color: rgba(0, 0, 0, 0.144); */
     padding: 2rem;

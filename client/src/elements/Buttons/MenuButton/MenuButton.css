@@ -1,6 +1,7 @@
 .app__menu-button {
-    background: rgb(21, 21, 21);
-    width: 5rem;
+    /* background: rgb(21, 21, 21); */
+    background: transparent;
+    width: 4rem;
     height: var(--navbar-height);
     border: none;
     cursor: pointer;
@@ -20,14 +21,14 @@
     transition: transform 0.3s ease;
 }
 .app__menu-button span:nth-child(1) {
-    top: 30%;
+    top: 32%;
 }
 .app__menu-button span:nth-child(2) {
     transform: translateY(-50%);
     top: 50%;
 }
 .app__menu-button span:nth-child(3) {
-    bottom: 30%;
+    bottom: 32%;
 }
 
 

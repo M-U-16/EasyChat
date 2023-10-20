@@ -4,7 +4,7 @@ import "./RegisterForm.css"
 import { useState } from 'react'
 import { backendConfig } from '../../constants'
 
-import SubmitButton from '../SubmitButton/SubmitButton'
+import SubmitButton from '../Buttons/SubmitButton/SubmitButton'
 
 const RegisterForm = (props) => {
   const [formData, setFormData] = useState(null)

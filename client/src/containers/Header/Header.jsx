@@ -1,8 +1,7 @@
 import React from 'react'
 import "./Header.css"
 import { images } from '../../constants'
-import { LoginButton } from '../../elements'
-import ActionButton from '../../elements/ActionButton/ActionButton'
+import { LoginButton, ActionButton } from '../../elements'
 
 const Header = () => {
   return (

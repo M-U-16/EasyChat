@@ -11,7 +11,7 @@ const Errorpage = () => {
             <h1 className='app__error-code'>404</h1>
             <p>Seite konnte nicht gefunden werden.</p>
         </section>
-        <BackButton />
+        {/* <BackButton /> */}
     </>
   )
 }

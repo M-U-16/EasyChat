@@ -1,10 +1,12 @@
-import LoginButton from "./LoginButton/LoginButton";
-import BackButton from "./BackButton/BackButton";
-import SubmitButton from "./SubmitButton/SubmitButton";
 import RegisterForm from "./RegisterForm/RegisterForm";
 import RegisterSuccess from "./RegisterSuccess/RegisterSuccess";
-import MenuButton from "./MenuButton/MenuButton";
-import HomeButton from "./HomeButton/HomeButton";
+
+import SubmitButton from "./Buttons/SubmitButton/SubmitButton";
+import LoginButton from "./Buttons/LoginButton/LoginButton";
+import BackButton from "./Buttons/BackButton/BackButton";
+import MenuButton from "./Buttons/MenuButton/MenuButton";
+import HomeButton from "./Buttons/HomeButton/HomeButton";
+import ActionButton from "./Buttons/ActionButton/ActionButton"
 
 export {
     LoginButton,
@@ -13,5 +15,6 @@ export {
     RegisterForm,
     RegisterSuccess,
     MenuButton,
-    HomeButton
+    HomeButton,
+    ActionButton
 }

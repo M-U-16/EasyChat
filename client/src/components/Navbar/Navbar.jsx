@@ -1,16 +1,16 @@
 import React from "react";
-import Menu from "./Menu/Menu";
-import { images } from "../../constants"
+import { Link } from "react-router-dom";
+
 import "./Navbar.css"
+import Menu from "./Menu/Menu";
 
 const Navbar = (props) => {
     return (
         <nav className="app__navbar">
-            <div className="navbar__logo-container">
-                {/* <img src={images.logo} /> */}
+            <Link to={"/"} className="navbar__logo-container">
                 <h2>Easy</h2>
                 <h1>Chat</h1>
-            </div>
+            </Link>
             <Menu showLogin={props.showLogin}/>
         </nav>
     )
