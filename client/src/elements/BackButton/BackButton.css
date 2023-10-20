@@ -4,17 +4,34 @@
     left: 1rem;
     display: flex;
     align-items: center;
+    justify-content: center;
     text-decoration: none;
     color: white;
     padding: 1rem;
-    background: rgb(17, 17, 17);
+
     border-radius: 1rem;
-    box-shadow: inset 0px 0px 5px black;
+    transition: 0.3s ease;
+    /* width: 10rem; */
+    /* box-shadow: 
+        inset 0px 0px 5px var(--highlight-blue),
+        inset 0px 0px 10px rgba(0, 149, 255, 0.371); */
+}
+.app__back-button:hover,
+.app__back-button:focus {
+    outline: none;
+    background: var(--highlight-blue);
+    box-shadow: 
+        inset 0px 0px 5px rgba(255, 255, 255, 0.13),
+        inset 0px 0px 10px rgba(255, 255, 255, 0.289);
+}
+.app__back-button:active {
+    box-shadow: none;
 }
 .app__back-button img {
-    width: 1rem;
+    /* display: none; */
+    width: 2rem;
     aspect-ratio: 1 / 1;
-    rotate: 180deg;
+    filter: invert(90%);
 }
 .app__back-button span {
     font-size: 1.2rem;

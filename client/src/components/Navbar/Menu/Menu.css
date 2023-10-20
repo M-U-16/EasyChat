@@ -1,6 +1,7 @@
 .app__menu {
     display: flex;
     align-items: center;
+    z-index: 1;
 }
 .app__menu-link {
     margin: 0 1rem 0 1rem;
@@ -11,4 +12,59 @@
 .app__menu-link:hover {
     color: rgb(144, 144, 144);
     cursor: pointer;
+}
+.app__menu-wrapper {
+    height: var(--navbar-height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+/* MENU */
+.app__menu-container {
+    position: absolute;
+    top: calc(100% + 0rem);
+    right: 0;
+    background-color: red;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    height: calc(100vh - var(--navbar-height));
+    background: var(--secondary-blue);
+    box-shadow: -2px 2px 2px var(--highlight-blue);
+    --border-size: 15px;
+    /* transform: scaleX(0) translateY(100px); */
+    opacity: 0;
+    pointer-events: none;
+    transition: 
+        width 0.5s ease-in-out;
+
+    width: 0;
+    /* width: 15rem; */
+}
+.app__menu-container .link {
+    padding: 1.5rem 0rem 1.5rem 3rem;
+    text-decoration: none;
+    color: white;
+    font-size: 1.4rem;
+    width: 100%;
+    transition: 0.3s ease;
+}
+.app__menu-container .link:hover {
+    background-color: rgba(0, 0, 0, 0.468);
+}
+.active-app-menu {
+    /* transform: scaleX(1); */
+    opacity: 1;
+    pointer-events: all;
+    /* max-width: 20rem; */
+    width: 15rem;
+}
+
+@media screen and (max-width: 800px) {
+    .active-app-menu {
+        width: 100vw;
+    }
 }

@@ -13,7 +13,12 @@
   --bg-clr: #242424;
   --navbar-height: 5rem;
   --navbar-bg: #272727;
+  --primary-color: violet;
   --normal-transition: 0.3s ease;
+
+  --primary-blue: #292841;
+  --secondary-blue: #1C1B29;
+  --highlight-blue: rgb(0, 153, 255);
 }
 * {
   padding: 0;
@@ -22,8 +27,8 @@
 }
 body {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  background-color: var(--bg-clr);
-  min-height: 100vh;
+  background-color: var(--primary-blue);
+  min-height: auto;
 }
 .flex_center-full_height {
   display: flex;
@@ -31,4 +36,10 @@ body {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+}
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }

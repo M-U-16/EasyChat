@@ -1,0 +1,131 @@
+.app__chat-panel {
+    height: 5.5rem;
+    cursor: pointer;
+    transition: 0.5s ease;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    border-left: 1px solid transparent;
+    position: relative;
+}
+.panel__text-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow-x: hidden;
+}
+.panel__text-wrapper h1 {
+    color: white;
+}
+.panel__profile-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.panel__profile-container {
+    width: var(--profile-img-width);
+    position: relative;
+}
+.panel__profile-container img {
+    /* filter: hue-rotate(-90deg) invert(50%); */
+    /* width: var(--profile-img-width, 4rem); */
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.panel__profile-new-messages {
+    position: absolute;
+    background-color: rgb(0, 128, 255);
+    border: 3px solid var(--secondary-blue);
+    z-index: 2;
+    border-radius: 50%;
+    width: 1.2rem;
+    height: 1.2rem;
+    font-size: 0.9rem;
+    bottom: 0px;
+    right: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.panel__profile-new-messages::before {
+    content: "";
+}
+.panel__status {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 2;
+    top: 0px;
+    right: 0px;
+}
+.panel__status::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 3;
+    display: none;
+    background-color: var(--secondary-blue);
+}
+.true {
+    border: 
+        3px solid var(--secondary-blue);
+    box-shadow: inset 0px 0px 50px rgb(0, 171, 0);
+}
+.false {
+    border: 
+        3px solid var(--secondary-blue);
+    box-shadow: inset 0px 0px 50px rgb(255, 51, 51);
+}
+/*  */
+.app__panel-lastmessage-container {
+    display: flex;
+    align-items: center;
+    /* max-width: 50%; */
+    overflow-x: hidden;
+}
+.app__panel-lastmessage-container h2,
+.app__panel-lastmessage-container p {
+    font-size: 1rem;
+    color: grey;
+}
+.app__panel-lastmessage-container h2 {
+    margin: 0rem 0.5rem 0 0;
+}
+.app__panel-lastmessage-container p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 60%;
+}
+
+/* HOVER */
+.app__chat-panel:hover {
+    border-left: 1px solid var(--highlight-blue);
+    background: #0F0E16;
+}
+.app__chat-panel:hover .app__panel-lastmessage-container h2 {
+    color: var(--highlight-blue);
+}
+
+@media screen and (max-width: 800px) {
+    .panel__status {
+        top: 6px;
+        right: 10px;
+    }
+    .panel__profile-new-messages {
+        bottom: 10px;
+        right: 10px;
+    }
+    /* .panel__profile-wrapper {
+        padding: 0.5rem;
+    } */
+    .panel__profile-container img {
+        padding: 0.5rem;
+    }
+
+}

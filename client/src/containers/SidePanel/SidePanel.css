@@ -1,0 +1,82 @@
+.app__chat-sidepanel {
+    --profile-img-width: 4rem;
+    --breakpoint-800: 800px;
+
+    width: 20rem;
+    max-width: 500px;
+    transition: max-width 1s ease;
+    height: calc(100vh - var(--navbar-height));
+    background: var(--secondary-blue);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: relative;
+
+}
+
+.app__chat-sidepanel::-webkit-scrollbar{
+    width: 7px;
+}
+.app__chat-sidepanel::-webkit-scrollbar-track {
+    background: var(--secondary-blue);
+    transition: 0.3s ease;
+}
+.app__chat-sidepanel::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 0px;
+}
+.app__chat-sidepanel::-webkit-scrollbar-thumb:hover {
+    background: rgb(90, 90, 90);
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.app__chat-sidepanel:hover::-webkit-scrollbar-thumb {
+    /* background: var(--highlight-blue); */
+    background: rgb(100, 100, 100);
+    transition: 0.3s ease;
+}
+.app__chat-sidepanel:hover::-webkit-scrollbar-track {
+    background: rgba(16, 16, 16, 0.46);
+}
+
+/* LODING */
+.loading-spinner {
+    --border: 5px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+    width: 2rem;
+    height: 2rem;
+    background-color: transparent;
+    border-radius: 50%;
+    border: var(--border) solid transparent;
+    border-bottom: var(--highlight-blue) var(--border) solid;
+    border-left: var(--highlight-blue) var(--border) solid;
+    animation: chatLoadingSpin 1s ease-in-out infinite;
+    transform-origin: center center;
+    display: flex;
+}
+
+@keyframes chatLoadingSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+/* SIDEPANEL MEDIA */
+@media screen and (max-width: 800px) {
+    .app__chat-sidepanel::-webkit-scrollbar {
+        width: 0px;
+    }
+    .app__chat-sidepanel {
+        --profile-img-width: 5rem;
+        width: var(--profile-img-width);
+    }
+    .panel__profile-wrapper {
+        width: auto;
+        height: auto;
+    }
+}

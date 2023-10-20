@@ -1,0 +1,64 @@
+.app__menu-button {
+    background: rgb(21, 21, 21);
+    width: 5rem;
+    height: var(--navbar-height);
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+.app__menu-button span {
+    background: white;
+    width: 60%;
+    height: 3px;
+    position: absolute;
+    border-radius: 10px;
+    transform-origin: 50% 50%;
+    rotate: 0;
+    transition: transform 0.3s ease;
+}
+.app__menu-button span:nth-child(1) {
+    top: 30%;
+}
+.app__menu-button span:nth-child(2) {
+    transform: translateY(-50%);
+    top: 50%;
+}
+.app__menu-button span:nth-child(3) {
+    bottom: 30%;
+}
+
+
+.active-menu-button span:nth-child(1){
+    transition: rotate 0.3s ease;
+    top: 50%;
+    rotate: 135deg;
+    transform: translateY(50%);
+}
+.active-menu-button span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(4px);
+}
+.active-menu-button span:nth-child(3){
+    bottom: 50%;
+    rotate: -135deg;
+    transform: translateY(-50%);
+    transition: rotate 0.3s ease;
+}
+
+@keyframes activeButton {
+    
+}
+
+/*  */
+.app__link-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 5;
+    width: 20rem;
+    height: 20rem;
+    background: red;
+}

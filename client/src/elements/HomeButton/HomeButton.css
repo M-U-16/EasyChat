@@ -1,0 +1,40 @@
+.app__home-button {
+    position: absolute;
+    bottom: 1rem;
+    left: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+    padding: 1rem;
+
+    border-radius: 1rem;
+    transition: 0.3s ease;
+    background: var(--highlight-blue);
+    /* width: 10rem; */
+    /* box-shadow: 
+        inset 0px 0px 5px var(--highlight-blue),
+        inset 0px 0px 10px rgba(0, 149, 255, 0.371); */
+}
+.app__home-button:hover,
+.app__home-button:focus {
+    outline: none;
+    background: var(--highlight-blue);
+    box-shadow: 
+        inset 0px 0px 5px rgba(255, 255, 255, 0.13),
+        inset 0px 0px 10px rgba(255, 255, 255, 0.289);
+}
+.app__home-button:active {
+    box-shadow: none;
+}
+.app__home-button img {
+    /* display: none; */
+    width: 2rem;
+    aspect-ratio: 1 / 1;
+    filter: invert(90%);
+}
+.app__home-button span {
+    font-size: 1.2rem;
+    margin-left: 0.2rem;
+}

@@ -2,8 +2,8 @@
     height: var(--navbar-height);
     width: 100%;
 
-    background: var(--navbar-bg);
-    box-shadow: 0px 0px 2px rgb(174, 0, 255);
+    background: var(--secondary-blue);
+    box-shadow: 0px 0px 2px rgb(26, 103, 255);
     
     position: fixed;
     top: 0;
@@ -12,8 +12,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    overflow: hidden;
     z-index: 5;
+    transition: 0.3s ease;
 }
 .navbar__logo-container {
     height: 100%;
@@ -21,7 +21,13 @@
     display: flex;
     align-items: center;
     /* background: rgb(8, 8, 8); */
-    filter: drop-shadow(0px 0px 15px rgb(187, 0, 255));
+}
+.navbar__logo-container h1 {
+    filter: drop-shadow(0px 0px 10px var(--highlight-blue));
+    color: var(--highlight-blue);
+}
+.navbar__logo-container h2 {
+    filter: drop-shadow(0px 0px 10px white)
 }
 .navbar__logo-container img {
     height: 100%;

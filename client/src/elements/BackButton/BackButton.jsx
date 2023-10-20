@@ -6,8 +6,7 @@ import "./BackButton.css"
 const BackButton = () => {
   return (
     <Link to={`/`} className='app__back-button'>
-        <img src={images.arrowRight} />
-        <span>Zurück</span>
+        <img src={images.home} />
     </Link>
   )
 }
