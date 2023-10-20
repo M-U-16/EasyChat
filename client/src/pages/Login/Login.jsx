@@ -95,7 +95,7 @@ const Login = () => {
         </form>
         <div className="app__login-register">
           <p>Haben Sie noch keinen Account?</p>
-          <Link to={`/registrieren`}>Registrieren</Link>
+          <Link to={`/registrieren`} className='link__to-register'>Registrieren</Link>
         </div>
       </div>
 

@@ -49,10 +49,6 @@
     transition: rotate 0.3s ease;
 }
 
-@keyframes activeButton {
-    
-}
-
 /*  */
 .app__link-menu {
     position: absolute;

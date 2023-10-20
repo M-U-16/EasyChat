@@ -22,6 +22,10 @@
     margin: 1rem 0;
     display: flex;
 }
+.app__login-register .link__to-register {
+    color: var(--highlight-blue);
+    text-decoration: none;
+}
 .app__login-register :nth-child(1) {
     margin-right: 0.5rem;
 }
