@@ -7,6 +7,8 @@ import profileIcon from "../assets/icons/person-profile.svg"
 import chatboxIcon from "../assets/icons/chatbox.svg"
 import blueProfileIcon from "../assets/icons/blue-profile.svg"
 import logout from "../assets/icons/log-out.svg"
+import refreshIcon from "../assets/icons/refresh.svg"
+import searchIcon from "../assets/icons/search.svg"
 
 export default {
     loginIcon,
@@ -17,5 +19,7 @@ export default {
     profileIcon,
     chatboxIcon,
     blueProfileIcon,
-    logout
+    logout,
+    refreshIcon,
+    searchIcon
 }

@@ -12,7 +12,7 @@ export default {
         },
         contacts: {
             method: "get",
-            url: "localhost:3000/user/contacts"
+            url: "localhost:3000/user/chats"
         }
     }
 }

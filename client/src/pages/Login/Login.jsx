@@ -61,6 +61,7 @@ const Login = () => {
         const res = await fetch(url,{
           method: backendConfig.user.login.method,
           headers: headers,
+          credentials: "include",
           body: JSON.stringify(formData)
         })
         const resJson = await res.json()
@@ -99,7 +100,7 @@ const Login = () => {
         </div>
       </div>
 
-      {loginSuccess && <Navigate to={"/chat"} />}
+      {/* {loginSuccess && <Navigate to={"/chat"} />} */}
     </>
   )
 }

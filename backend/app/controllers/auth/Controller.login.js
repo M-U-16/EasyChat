@@ -1,8 +1,9 @@
-import { createTokens } from "../helpers/JWT.js"
+import { createTokens } from "../../helpers/JWT.js"
+import { getTokenName } from "../../helpers/env.js"
 import { 
     findUser,
     comparePassHash
-} from "../models/user.model.js"
+} from "../../models/user.js"
 
 //login user
 const login = (req, res) => {
@@ -25,12 +26,20 @@ const login = (req, res) => {
                     if (!doesMatch) res.json({error: true, message: "PASSWORD_IS_INCORECT"})
                     if (doesMatch) {
                         const token = createTokens(user)
+                        console.log(getTokenName())
+                        res.clearCookie(getTokenName())
                         res.cookie(
-                            "access-token-web-chat",
-                            token, 
-                            { maxAge: 3600000, httpOnly: true }      
+                            getTokenName(),
+                            token,
+                            {
+                                maxAge:36000000,
+                                sameSite:"none",
+                                secure: true
+                            } 
                         )
+                        console.log("set cookie")
                         res.json({error: false, message: null})
+                    
                     }
                 })
             }

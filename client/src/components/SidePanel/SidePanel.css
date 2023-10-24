@@ -1,10 +1,11 @@
 .app__chat-sidepanel {
-    --profile-img-width: 4rem;
+    --profile-img-width: 50px;
     --breakpoint-800: 800px;
+    --side-panel-width: 20rem;
 
-    width: 20rem;
+    width: var(--side-panel-width);
+    /* transition: width 0.3s linear; */
     max-width: 500px;
-    transition: max-width 1s ease;
     height: calc(100vh - var(--navbar-height));
     background: var(--secondary-blue);
     overflow-y: scroll;
@@ -14,7 +15,7 @@
 }
 
 .app__chat-sidepanel::-webkit-scrollbar{
-    width: 7px;
+    width: 0px;
 }
 .app__chat-sidepanel::-webkit-scrollbar-track {
     background: var(--secondary-blue);
@@ -45,7 +46,6 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%);
     width: 2rem;
     height: 2rem;
     background-color: transparent;
@@ -54,10 +54,27 @@
     border-bottom: var(--highlight-blue) var(--border) solid;
     border-left: var(--highlight-blue) var(--border) solid;
     animation: chatLoadingSpin 1s ease-in-out infinite;
-    transform-origin: center center;
+    transform-origin: 50% 50%;
     display: flex;
+    translate: -50% -50%;
 }
-
+.app__chat-refresh-btn {
+    position: absolute;
+    border: none;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background: transparent;
+    cursor: pointer;
+}
+.app__chat-refresh-btn img {
+    width: 2.5rem;
+    transition: 0.3s ease-in-out;
+}
+/* .app__chat-refresh-btn:hover img {
+    transform-origin: 50% 50%;
+    rotate: 369deg;
+} */
 @keyframes chatLoadingSpin {
     from {
         transform: rotate(0deg);
@@ -73,7 +90,7 @@
     }
     .app__chat-sidepanel {
         --profile-img-width: 5rem;
-        width: var(--profile-img-width);
+        --side-panel-width: var(--profile-img-width);
     }
     .panel__profile-wrapper {
         width: auto;

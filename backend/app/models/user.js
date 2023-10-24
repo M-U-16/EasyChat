@@ -1,8 +1,7 @@
-import connection from "../database/db.js"
 import mysql2 from "mysql2"
-
 import bcrypt from "bcrypt"
-import { createTokens } from "../helpers/JWT.js"
+
+import connection from "../database/db.js"
 
 //validating that the user not already exists
 const checkUser = async (newUser) => {
@@ -31,18 +30,17 @@ const checkUser = async (newUser) => {
 //function for adding user to database
 const addUser = async (user) => {
     try {
-        
         const hashedPassword = await bcrypt.hash(user.password, 10)
         const sql = mysql2.format(
-            "INSERT INTO users (password, email, username) VALUES (?, ?, ?)",
-            [hashedPassword, user.email, user.username]   
+            "INSERT INTO users (password, email, username, status) VALUES (?, ?, ?, ?)",
+            [hashedPassword, user.email, user.username, true] //set values for user and also default status of true   
         )
         const result = await connection.promise().query(sql)
         return true
 
     } catch(err) { return false }
 }
-
+//finds a user in database
 const findUser = async (email) => {
 
     try {
@@ -50,7 +48,7 @@ const findUser = async (email) => {
         return await connection.promise().query(sql, [email])
     } catch(err) { if (err) throw err }
 }
-
+//compares password from user and from database
 const comparePassHash = async (user_password, db_hash) => {
 
     const match = await bcrypt.compare(user_password, db_hash)

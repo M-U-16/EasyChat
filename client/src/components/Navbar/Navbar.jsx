@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 import "./Navbar.css"
 import Menu from "./Menu/Menu";
 
 const Navbar = (props) => {
+
+
     return (
         <nav className="app__navbar">
             <Link to={"/"} className="navbar__logo-container">

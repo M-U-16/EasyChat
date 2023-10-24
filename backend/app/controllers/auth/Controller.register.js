@@ -1,4 +1,4 @@
-import { checkUser, addUser } from "../../models/user.model.js"
+import { checkUser, addUser } from "../../models/user.js"
 
 //register a new User
 const register = (req, res) => {
