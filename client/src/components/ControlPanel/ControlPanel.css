@@ -16,10 +16,6 @@
     transition: 0.3s ease;
     outline: none;
 }
-/* .chat__new-chat-btn:active {
-    transition: 0.2s ease;
-    scale: 0.8;
-} */
 .chat__new-chat-btn:hover {
     background-color: #000000;
 }
@@ -58,6 +54,22 @@
 }
 @media screen and (max-width: 800px) {
     .chat__side-control-container {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+    .chat__new-chat-btn {
+        width: 100%;
+        height: 3rem;
+    }
+    .search-container {
+        height: auto;
+    }
+    .search-container input {
         display: none;
     }
+    .chat__search-btn {
+        width: 100%;
+        height: 3rem;
+    }
+
 }

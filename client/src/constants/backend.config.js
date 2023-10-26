@@ -3,20 +3,24 @@ export default {
     user: {
         route: "user",
         register: {
-            method: "post",
+            method: "POST",
             url: "localhost:3000/user/register"
         },
         login: {
-            method: "post",
+            method: "POST",
             url: "localhost:3000/user/login"
         },
         contacts: {
-            method: "get",
+            method: "GET",
             url: "localhost:3000/user/chats"
         },
         logout: {
-            method: "post",
+            method: "POST",
             url: "localhost:3000/user/logout"
+        },
+        newChat: {
+            method: "POST",
+            url: "localhost:3000/user/chats/new-chat"
         }
     }
 }

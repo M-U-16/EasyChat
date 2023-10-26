@@ -8,17 +8,18 @@ const createChat = async(req, res) => {
 
     const token = req.cookies[getTokenName()]
     const isPrivate = true
-    const user = encryptToken(token)
-    const user_id = user.user_id
+    const user_id = req.user_id
     const contactName = req.body.contactName
 
-    if (!contactName || !user_id) res.json({error: true, message: "CONTACT_OR_USER_NOT_THERE"})
+    if (!contactName || !user_id) return res.json({error: true, message: "CONTACT_IS_REQUIRED"})
 
     //get the id from new contact username
     const contactId = await connection
         .promise()
         .query("select user_id from users where username=?", [contactName])
-        .then(result => getQueryResults(result).user_id)
+        .then(result => getQueryResults(result))
+    
+    if (!contactId) return res.json({error: true, message: "CONTACT_NOT_FOUND"})
     
     //check if rooom already exists
     const checkRoom = await connection
@@ -50,8 +51,7 @@ const createChat = async(req, res) => {
                 .query("SELECT last_insert_id()")
                 .then(result => getQueryResults(result)["last_insert_id()"])
             if (roomId) {
-                res.json("hello from new chat")
-                const participantList = [user_id, contactId]
+                const participantList = [user_id, contactId.user_id]
                 const participantSql = "insert into participants (room_id, user_id) values (?, ?)"
             
                 connection.query("select last_insert_id()")
@@ -62,13 +62,13 @@ const createChat = async(req, res) => {
                     })
                 })
             } else {
-                res.json({error: true, message: "error"})
+                return res.json({error: true, message: "error"})
             }
         } else {
-            res.json({error: true, message: "error"})
+           return res.json({error: true, message: "error"})
         }
     } else {
-        res.json({error: true, message: "error"})
+        return res.json({error: true, message: "ROOM_ALREADY_EXISTS"})
     }
 }
 export default createChat

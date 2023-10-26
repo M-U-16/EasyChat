@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 const {sign, verify} = jwt
-import { getTokenSecret } from "./env.js"
+import { getTokenName, getTokenSecret } from "./env.js"
 
 const createTokens = (user) => {
     const accessToken = sign(
@@ -14,7 +14,8 @@ const createTokens = (user) => {
 }
 
 const validateToken = (req, res, next) => {
-    const accessToken = req.cookies[process.env.TOKEN_NAME]
+
+    const accessToken = req.cookies[getTokenName()]
     if (!accessToken) return res.json({error: true, message: "not authenticated!"})
     try {
         const validToken = verify(accessToken, getTokenSecret())
