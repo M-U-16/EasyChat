@@ -9,7 +9,7 @@ const Chat = () => {
   return (
     <>
       <Navbar />
-      <div className='app__chat-container'>
+      <div className='app__chat-container' id='chat-container'>
         <SidePanel />
         
       </div>

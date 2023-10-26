@@ -2,6 +2,7 @@ import connection from "../../database/db.js"
 import { encryptToken } from "../../helpers/JWT.js"
 import { getTokenName } from "../../helpers/env.js"
 import { format } from "mysql2"
+import { getQueryResults } from "../../database/db-actions/dbQueryResult.js"
 
 const createChat = async(req, res) => {
 
@@ -17,7 +18,7 @@ const createChat = async(req, res) => {
     const contactId = await connection
         .promise()
         .query("select user_id from users where username=?", [contactName])
-        .then(result => result[0][0].user_id)
+        .then(result => getQueryResults(result).user_id)
     
     //check if rooom already exists
     const checkRoom = await connection
@@ -39,7 +40,6 @@ const createChat = async(req, res) => {
     //creates a new room
     const chatQuery = "insert into rooms (room_name, private) values (?, ?)"
     if (checkRoom) {
-        console.log("creating room")
         const newChat = await connection
             .promise()
             .query(chatQuery, [contactName, isPrivate])
@@ -48,9 +48,8 @@ const createChat = async(req, res) => {
             const roomId = await connection
                 .promise()
                 .query("SELECT last_insert_id()")
-                .then(result => result[0][0]["last_insert_id()"])
+                .then(result => getQueryResults(result)["last_insert_id()"])
             if (roomId) {
-                console.log(roomId)
                 res.json("hello from new chat")
                 const participantList = [user_id, contactId]
                 const participantSql = "insert into participants (room_id, user_id) values (?, ?)"
@@ -60,7 +59,6 @@ const createChat = async(req, res) => {
                 participantList.forEach((participant) => {
                     connection.query(participantSql, [roomId, participant], (err, result)=>{
                         if (err) throw err
-                        console.log(result)
                     })
                 })
             } else {

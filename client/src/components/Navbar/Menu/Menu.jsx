@@ -7,12 +7,23 @@ import {
   MenuButton,
   HomeButton
 } from "../../../elements"
-import { icons } from '../../../constants'
+import { backendConfig, icons } from '../../../constants'
 
 const Menu = (props) => {
   const showLogin = props.showLogin
   const [activeMenu, setActiveMenu] = useState(false)
   let activeClass = activeMenu ? " active-app-menu" : ""
+
+  const logoutUser = () => {
+    fetch(
+      `http://${backendConfig.user.logout.url}`,
+      { 
+        method: backendConfig.user.logout.method,
+        credentials: "include",
+        mode: "no-cors"
+      }
+    )
+  }
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -37,7 +48,7 @@ const Menu = (props) => {
           <Link className='link' to={"/profil"}>
             Profil <img src={icons.blueProfileIcon}/>
           </Link>
-          <Link className='link' to={"/abmelden"}>
+          <Link className='link' to={"/"} onClick={logoutUser}>
             Abmelden <img src={icons.logout}/>
           </Link>
         </div>

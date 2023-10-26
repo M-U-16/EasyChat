@@ -4,7 +4,7 @@
     background: rgb(23, 23, 23);
     padding: 2rem;
     border-radius: 1rem;
-    max-width: 25rem;
+    max-width: 30rem;
     width: 70%;
     box-shadow: 0px 0px 3px rgba(255, 255, 255, 0.526);
     animation: 0.3s popup ease;
@@ -33,6 +33,7 @@
 }
 @media screen and (max-width: 500px) {
     .app__form {
-        width: 85%;
+        width: 90%;
+        padding: 1rem;
     }
 }

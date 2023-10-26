@@ -25,10 +25,15 @@
     "jsonwebtoken": "^9.0.2",
     "method-override": "^3.0.0",
     "mysql2": "^3.6.1",
-    "sanitize": "^2.1.2"
+    "sanitize": "^2.1.2",
+    "ws": "^8.14.2"
   },
   "devDependencies": {
     "dotnet": "^1.1.4",
     "nodemon": "^3.0.1"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.8",
+    "utf-8-validate": "^6.0.3"
   }
 }

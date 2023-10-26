@@ -13,6 +13,10 @@ export default {
         contacts: {
             method: "get",
             url: "localhost:3000/user/chats"
+        },
+        logout: {
+            method: "post",
+            url: "localhost:3000/user/logout"
         }
     }
 }

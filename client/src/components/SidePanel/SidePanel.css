@@ -4,12 +4,10 @@
     --side-panel-width: 20rem;
 
     width: var(--side-panel-width);
-    /* transition: width 0.3s linear; */
     max-width: 500px;
     height: calc(100vh - var(--navbar-height));
     background: var(--secondary-blue);
     overflow-y: scroll;
-    overflow-x: hidden;
     position: relative;
 
 }
@@ -32,7 +30,6 @@
 }
 
 .app__chat-sidepanel:hover::-webkit-scrollbar-thumb {
-    /* background: var(--highlight-blue); */
     background: rgb(100, 100, 100);
     transition: 0.3s ease;
 }
@@ -71,10 +68,6 @@
     width: 2.5rem;
     transition: 0.3s ease-in-out;
 }
-/* .app__chat-refresh-btn:hover img {
-    transform-origin: 50% 50%;
-    rotate: 369deg;
-} */
 @keyframes chatLoadingSpin {
     from {
         transform: rotate(0deg);
@@ -89,11 +82,9 @@
         width: 0px;
     }
     .app__chat-sidepanel {
-        --profile-img-width: 5rem;
-        --side-panel-width: var(--profile-img-width);
+        width: calc(var(--profile-img-width) + 1rem);
     }
-    .panel__profile-wrapper {
-        width: auto;
-        height: auto;
+    .app__chat-sidepanel .panel__text-wrapper {
+        display: none;
     }
 }

@@ -1,11 +1,11 @@
 .app__chat-panel {
     --online-status-border-clr: var(--secondary-blue);
     
-    height: 5.5rem;
+    height: 5rem;
     cursor: pointer;
     transition: 0.5s ease;
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: auto 3fr;
     border-left: 1px solid transparent;
     position: relative;
     isolation: isolate;
@@ -24,6 +24,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    width: 70px;
 }
 .panel__profile-container {
     width: var(--profile-img-width);
@@ -122,20 +123,11 @@
     border: 3px solid #0f0e16;
 }
 @media screen and (max-width: 800px) {
-    
-    .panel__status {
-        top: 6px;
-        right: 10px;
-    }
-    .panel__profile-new-messages {
-        bottom: 10px;
-        right: 10px;
-    }
-    /* .panel__profile-wrapper {
-        padding: 0.5rem;
-    } */
     .panel__profile-container img {
-        padding: 0.5rem;
+        padding: 0rem;
     }
-
+    .app__chat-panel {
+        grid-template-columns: 1fr;
+        height: 4.5rem;
+    }
 }

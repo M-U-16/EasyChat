@@ -93,14 +93,14 @@ const Login = () => {
           </div>
           
           <SubmitButton isLoading={isLoading} />
+          <div className="app__login-register">
+            <p>Haben Sie noch keinen Account?</p>
+            <Link to={`/registrieren`} className='link__to-register'>Registrieren</Link>
+          </div>
         </form>
-        <div className="app__login-register">
-          <p>Haben Sie noch keinen Account?</p>
-          <Link to={`/registrieren`} className='link__to-register'>Registrieren</Link>
-        </div>
       </div>
 
-      {/* {loginSuccess && <Navigate to={"/chat"} />} */}
+      {loginSuccess && <Navigate to={"/chat"} />}
     </>
   )
 }

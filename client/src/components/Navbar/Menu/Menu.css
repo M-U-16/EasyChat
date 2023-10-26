@@ -34,7 +34,7 @@
     
     height: calc(100vh - var(--navbar-height));
     background: var(--secondary-blue);
-    box-shadow: -2px 2px 2px var(--highlight-blue);
+    box-shadow: -2px 0px 0px var(--highlight-blue);
     --border-size: 15px;
     opacity: 0;
     pointer-events: none;

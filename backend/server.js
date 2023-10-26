@@ -3,9 +3,11 @@ import cors from "cors"
 import bodyParser from "body-parser"
 import cookieParser from "cookie-parser"
 import session from "express-session"
-import { userRoute } from "./app/routes/User.routes.js"
+import http from "http"
+
 import SERVER_CONFIG from "./app/config/server.conf.js"
 import { validateToken } from "./app/helpers/JWT.js"
+import { userRoute } from "./app/routes/User.routes.js"
 
 //creating express app
 const app = express()
@@ -34,7 +36,6 @@ app.use(bodyParser.urlencoded({
     extended: true
 }))
 
-
 //routes
 app.use("/user", userRoute)
 
@@ -44,10 +45,12 @@ app.get("/", validateToken, (req, res) => {
 })
 
 const startingServer = (hostname, port) => {
-    //console.log(typeof(getDbPassword()))
     console.log(`Server running at http://${hostname}:${port}`)
 }
-app.listen(
+
+const server = http.createServer(app)
+
+server.listen(
     SERVER_CONFIG.port,
     SERVER_CONFIG.hostname,
     startingServer(

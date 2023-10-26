@@ -9,6 +9,7 @@ import blueProfileIcon from "../assets/icons/blue-profile.svg"
 import logout from "../assets/icons/log-out.svg"
 import refreshIcon from "../assets/icons/refresh.svg"
 import searchIcon from "../assets/icons/search.svg"
+import close from "../assets/icons/close-outline.svg"
 
 export default {
     loginIcon,
@@ -21,5 +22,6 @@ export default {
     blueProfileIcon,
     logout,
     refreshIcon,
-    searchIcon
+    searchIcon,
+    close
 }

@@ -1,0 +1,72 @@
+/* OVERLAY */
+.chat__addContact-overlay {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.492);
+    animation: fadein 0.5s ease 1;
+}
+/* ADD CONTACT FORM */
+.chat__addContact-form {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    background-color: rgb(13, 13, 13);
+    padding: 2rem;
+    height: 17rem;
+    width: 20rem;
+    position: relative;
+    animation: slidein 1 0.8s ease;
+    box-shadow: 3px 3px 3px rgba(196, 196, 196, 0.146);
+}
+/* CLOSE BUTTON */
+.chat__addContact-close-bnt {
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+.chat__addContact-form label {
+    margin-top: 1rem;
+    margin-bottom: 0.2rem;
+    font-size: 1rem;
+}
+.chat__addContact-form input {
+    padding: 0.5rem;
+    font-size: 1.3rem;
+    outline: none;
+    border: none;
+}
+
+.chat__addContact-submit {
+    margin: 1rem 0rem 0rem 0rem;
+    padding: 1rem;
+    border-radius: 0;
+    cursor: pointer;
+    background: var(--highlight-blue);
+    border: none;
+}
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes slidein {
+    from {
+        transform: translateY(100px);
+    }
+    to {
+        transform: translateY(0px);
+    }
+}

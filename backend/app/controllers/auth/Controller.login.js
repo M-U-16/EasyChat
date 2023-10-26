@@ -9,7 +9,6 @@ import {
 const login = (req, res) => {
     const inputPassword = req.body.password
 
-    console.log(inputPassword)
     if (!inputPassword) {
         res.send({error: true, message: "PASSWORD IS REQUIRED!" })
     } else {
@@ -26,7 +25,6 @@ const login = (req, res) => {
                     if (!doesMatch) res.json({error: true, message: "PASSWORD_IS_INCORECT"})
                     if (doesMatch) {
                         const token = createTokens(user)
-                        console.log(getTokenName())
                         res.clearCookie(getTokenName())
                         res.cookie(
                             getTokenName(),
@@ -34,12 +32,11 @@ const login = (req, res) => {
                             {
                                 maxAge:36000000,
                                 sameSite:"none",
-                                secure: true
-                            } 
+                                secure: true,
+                                httpOnly: true
+                            }
                         )
-                        console.log("set cookie")
                         res.json({error: false, message: null})
-                    
                     }
                 })
             }

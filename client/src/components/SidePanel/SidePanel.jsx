@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react'
 import "./SidePanel.css"
 import { icons } from '../../constants'
 import { backendConfig } from '../../constants'
-import ContactPanel from '../../containers/ContactPanel/ContactPanel'
-import ControlPanel from '../../containers/ControlPanel/ControlPanel'
+import ContactPanel from '../ContactPanel/ContactPanel'
+import ControlPanel from '../ControlPanel/ControlPanel'
 
 const SidePanel = () => {
   
@@ -78,7 +78,7 @@ const SidePanel = () => {
       { 
         contacts &&
         contacts.map((contact, index) => 
-          <ContactPanel contact={contact} key={index} />
+        <ContactPanel contact={contact} key={index} />
         )
       }
       {
