@@ -26,6 +26,7 @@
     "method-override": "^3.0.0",
     "mysql2": "^3.6.1",
     "sanitize": "^2.1.2",
+    "socket.io": "^4.7.2",
     "ws": "^8.14.2"
   },
   "devDependencies": {

@@ -9,18 +9,18 @@ const register = (req, res) => {
     }
 
     checkUser(user)
-    .then(check => {
-        if (check.error) {
-            //sends a error that user already exists
-            res.json(check)
-
-        } else if (!check.error) {
-            addUser(user) // adds new user to db
-            .then(addedUser => {
-                if (addedUser) res.send({error: false, message: "ADDED_USER"})
-                if (!addedUser) res.send({ error: true, message: "COULD_NOT_ADD_USER"})
-            })
-        }
-    })
+        .then(check => {
+            //check = true or false
+            if (check.error) return res.json(check) //sends a error that user already exists
+            if (!check.error) {
+                addUser(user) // adds new user to db
+                .then(addedUser => {
+                    if (!addedUser) return res.send({
+                        error: true, message: "COULD_NOT_ADD_USER"
+                    })
+                    return res.send({error: false, message: "ADDED_USER"})
+                })
+            }
+        })
 }
 export default register

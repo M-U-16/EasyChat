@@ -9,23 +9,24 @@ import SubmitButton from '../Buttons/SubmitButton/SubmitButton'
 const RegisterForm = (props) => {
   const [formData, setFormData] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [emailError, setEmailError] = useState("")
+  const [usernameError, setUsernameError] = useState("")
 
   const hadleFormData = (prev, event) => {
 
-    let value = event.target.value
     if (event.target.value == null) value = ""
     return {
       ...prev,
-      ...{[event.target.name]: value}
+      ...{[event.target.name]: event.target.value}
     }
+
   }
 
-  const handleInput = (event) => {
-    setFormData(prev => hadleFormData(prev, event))
-  }
+  const handleInput = (event) => setFormData(prev => hadleFormData(prev, event))
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    setIsLoading(true)
     const url = `http://${backendConfig.user.register.url}`
     const headers = {
       "Accept": "application/json",
@@ -41,31 +42,40 @@ const RegisterForm = (props) => {
         })
         const resJson = await res.json()
         
-        //shows success page
+        //shows result of registration
         console.log(resJson)
-        if (!resJson.error) props.setShowRegister(false)
-        if (resJson.error && resJson.message == "USER_ALREADY_EXISTS") {}
-        if (resJson.error && resJson.message == "COULD_NOT_ADD_USER") {}
-      } catch (err) { console.log({err})}
+        if (resJson) {
+          console.log(isLoading)
+          setIsLoading(false)
+          if (!resJson.error) props.setShowRegister(false)
+          if (resJson.message == "USER_ALREADY_EXISTS") {}
+          if (resJson.message == "COULD_NOT_ADD_USER") {}
+        }
+      } catch (err) {}
     }
-    setIsLoading(true)
   }
 
   return (
     <form className='app__register-form app__form'  onSubmit={handleSubmit}>
       <h1>Registrieren</h1>
-      <input 
-        required name="email" type="email" placeholder='Email'
-        onChange={handleInput}
-      />
-      <input 
-        required name="username" type="text"
-        placeholder='Benutzername' onChange={handleInput}
-      />
-      <input
-        required name="password" type="password"
-        placeholder='Passwort' onChange={handleInput}
-      />
+      <div className='app__register-input-wrapper'>
+        <input 
+          required name="email" type="email" placeholder='Email'
+          onChange={handleInput}
+        />
+      </div>
+      <div className='app__register-input-wrapper'>
+        <input 
+          required name="username" type="text"
+          placeholder='Benutzername' onChange={handleInput}
+        />
+      </div>
+      <div className='app__register-input-wrapper'>
+        <input
+          required name="password" type="password"
+          placeholder='Passwort' onChange={handleInput}
+        />
+      </div>
       <SubmitButton isLoading={isLoading}/>
     </form>
   )

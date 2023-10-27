@@ -8,6 +8,7 @@
     height: calc(100vh - var(--navbar-height));
     background: var(--secondary-blue);
     overflow-y: scroll;
+    overflow-x: hidden;
     position: relative;
 
 }

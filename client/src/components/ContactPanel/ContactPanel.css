@@ -35,8 +35,6 @@
     justify-content: center;
 }
 .panel__profile-container img {
-    /* filter: hue-rotate(-90deg) invert(50%); */
-    /* width: var(--profile-img-width, 4rem); */
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -89,6 +87,9 @@
     box-shadow: inset 0px 0px 50px rgb(255, 51, 51);
 }
 /*  */
+.app__panel-username {
+    height: 30px;
+}
 .app__panel-lastmessage-container {
     display: flex;
     align-items: center;
@@ -125,6 +126,9 @@
 @media screen and (max-width: 800px) {
     .panel__profile-container img {
         padding: 0rem;
+    }
+    .panel__profile-wrapper {
+        width: 100%;
     }
     .app__chat-panel {
         grid-template-columns: 1fr;

@@ -4,6 +4,7 @@ import bodyParser from "body-parser"
 import cookieParser from "cookie-parser"
 import session from "express-session"
 import http from "http"
+import { Server } from "socket.io"
 
 import SERVER_CONFIG from "./app/config/server.conf.js"
 import { validateToken } from "./app/helpers/JWT.js"
@@ -11,6 +12,13 @@ import { userRoute } from "./app/routes/User.routes.js"
 
 //creating express app
 const app = express()
+//creating http server
+const server = http.createServer(app)
+//creating ws server on top of http server
+const io = new Server(server, { 
+    cors: { origin: "*" },
+    methods: ["GET", "POST"]
+})
 
 //cors options
 const whitelist = ["http://127.0.0.1:5173"]
@@ -44,11 +52,18 @@ app.get("/", validateToken, (req, res) => {
     res.send({"message": "hello world"})
 })
 
+/* WEBSOCKETS */
+
+io.on("connection", (socket) => {
+    console.log("user connected")
+
+    
+})
+
+//function for logging server start
 const startingServer = (hostname, port) => {
     console.log(`Server running at http://${hostname}:${port}`)
 }
-
-const server = http.createServer(app)
 
 server.listen(
     SERVER_CONFIG.port,
