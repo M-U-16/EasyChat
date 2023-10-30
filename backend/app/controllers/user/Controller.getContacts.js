@@ -9,25 +9,36 @@ const getUsersInRoom = async(rooms, user_id) => {
         .map(room => room.room_id.toString())
         .join(",")
 
-    const query = `select user_id from participants where room_id in (${roomString}) and user_id <> ?`
+    const query = `select user_id, room_id from participants where room_id in (${roomString}) and user_id <> ?`
 
-    return await connection
+    const res = await connection
         .promise()
         .query(query, [user_id])
-        .then(result => result[0].map(user => user.user_id))
-    
+        .then(result => result[0].map(user => {
+            return {user_id: user.user_id, room_id: user.room_id}
+        }))
+
+    return res
 }
 
 const getContactInformation = async(users) => {
     const userString = users
-        .map(user => user.toString())
+        .map(user => user.user_id.toString())
         .join(",")
 
     const sql = `select username from users where user_id in (${userString})`
     return await connection
         .promise()
         .query(sql)
-        .then(result => result[0])
+        .then(results => {
+            return results[0].map((result, index) => {
+
+                return {
+                    username: result.username,
+                    room_id: users[index].room_id
+                }
+            })
+        })
 }
 
 const createContactObject = (userInf) => {
@@ -40,7 +51,8 @@ const createContactObject = (userInf) => {
                 message: "helisfj kfjidjfkd?"
             },
             newMessages: 0,
-            status: false
+            status: false,
+            room_id: user.room_id,
         }
     })
 }
@@ -56,6 +68,7 @@ const getContacts = async(req, res) => {
         .then(result => result[0])
 
     const users = await getUsersInRoom(rooms, userId)
+
     if (users) {
         const userInfo = await getContactInformation(users)
         const obj = createContactObject(userInfo)

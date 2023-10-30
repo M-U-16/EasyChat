@@ -1,0 +1,30 @@
+.chat__panel-conatainer {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+}
+.chat__panel-conatainer::-webkit-scrollbar{
+    width: 5px;
+}
+.chat__panel-conatainer::-webkit-scrollbar-track {
+    background: var(--secondary-blue);
+    transition: 0.3s ease;
+}
+.chat__panel-conatainer::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 0px;
+}
+.chat__panel-conatainer::-webkit-scrollbar-thumb:hover {
+    background: rgb(90, 90, 90);
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.chat__panel-conatainer:hover::-webkit-scrollbar-thumb {
+    background: rgb(100, 100, 100);
+    transition: 0.3s ease;
+}
+.chat__panel-conatainer:hover::-webkit-scrollbar-track {
+    background: rgba(16, 16, 16, 0.46);
+}

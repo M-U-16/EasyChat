@@ -1,29 +1,43 @@
 .chat__side-control-container {
+    --control-panel-height: 65%;
+
     position: sticky;
     top: 0;
     display: grid;
+    place-items: center;
     grid-template-columns: auto 1fr;
-    height: 3rem;
+    height: 4rem;
+    background: rgb(0, 0, 0);
     box-shadow: 0px 0px 3px rgb(0, 110, 255);
 }
 .chat__new-chat-btn {
     width: 3rem;
+    height: 3rem;
+    aspect-ratio: 1;
+    height: var(--control-panel-height);
     cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.802);
+    background: transparent;
     border: none;
     font-size: 2rem;
     color: var(--highlight-blue);
     transition: 0.3s ease;
     outline: none;
+    border-radius: 1rem;
+    margin: 0rem 0.8rem 0rem 0.8rem;
 }
 .chat__new-chat-btn:hover {
-    background-color: #000000;
+    background-color: #171717;
+}
+.chat__new-chat-btn:active {
+    scale: 1;
 }
 .search-container {
     display: flex;
     justify-content: end;
-    height: 3rem;
+    height: 4rem;
     width: 100%;
+    align-items: center;
+    padding-right: 1rem;
 }
 .search-container img {
     width: 1rem;
@@ -31,12 +45,12 @@
     aspect-ratio: 1;
 }
 .chat__search-btn {
-    height: 100%;
+    height: var(--control-panel-height);
     display: flex;
     justify-content: center;
     align-items: center;
     aspect-ratio: 1;
-    border-radius: 0;
+    border-radius: 1rem;
     border: none;
     cursor: pointer;
     background-color: var(--highlight-blue);
@@ -46,31 +60,42 @@
 }
 .search-container input {
     width: 100%;
+    height: var(--control-panel-height);
     border: none;
     outline: none;
     font-size: 1.1rem;
     padding-left: 1rem;
     background: rgb(42, 42, 42);
+    border-radius: 1rem 0rem 0rem 1rem;
 }
 @media screen and (max-width: 800px) {
     .chat__side-control-container {
         grid-template-columns: 1fr;
         height: auto;
+        background: none;
+        border: none;
+        box-shadow: none;
     }
     .chat__new-chat-btn {
-        width: 100%;
-        /* height: 70px; */
+        width: 3rem;
         height: 3rem;
+        margin: 0.5rem 0rem 0.5rem 0rem;
+        border-radius: 1rem;
     }
     .search-container {
         height: auto;
+        padding-right: 0;
+        display: flex;
+        justify-content: center;
     }
     .search-container input {
         display: none;
     }
     .chat__search-btn {
-        width: 100%;
+        width: 3rem;
         height: 3rem;
+        border-radius: 0;
+        border-radius: 1rem;
     }
 
 }

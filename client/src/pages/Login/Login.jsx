@@ -18,7 +18,7 @@ const Login = () => {
   const hadleFormData = (prev, event) => {
 
     let value = event.target.value
-    if (event.target.value == null) value = ""
+    if (value == null) value = ""
     return {
       ...prev,
       ...{[event.target.name]: value}
@@ -58,7 +58,7 @@ const Login = () => {
       try {
         setIsLoading(true)
 
-        const res = await fetch(url,{
+        const res = await fetch(url, {
           method: backendConfig.user.login.method,
           headers: headers,
           credentials: "include",

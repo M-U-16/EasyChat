@@ -21,7 +21,7 @@ const ControlPanel = () => {
         onClick={handleContactDisplay}
       >+</button>
       <div className="search-container">
-        <input type="text" />
+        {/* <input type="text" /> */}
         <button title='Nach Kontakt Suchen' className='chat__search-btn'>
           <img src={icons.searchIcon} />
         </button>

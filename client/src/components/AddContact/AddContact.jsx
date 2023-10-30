@@ -50,20 +50,19 @@ const AddContact = ({ setDisplayContact }) => {
         className='chat__addContact-form'
         onSubmit={handleFormSubmit}
       >
-        
+        <button
+          className='chat__addContact-close-bnt'
+          type='button'
+          onClick={handleDisplay}
+        >
+          <img src={icons.close} alt="" />
+        </button>
 
         <div className='chat__addContact-head'>
           <h2>Kontakt hinzufügen</h2>
-          <button
-            className='chat__addContact-close-bnt'
-            type='button'
-            onClick={handleDisplay}
-          >
-            <img src={icons.close} alt="" />
-          </button>
         </div>
         <label htmlFor="contact-name-input">
-          Benutzername des Kontakts:
+          Benutzername
         </label>
         <input 
           id='contact-name-input'

@@ -1,39 +1,28 @@
+import cookieParser from "cookie-parser"
+import bodyParser from "body-parser"
 import express from "express"
 import cors from "cors"
-import bodyParser from "body-parser"
-import cookieParser from "cookie-parser"
-import session from "express-session"
 import http from "http"
 import { Server } from "socket.io"
 
 import SERVER_CONFIG from "./app/config/server.conf.js"
-import { validateToken } from "./app/helpers/JWT.js"
+import validateToken from "./app/middleware/auth/validateToken.js"
 import { userRoute } from "./app/routes/User.routes.js"
 
+import {
+    startingServer,
+    corsOptions
+} from "./app/config/server.conf.js"
+import {
+    socketConf
+} from "./app/config/socket.server.conf.js"
+import { registerChatHandler } from "./app/socket-server/handlers/handler.chat.js"
 //creating express app
 const app = express()
 //creating http server
 const server = http.createServer(app)
-//creating ws server on top of http server
-const io = new Server(server, { 
-    cors: { origin: "*" },
-    methods: ["GET", "POST"]
-})
-
-//cors options
-const whitelist = ["http://127.0.0.1:5173"]
-const corsOptions = {
-    credentials: true,
-    exposedHeaders: [
-        "Set-Cookie",
-        "Authorization",
-        "Origin",
-        "X-Requested-With",
-        "Content-Type",
-        "Accept"
-    ],
-    origin: "http://127.0.0.1:5173"
-}
+//creating websocket server on top of http server
+export const io = new Server(server, socketConf)
 
 //middleware
 app.use(cookieParser())
@@ -47,23 +36,13 @@ app.use(bodyParser.urlencoded({
 //routes
 app.use("/user", userRoute)
 
-//index route
-app.get("/", validateToken, (req, res) => {
-    res.send({"message": "hello world"})
-})
-
-/* WEBSOCKETS */
-
+//sockets
 io.on("connection", (socket) => {
-    console.log("user connected")
-
     
 })
-
-//function for logging server start
-const startingServer = (hostname, port) => {
-    console.log(`Server running at http://${hostname}:${port}`)
-}
+io.of("/chat", (socket) => {
+    registerChatHandler(io, socket)
+})
 
 server.listen(
     SERVER_CONFIG.port,

@@ -5,4 +5,5 @@
         radial-gradient(circle at 100% 100%, rgba(0, 0, 255, 0.611), rgba(74, 45, 202, 0.799) 50%); */
     background-size: 100% 100%;
     background-attachment: fixed;
+    background: rgb(255, 255, 255);
 }

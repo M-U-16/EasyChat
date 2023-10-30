@@ -1,0 +1,11 @@
+.header__world-svg {
+    width: 30rem;
+    aspect-ratio: 1;
+    overflow: hidden;
+    display: none;
+}
+/* .header__world-svg .header__world-earth {
+    clip-path: circle(90%);
+    fill: var(--highlight-blue);
+    
+} */

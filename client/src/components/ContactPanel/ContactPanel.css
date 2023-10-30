@@ -55,9 +55,6 @@
     justify-content: center;
     align-items: center;
 }
-.panel__profile-new-messages::before {
-    content: "";
-}
 .panel__status {
     width: 1rem;
     height: 1rem;

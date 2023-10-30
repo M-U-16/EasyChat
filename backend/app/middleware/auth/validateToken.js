@@ -1,3 +1,10 @@
+import {
+    getTokenName,
+    getTokenSecret 
+} from "../../helpers/env.js"
+import jwt from "jsonwebtoken"
+const {sign, verify} = jwt
+
 const validateToken = (req, res, next) => {
 
     const accessToken = req.cookies[getTokenName()]
@@ -10,6 +17,7 @@ const validateToken = (req, res, next) => {
             return next()
         }
     } catch(err) {
+        console.log(err)
         return res.status(400).json({error: err})
     }
 }

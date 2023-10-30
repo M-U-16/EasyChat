@@ -2,42 +2,25 @@
 
 .app__homepage-header {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    /* background:
-        radial-gradient(circle at 0 0, rgb(0, 98, 255) 5%, transparent 40%),
-        radial-gradient(circle at 100% 100%, rgba(0, 0, 0, 0.222) 200px, rgba(0, 17, 255, 0.205) 500px),
-        radial-gradient(circle at 100% 0, rgba(33, 33, 33, 0.353) 60%, transparent),
-        linear-gradient(rgb(32, 32, 32), rgba(0, 0, 0, 0.3)),
-        rgb(20, 20, 20); */
-    background-size: 100% 100%;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    align-content: center;
+    background: 
+        radial-gradient(circle at 50% 50%, rgba(0, 0, 255, 0.292), transparent),
+        rgb(15, 15, 15);
     background-attachment: fixed;
-    /* linear-gradient(rgb(32, 32, 32), rgb(42, 42, 42)); */
 }
 .app__landing-section {
-    max-width: 50rem;
     height: auto;
-    width: 90%;
     padding: 2rem;
+    margin-left: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border-radius: 1rem;
     position: relative;
     z-index: 1;
-    /* background:
-        radial-gradient(circle at 100% 100%, rgba(0, 0, 0, 0.405), rgba(0, 8, 255, 0.579)),
-        radial-gradient(circle at 0 0, rgb(58, 58, 255) 60%, rgba(43, 43, 255, 0.792) 80%) */
-        /* radial-gradient(circle at 0, 0, ) */;
-    background-size: 100% 100%;
-    box-shadow:
-        inset 0px 0px 5px white,
-        inset 0px 0px 10px rgba(255, 255, 255, 0.781),
-        inset 0px 0px 15px rgba(255, 255, 255, 0.534),
-        inset 0px 0px 20px rgba(255, 255, 255, 0.202);
-    border-bottom-right-radius: 1rem;
+    margin-top: var(--navbar-height);
+    max-width: 40rem;
 }
 .app__landing-section::before {
     content: "";
@@ -54,32 +37,38 @@
 .app__landing-headings {
     padding: 0rem 0rem 0.5rem 0rem;
     line-height: 0.9;
+    position: relative;
 }
 .app__landing-headings h2 {
     font-size: 4rem;
     color: white;
-    /* transform: translateY(30px); */
 }
 .app__landing-headings h1 {
-    /* transform: translateY(-20px); */
+    position: relative;
     font-size: 5rem;
     color: var(--highlight-blue);
-    /* filter: drop-shadow(0px 0px 3px rgba(0, 140, 255, 0.527)); */
+}
+.app__landing-headings span {
+    position: relative;
+}
+.app__chat-icon {
+    position: absolute;
+    width: 4rem;
+    top: 0;
+    rotate: 20deg;
 }
 .app__landing-section p {
     font-size: 1.5rem;
-    /* text-align: justify; */
     transform: translateY(-20px);
-    width: 90%;
+    width: 100%;
+    text-wrap: balance;
     font-family: Verdana;
     padding: 1rem 0rem;
     margin-top: 1rem;
     border-radius: 1rem;
     border-bottom-right-radius: 0;
     text-align: start;
-    /* box-shadow:
-        inset 0px 0px 3px rgba(156, 156, 156, 0.458),
-        inset 2px 2px 5px rgba(255, 255, 255, 0.273); */
+    display: inline-block;
 }
 .app__cta-container {
     display: flex;
