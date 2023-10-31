@@ -40,9 +40,7 @@ app.use("/user", userRoute)
 io.on("connection", (socket) => {
     
 })
-io.of("/chat", (socket) => {
-    registerChatHandler(io, socket)
-})
+io.of("/chat", (socket) => registerChatHandler(io, socket))
 
 server.listen(
     SERVER_CONFIG.port,

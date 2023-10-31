@@ -5,7 +5,7 @@
     position: relative;
 }
 .chat__panel-conatainer::-webkit-scrollbar{
-    width: 5px;
+    width: 0px;
 }
 .chat__panel-conatainer::-webkit-scrollbar-track {
     background: var(--secondary-blue);
