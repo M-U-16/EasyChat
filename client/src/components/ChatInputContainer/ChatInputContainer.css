@@ -1,11 +1,12 @@
 .chat__input-container {
-    height: 7rem;
+    height: 6rem;
     width: 100%;
-    position: absolute;
-    bottom: 0;
+    /* position: absolute;
+    bottom: 0; */
     display: flex;
     justify-content: center;
     align-items: center;
+    background: var(--primary-blue);
 }
 .chat__input-wrapper {
     width: 90%;

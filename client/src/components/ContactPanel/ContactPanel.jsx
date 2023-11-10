@@ -1,16 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import "./ContactPanel.css"
 import { images } from '../../constants'
 import { socket } from '../../SOCKET/socket'
+import { messagesContext } from '../../pages/Chat/Chat'
 
 const ContactPanel = (props) => {
 
     const contact = props.contact
-    
+    const { messages, setMessages } = useContext(messagesContext)
+
     const joinChat = () => {
-        console.log(contact.room_id)
-        props.setCurrentChat(contact.room_id)
-        socket.emit(":join_room", {room_id: contact.room_id})
+        if (contact.room_id != props.currentChat) {
+            socket.emit(":join_room", {room_id: contact.room_id}, (response) => {
+                setMessages(response.messages)
+                console.log(messages)
+            })
+            props.setCurrentChat(contact.room_id)
+        }
     }
 
     return (

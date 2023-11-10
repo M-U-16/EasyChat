@@ -1,4 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import
+React, 
+{ 
+  useEffect,
+  useState,
+  createContext
+} from 'react'
+
 import { Navigate } from 'react-router-dom'
 
 import "./Chat.css"
@@ -9,9 +16,12 @@ import { backendConfig } from '../../constants'
 import { checkLoggedIn } from '../../SERVER/checkAuth'
 import ChatPanel from '../../components/ChatPanel/ChatPanel'
 
+export const messagesContext = createContext()
+
 const Chat = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(true)
+  const [messages, setMessages] = useState(null)
 
   useEffect(() => {
     checkLoggedIn(
@@ -29,8 +39,10 @@ const Chat = () => {
     <>
       <Navbar />
       <div className='app__chat-container'>
-        <SidePanel />
-        <ChatPanel />
+        <messagesContext.Provider value={{messages, setMessages}}>
+          <SidePanel />
+          <ChatPanel />
+        </messagesContext.Provider>
       </div>
       {!isLoggedIn && <Navigate to={"/login"} replace={true} />}
     </>

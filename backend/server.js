@@ -6,7 +6,7 @@ import http from "http"
 import { Server } from "socket.io"
 
 import SERVER_CONFIG from "./app/config/server.conf.js"
-import validateToken from "./app/middleware/auth/validateToken.js"
+import { auth } from "./app/socket-server/middleware/socket-auth.js"
 import { userRoute } from "./app/routes/User.routes.js"
 
 import {
@@ -37,8 +37,10 @@ app.use(bodyParser.urlencoded({
 app.use("/user", userRoute)
 
 //sockets
-io.on("connection", (socket) => {
-    
+//io.of("/chat").use((socket, next) => auth(socket, next))
+io.of("/chat").use((socket, next) => {
+    console.log(socket.handshake.headers.cookie)
+    next()
 })
 io.of("/chat", (socket) => registerChatHandler(io, socket))
 

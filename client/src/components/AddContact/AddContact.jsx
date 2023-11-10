@@ -4,26 +4,25 @@ import { backendConfig, icons } from "../../constants"
 import {contactsContext} from "../SidePanel/SidePanel"
 
 const AddContact = ({ setDisplayContact }) => {
-  const handleDisplay = () => setDisplayContact(false)
   const [contactName, setContactName] = useState(null)
   const refreshChat = useContext(contactsContext)
 
+  const handleContact = (e) => setContactName(e.target.value)
+  const removeDisplay = () => setDisplayContact(false)
+  
   const handleFormSubmit = (e) => {
     e.preventDefault()
     const xhttp = new XMLHttpRequest()
 
     try {
-      const data = { contactName: contactName }
 
       xhttp.withCredentials = true
       xhttp.onreadystatechange = () => {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
-          //console.log(JSON.parse(xhttp.responseText))
           const res = JSON.parse(xhttp.responseText)
-          console.log(res)
           if (!res.error) {
-            handleDisplay()
             refreshChat()
+            removeDisplay()
           }
         }
       }
@@ -40,9 +39,6 @@ const AddContact = ({ setDisplayContact }) => {
     }
     
   }
-  const handleContact = (e) => {
-    setContactName(e.target.value)
-  }
 
   return (
     <div className='chat__addContact-overlay'>
@@ -53,7 +49,7 @@ const AddContact = ({ setDisplayContact }) => {
         <button
           className='chat__addContact-close-bnt'
           type='button'
-          onClick={handleDisplay}
+          onClick={removeDisplay}
         >
           <img src={icons.close} alt="" />
         </button>

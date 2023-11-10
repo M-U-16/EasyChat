@@ -4,7 +4,6 @@
     --side-panel-width: 20rem;
 
     width: var(--side-panel-width);
-    max-width: 500px;
     height: calc(100vh - var(--navbar-height));
     background: var(--secondary-blue);
     background: linear-gradient(45deg, var(--secondary-blue), rgb(16, 16, 16));

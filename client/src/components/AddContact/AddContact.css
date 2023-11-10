@@ -61,7 +61,7 @@
     font-size: 1rem;
     background: rgb(0, 166, 255);
     display: block;
-    width: 50%;
+    /* width: 50%; */
     text-align: center;
     border-radius: 5px 5px 0 0;
 }
@@ -70,7 +70,7 @@
     font-size: 1.3rem;
     outline: none;
     border: none;
-    border-radius: 0px 10px 10px 10px;
+    border-radius: 0px 0px 10px 10px;
 }
 .chat__addContact-submit {
     width: 100%;

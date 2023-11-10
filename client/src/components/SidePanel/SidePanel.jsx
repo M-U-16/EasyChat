@@ -1,7 +1,8 @@
 import React, {
   createContext,
   useState,
-  useEffect
+  useEffect,
+  useRef
 } from 'react'
 
 import "./SidePanel.css"
@@ -21,6 +22,8 @@ const SidePanel = () => {
   const [loadError, setLoadError] = useState(false)
   const [currentChat, setCurrentChat] = useState(null)
   const [prevChat, setPrevChat] = useState(null)
+
+  const contactsContainer = useRef()
   
   const getUserContacts = async() => {
     try {
@@ -42,8 +45,9 @@ const SidePanel = () => {
       if (!jsonRes.error) {
         const arr = await jsonRes.contacts.map(contact => contact)
         if (arr) setIsLoading(false)
-        if (arr.length < 1) setLoadError(true)
+        //if (arr.length < 1) setLoadError(true)
         setContacts(arr)
+        setCurrentChat(arr[0].room_id)
       } else {
         setLoadError(true)
         setIsLoading(false)
@@ -55,38 +59,41 @@ const SidePanel = () => {
       setLoadError(true)
     }
   }
-  
-  const refreshChat = () => {
-    setTimeout(() => {
-      getUserContacts()
-    }, 50);
-  }
 
   useEffect(() => {
     getUserContacts()
   },[])
 
   return (
-    <nav className='app__chat-sidepanel loading'>
-      <contactsContext.Provider value={refreshChat}>
+    <nav className='app__chat-sidepanel'>
+      <contactsContext.Provider value={getUserContacts}>
         <ControlPanel />
       </contactsContext.Provider>
-      { 
-        contacts &&
-        contacts.map((contact, index) => 
-          <ContactPanel
-            contact={contact}
-            key={index}
-            setCurrentChat={setCurrentChat}
-            currentChat={currentChat}
-            prevChat={prevChat}
-            setPrevChat={setPrevChat}
-          />
-        )
-      }
+      <div
+        className='chat__contacts-container'
+        id='chat-contacts-container'
+        ref={contactsContainer}
+      >
+        { 
+          contacts &&
+          contacts.map((contact, index) => 
+            <ContactPanel
+              contact={contact}
+              key={index}
+              setCurrentChat={setCurrentChat}
+              currentChat={currentChat}
+              prevChat={prevChat}
+              setPrevChat={setPrevChat}
+            />
+          )
+        }
+      </div>
       {
         loadError &&
-        <button className='app__chat-refresh-btn' onClick={refreshChat}>
+        <button
+          className='app__chat-refresh-btn'
+          onClick={getUserContacts}
+        >
           <img src={icons.refreshIcon} />
         </button>
       }

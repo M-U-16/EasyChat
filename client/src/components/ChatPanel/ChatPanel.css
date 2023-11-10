@@ -3,6 +3,8 @@
     overflow-x: hidden;
     overflow-y: scroll;
     position: relative;
+    display: grid;
+    grid-template-rows: 1fr auto;
 }
 .chat__panel-conatainer::-webkit-scrollbar{
     width: 0px;

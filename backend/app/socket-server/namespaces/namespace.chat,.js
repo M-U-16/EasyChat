@@ -1,6 +1,5 @@
-const chat = (io) => {
-    const chatNameSpace = io.of("/chat")
-    chatNameSpace.on("connection", (socket) => {
-        
-    })
-}
+import { io } from "../../../server"
+
+const chatNamespace = io.of("/chat")
+
+export default chatNamespace

@@ -6,12 +6,7 @@ import AddContact from '../AddContact/AddContact'
 
 const ControlPanel = () => {
   const [displayContact, setDisplayContact] = useState(false)
-  const [domIsReady, setDomIsReady] = useState(false)
   const handleContactDisplay = () => setDisplayContact(true)
-
-  useEffect(() => {
-    setDomIsReady(true)
-  }, [])
 
   return (
     <div className='chat__side-control-container'>
@@ -21,7 +16,6 @@ const ControlPanel = () => {
         onClick={handleContactDisplay}
       >+</button>
       <div className="search-container">
-        {/* <input type="text" /> */}
         <button title='Nach Kontakt Suchen' className='chat__search-btn'>
           <img src={icons.searchIcon} />
         </button>
@@ -29,7 +23,6 @@ const ControlPanel = () => {
 
       {
         displayContact &&
-        domIsReady &&
         createPortal(
           <AddContact setDisplayContact={setDisplayContact}/>,
           document.getElementById("chat-container")

@@ -109,9 +109,23 @@
 }
 
 /* HOVER */
-.app__chat-panel:hover {
-    border-left: 1px solid var(--highlight-blue);
-    background: #0F0E16;
+.app__chat-panel::after {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 60%;
+    top: 50%;
+    right: calc(100% - 2px);
+    background: var(--highlight-blue);
+    transform: translateY(-50%);
+    border-radius: 0 50% 50% 0;
+    opacity: 0;
+    transition: 0.3s ease;
+}
+.app__chat-panel:hover::after {
+    /* border-left: 1px solid var(--highlight-blue);
+    background: #0F0E16; */
+    opacity: 1;
 }
 .app__chat-panel:hover .app__panel-lastmessage-container h2 {
     color: var(--highlight-blue);
