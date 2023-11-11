@@ -45,6 +45,7 @@ const SidePanel = () => {
       if (!jsonRes.error) {
         const arr = await jsonRes.contacts.map(contact => contact)
         if (arr) setIsLoading(false)
+        console.log(arr)
         //if (arr.length < 1) setLoadError(true)
         setContacts(arr)
         setCurrentChat(arr[0].room_id)

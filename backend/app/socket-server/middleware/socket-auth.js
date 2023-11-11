@@ -3,7 +3,10 @@ const { verify } = jwt
 
 export const auth = (socket, next) => {
     const COOKIE_REGEX = /=(.*)/
-    const TOKEN = socket.handshake.headers.cookie.match(COOKIE_REGEX)[1]
+    const cookies = socket.handshake.headers.cookie
+    if (!cookies) return next(new Error("NOT_AUTHENTICATED"))
+
+    const TOKEN = cookies.match(COOKIE_REGEX)[1]
     
     if (!TOKEN) return next(new Error("NOT_AUTHENTICATED"))
     try {

@@ -6,7 +6,7 @@ React,
   createContext
 } from 'react'
 
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import "./Chat.css"
 import { Navbar } from '../../components'
@@ -23,6 +23,11 @@ const Chat = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true)
   const [messages, setMessages] = useState(null)
 
+  const navigator = useNavigate()
+  useEffect(() => {
+    if (!isLoggedIn) navigator("/")
+  }, [isLoggedIn])
+
   useEffect(() => {
     checkLoggedIn(
       backendConfig.user.isLoggedIn.url,
@@ -32,6 +37,7 @@ const Chat = () => {
         if (!message.redirect) return socket.connect()
       }
     )
+
     return () => { if (isLoggedIn) socket.disconnect() }
   }, [])
 
@@ -44,7 +50,7 @@ const Chat = () => {
           <ChatPanel />
         </messagesContext.Provider>
       </div>
-      {!isLoggedIn && <Navigate to={"/login"} replace={true} />}
+      {/* {!isLoggedIn && <Navigate to={"/login"} replace={true} />} */}
     </>
   )
 }
