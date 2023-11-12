@@ -35,11 +35,9 @@ const Login = () => {
   }
 
   const handleResponse = (res) => {
-    console.log(res)
     setIsLoading(false)
     if (!res.error) setLoginSuccess(true)
     if (res.error) {
-      console.log(isLoading)
       if (res.message === "EMAIL_DOES_NOT_EXISTS") setEmailError(true)
       if (res.message === "PASSWORD_IS_INCORECT") setPasswordError(true)
     }
@@ -77,17 +75,19 @@ const Login = () => {
       <div className='app__login-wrapper flex_center-full_height'>
         <form onSubmit={handleSubmit} className='app__login-form app__form'>
           <h1>Anmelden</h1>
-          <div className="app__email-wrapper">
+          <div className="app__input-wrapper">
             {emailError && <p>Email existiert nicht!</p>}
-            <input 
-              required type="email" placeholder='Email' name='email'
-              onChange={handleInput}
+            <label id='form-label' htmlFor="login-email-input">Email</label>
+            <input
+              required type="email" name='email'
+              onChange={handleInput} id="login-email-input"
             />
           </div>
-          <div className='app__password-wrapper'>
+          <div className='app__input-wrapper'>
+            <label id='form-label' htmlFor="login-email-input">Passwort</label>
             {passwordError && <p>Passwort ist nicht richtig!</p>}
             <input
-              required type="password" placeholder='Passwort'
+              required type="password"
               onChange={handleInput} name='password'
             />
           </div>

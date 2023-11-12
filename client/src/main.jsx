@@ -10,6 +10,7 @@ import Login from "./pages/Login/Login"
 import Errorpage from './pages/Errorpage/Errorpage'
 import Register from './pages/Register/Register'
 import Chat from './pages/Chat/Chat.jsx'
+import PrivateRoute from './pages/PrivateRoute/PrivateRoute.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -20,7 +21,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/" element={<App />} />
         <Route path="login" element={<Login />} />
         <Route path="registrieren" element={<Register />}/>
-        <Route path="chat" element={<Chat />}/>
+        <Route path="chat" element={<PrivateRoute> <Chat/> </PrivateRoute>}/>
+        <Route path="test" element={<PrivateRoute></PrivateRoute>}/>
         <Route path="*" element={<Errorpage />} />
       </Routes>
     </BrowserRouter>

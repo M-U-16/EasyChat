@@ -7,6 +7,7 @@ import BackButton from "./Buttons/BackButton/BackButton";
 import MenuButton from "./Buttons/MenuButton/MenuButton";
 import HomeButton from "./Buttons/HomeButton/HomeButton";
 import ActionButton from "./Buttons/ActionButton/ActionButton"
+import LoadingSpinner from "./LoadingSpinner/LoadingSpinner"
 
 export {
     LoginButton,
@@ -16,5 +17,6 @@ export {
     RegisterSuccess,
     MenuButton,
     HomeButton,
-    ActionButton
+    ActionButton,
+    LoadingSpinner
 }

@@ -17,9 +17,9 @@ const MenuButton = (props) => {
             className={`app__menu-button${activeClass}`}
             onClick={toggleMenu}
         >
-            <span></span>
-            <span></span>
-            <span></span>
+            <span className='menu__hamburger-layer'></span>
+            <span className='menu__hamburger-layer'></span>
+            <span className='menu__hamburger-layer'></span>
         </button>
     )
 }

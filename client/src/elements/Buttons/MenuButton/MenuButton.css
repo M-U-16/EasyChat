@@ -1,5 +1,4 @@
 .app__menu-button {
-    /* background: rgb(21, 21, 21); */
     background: transparent;
     width: 4rem;
     height: var(--navbar-height);
@@ -9,47 +8,46 @@
     position: relative;
     display: flex;
     justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    --span-rotation-duration: 0.2s;
 }
 .app__menu-button span {
     background: white;
-    width: 60%;
+    display: block;
+    width: 40px;
     height: 3px;
     position: absolute;
     border-radius: 10px;
-    transform-origin: 50% 50%;
     rotate: 0;
-    transition: transform 0.3s ease;
+    transform-origin: center;
 }
 .app__menu-button span:nth-child(1) {
     top: 32%;
 }
 .app__menu-button span:nth-child(2) {
-    transform: translateY(-50%);
+    transform: translateY(-50%) translateX(0);
     top: 50%;
 }
 .app__menu-button span:nth-child(3) {
     bottom: 32%;
 }
-
-
+/* ACTIVE STATES */
 .active-menu-button span:nth-child(1){
-    transition: rotate 0.3s ease;
     top: 50%;
-    rotate: 135deg;
-    transform: translateY(50%);
+    transition: rotate var(--span-rotation-duration) ease;
+    rotate: -45deg;
 }
 .active-menu-button span:nth-child(2) {
     opacity: 0;
-    transform: translateX(4px);
+    transform: translateY(-50%);
 }
 .active-menu-button span:nth-child(3){
-    bottom: 50%;
-    rotate: -135deg;
-    transform: translateY(-50%);
-    transition: rotate 0.3s ease;
+    top: 50%;
+    rotate: 45deg;
+    transition: rotate var(--span-rotation-duration) ease;
 }
-
-/*  */
 .app__link-menu {
     position: absolute;
     top: 100%;

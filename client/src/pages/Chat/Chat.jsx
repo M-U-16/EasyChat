@@ -5,52 +5,69 @@ React,
   useState,
   createContext
 } from 'react'
-
-import { useNavigate } from 'react-router-dom'
-
 import "./Chat.css"
 import { Navbar } from '../../components'
 import { SidePanel } from '../../components'
 import { socket } from '../../SOCKET/socket.js'
-import { backendConfig } from '../../constants'
-import { checkLoggedIn } from '../../SERVER/checkAuth'
 import ChatPanel from '../../components/ChatPanel/ChatPanel'
 
-export const messagesContext = createContext()
+export const chatContext = createContext()
 
 const Chat = () => {
+  const [isConnected, setIsConnected] = useState(socket.connected)
+  const [messages, setMessages] = useState([])
+  const [message, setMessage] = useState("")
 
-  const [isLoggedIn, setIsLoggedIn] = useState(true)
-  const [messages, setMessages] = useState(null)
+  const sendMessage = () => {
+    console.log("sending message")
+    if (message == "") return // check if message is empty
+    socket.emit(":send_message", message, () => { console.log("server got message") })
+    setMessage("")
+  }
 
-  const navigator = useNavigate()
   useEffect(() => {
-    if (!isLoggedIn) navigator("/")
-  }, [isLoggedIn])
+    const connect = () => {
+      socket.connect()
+      setIsConnected(true)
+    }
+    const onDisconnect = () => setIsConnected(false)
+    const onMessage = (message) => {
+      console.log(message)
+      setMessages(prev => [...prev, message])
+      console.log("new message: ", message)
+      //console.log("messages: ", messages)
+    }
 
-  useEffect(() => {
-    checkLoggedIn(
-      backendConfig.user.isLoggedIn.url,
-      backendConfig.user.isLoggedIn.method,
-      (message) => {
-        if (message.redirect) return setIsLoggedIn(false)
-        if (!message.redirect) return socket.connect()
+    socket.on("connect", () => { console.log("hello") })
+    socket.on("disconnect", onDisconnect)
+    socket.on("new_message", onMessage)
+    //connecting to socket io server
+    connect()
+    //clean up function
+    return () => {
+      
+      if (socket.connected) {
+        //clearing connection
+        socket.off("connect", () => { console.log("hello") })
+        socket.off("disconnect", onDisconnect)
+        socket.off("new_message", onMessage)
+        //disconnecting from socket io server
+        socket.disconnect()
       }
-    )
-
-    return () => { if (isLoggedIn) socket.disconnect() }
+    }
   }, [])
 
   return (
     <>
       <Navbar />
       <div className='app__chat-container'>
-        <messagesContext.Provider value={{messages, setMessages}}>
+        <chatContext.Provider value={{
+          messages, setMessages, setMessage, sendMessage
+        }}>
           <SidePanel />
           <ChatPanel />
-        </messagesContext.Provider>
+        </chatContext.Provider>
       </div>
-      {/* {!isLoggedIn && <Navigate to={"/login"} replace={true} />} */}
     </>
   )
 }

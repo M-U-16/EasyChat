@@ -43,3 +43,13 @@ body {
   -ms-user-select: none;
   user-select: none;
 }
+.no-scroll {
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;  /* Firefox */
+}
+.no-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0 !important;
+  -ms-overflow-style: none;
+}

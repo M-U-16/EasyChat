@@ -43,9 +43,7 @@ const RegisterForm = (props) => {
         const resJson = await res.json()
         
         //shows result of registration
-        console.log(resJson)
         if (resJson) {
-          console.log(isLoading)
           setIsLoading(false)
           if (!resJson.error) props.setShowRegister(false)
           if (resJson.message == "USER_ALREADY_EXISTS") {}
@@ -58,22 +56,39 @@ const RegisterForm = (props) => {
   return (
     <form className='app__register-form app__form'  onSubmit={handleSubmit}>
       <h1>Registrieren</h1>
-      <div className='app__register-input-wrapper'>
-        <input 
-          required name="email" type="email" placeholder='Email'
+      <div className='app__input-wrapper'>
+        <label htmlFor="register-username-input">
+          Email
+        </label>
+        <input
+          required
+          name="email"
+          type="email"
           onChange={handleInput}
         />
       </div>
-      <div className='app__register-input-wrapper'>
+      <div className='app__input-wrapper'>
+        <label htmlFor="register-username-input">
+          Benutzername
+        </label>
         <input 
-          required name="username" type="text"
-          placeholder='Benutzername' onChange={handleInput}
+          id='register-username-input'
+          required
+          name="username"
+          type="text"
+          onChange={handleInput}
         />
       </div>
-      <div className='app__register-input-wrapper'>
+      <div className='app__input-wrapper'>
+        <label htmlFor="register-username-input">
+          Passwort
+        </label>
         <input
-          required name="password" type="password"
-          placeholder='Passwort' onChange={handleInput}
+          id='register-password-input'
+          required
+          name="password"
+          type="password"
+          onChange={handleInput}
         />
       </div>
       <SubmitButton isLoading={isLoading}/>

@@ -15,5 +15,4 @@ export const checkLoggedIn = (
   xhttp.open(method, endpoint, true)
   xhttp.setRequestHeader("Content-type", "application/json")
   xhttp.send(data)
-  
 }

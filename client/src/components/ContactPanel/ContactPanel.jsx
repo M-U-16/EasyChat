@@ -2,12 +2,12 @@ import React, { useContext } from 'react'
 import "./ContactPanel.css"
 import { images } from '../../constants'
 import { socket } from '../../SOCKET/socket'
-import { messagesContext } from '../../pages/Chat/Chat'
+import { chatContext } from '../../pages/Chat/Chat'
 
 const ContactPanel = (props) => {
 
     const contact = props.contact
-    const { messages, setMessages } = useContext(messagesContext)
+    const { messages, setMessages } = useContext(chatContext)
 
     const joinChat = () => {
         if (contact.room_id != props.currentChat) {

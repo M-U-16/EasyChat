@@ -1,21 +1,26 @@
-import React, { useState, useRef } from 'react'
+import React, { useRef, useContext, useEffect } from 'react'
 import "./ChatInputContainer.css"
 import { icons } from '../../constants'
 import { socket } from '../../SOCKET/socket'
+import { chatContext } from '../../pages/Chat/Chat'
+
 
 const ChatInputContainer = () => {
 
   const chatInput = useRef()
-  const [message, setMessage] = useState("")
-  const updateMessage = () => setMessage(chatInput.current.value)
-
+  const chatButton = useRef()
+  const chat = useContext(chatContext)
+  const updateMessage = () => chat.setMessage(chatInput.current.value)
+  
   const sendMessage = () => {
-    if (message == "") return // check if message is not empty
-    socket.emit(":send_message", message)
-    console.log(message)
-    setMessage("")
+    console.log("button click")
     chatInput.current.value = ""
+    chat.sendMessage()
   }
+
+  useEffect(() => {
+    
+  }, [])
 
   return (
     <div className='chat__input-container'>
@@ -27,7 +32,11 @@ const ChatInputContainer = () => {
           ref={chatInput}
           placeholder='Nachricht Senden...'
         />
-        <button className='chat__input-send-btn' onClick={sendMessage}>
+        <button
+          className='chat__input-send-btn'
+          ref={chatButton}
+          onClick={sendMessage}
+        >
           <img src={icons.sendIcon} />
         </button>
       </div>

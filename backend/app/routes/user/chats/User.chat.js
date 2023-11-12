@@ -8,5 +8,4 @@ const router = Router()
 router.get("/", getContacts)
 router.post("/new-chat", createChat)
 
-
 export { router as chatRouter }

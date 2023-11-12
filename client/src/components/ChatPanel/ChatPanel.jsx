@@ -5,7 +5,10 @@ import MessagesContainer from '../MessagesContainer/MessagesContainer'
 
 const ChatPanel = () => {
   return (
-    <div className='chat__panel-conatainer' id='chat-container'>
+    <div
+      className='chat__panel-conatainer no-scroll'
+      id='chat-container'
+    >
       <MessagesContainer />
       <ChatInputContainer />
     </div>

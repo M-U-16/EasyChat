@@ -24,7 +24,10 @@ const ControlPanel = () => {
       {
         displayContact &&
         createPortal(
-          <AddContact setDisplayContact={setDisplayContact}/>,
+          <AddContact
+            setDisplayContact={setDisplayContact}
+            displayContact={displayContact}
+          />,
           document.getElementById("chat-container")
         )
       }

@@ -21,14 +21,17 @@ export const registerChatHandler = (io, socket) => {
         //joins the socket to the room for realtime chatting
         joinRoom(
             socket,
-            room,
-            currentRoom,
+            room.toString(), 
+            currentRoom != undefined ? currentRoom.toString() : currentRoom,
             user_id,
             (room) => currentRoom = room
         )
         //returns the messages of the room stored in messages table
         callback(await getChat(room, user_id))
     })
-    socket.on(":send_message", sendMessageEvent)
+    socket.on(":send_message", (data, callback) => {
+        console.log(data)
+        io.of("/chat").to(currentRoom.toString()).emit("new_message", data)
+    })
     socket.on("disconnect", () => console.log("user disconnected"))
 }

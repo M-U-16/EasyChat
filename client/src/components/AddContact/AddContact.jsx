@@ -1,21 +1,46 @@
-import React, { useState, useContext } from 'react'
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef
+} from 'react'
 import "./AddContact.css"
 import { backendConfig, icons } from "../../constants"
 import {contactsContext} from "../SidePanel/SidePanel"
 
-const AddContact = ({ setDisplayContact }) => {
+const AddContact = ({displayContact, setDisplayContact }) => {
   const [contactName, setContactName] = useState(null)
   const refreshChat = useContext(contactsContext)
+  const timeoutRef = useRef(null)
+  const form = useRef(null)
+  const overlay = useRef(null)
 
+  useEffect(() => {
+    //clears timeout on unmount
+    return () => clearTimeout(timeoutRef.current)
+  }, []);
+  //animates out the overlay and form
+  const animateOut = () => {
+    form.current.classList.add("slide-out")
+    overlay.current.classList.add("fade-out")
+  }
+  //handles the contact input on the form
   const handleContact = (e) => setContactName(e.target.value)
-  const removeDisplay = () => setDisplayContact(false)
+  const removeDisplay = () => {
+    animateOut()
+
+    timeoutRef.current = setTimeout(
+      () =>  {
+        setDisplayContact(false)
+      }, 200
+    )
+  
+  }
   
   const handleFormSubmit = (e) => {
     e.preventDefault()
     const xhttp = new XMLHttpRequest()
-
     try {
-
       xhttp.withCredentials = true
       xhttp.onreadystatechange = () => {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
@@ -37,14 +62,17 @@ const AddContact = ({ setDisplayContact }) => {
     } catch(err) {
       console.log(err)
     }
-    
   }
 
   return (
-    <div className='chat__addContact-overlay'>
+    <div
+      className='chat__addContact-overlay'
+      ref={overlay}
+    >
       <form
         className='chat__addContact-form'
         onSubmit={handleFormSubmit}
+        ref={form}
       >
         <button
           className='chat__addContact-close-bnt'
@@ -57,15 +85,17 @@ const AddContact = ({ setDisplayContact }) => {
         <div className='chat__addContact-head'>
           <h2>Kontakt hinzufügen</h2>
         </div>
-        <label htmlFor="contact-name-input">
-          Benutzername
-        </label>
-        <input 
-          id='contact-name-input'
-          name="username"
-          type="text"
-          onChange={handleContact}
-        />
+        <div className="addContact__input-container">
+          <label className="no-select" htmlFor="contact-name-input">
+            Benutzername
+          </label>
+          <input 
+            id='contact-name-input'
+            name="username"
+            type="text"
+            onChange={handleContact}
+          />
+        </div>
         <button className='chat__addContact-submit' type='submit'>Hinzufügen</button>
       </form>
     </div>

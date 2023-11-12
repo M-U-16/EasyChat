@@ -31,7 +31,7 @@ const login = (req, res) => {
                             token,
                             {
                                 maxAge:36000000,
-                                sameSite:"none",
+                                sameSite: "none",
                                 secure: true,
                                 httpOnly: true
                             }

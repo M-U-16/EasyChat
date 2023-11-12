@@ -1,36 +1,26 @@
-.app__password-wrapper,
-.app__email-wrapper,
-.app__password-wrapper input,
-.app__email-wrapper input{
+.app__input-wrapper,
+.app__input-wrapper input{
     width: 100%;
     position: relative;
     margin: 0;
 }
-.app__password-wrapper,
-.app__email-wrapper {
+.app__input-wrapper {
     margin: 1rem 0;
 }
-
-.app__password-wrapper p,
-.app__email-wrapper p {
+.app__input-wrapper p {
     position: absolute;
     top: 100%;
     color: rgb(200, 0, 0);
 }
-
 .app__login-register {
     display: flex;
-    flex-direction: column;
-    margin: 1rem 1rem;
+    flex-direction: row;
+    margin: 1rem 0rem;
 }
-.app__login-register > * {
-    display: inline-block;
+.app__login-register :nth-child(2) {
+    margin-left: 0.5rem;
 }
 .app__login-register .link__to-register {
     color: var(--highlight-blue);
     text-decoration: underline;
-}
-.app__login-register p,
-.app__login-register a {
-    text-align: center;
 }

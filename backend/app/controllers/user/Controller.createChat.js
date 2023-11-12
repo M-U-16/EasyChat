@@ -1,10 +1,9 @@
 import connection from "../../database/db.js"
-import { encryptToken } from "../../helpers/JWT.js"
-import { getTokenName } from "../../helpers/env.js"
-import { format } from "mysql2"
 import { getQueryResults } from "../../database/db-actions/dbQueryResult.js"
 
 const createChat = async(req, res) => {
+
+    console.log("hello")
 
     const isPrivate = true
     const user_id = req.user_id
@@ -54,7 +53,7 @@ const createChat = async(req, res) => {
             }
             return res.json({error: false, message: null})
         } else {
-           return res.json({error: true, message: "error"})
+            return res.json({error: true, message: "error"})
         }
     } else {
         return res.json({error: true, message: "ROOM_ALREADY_EXISTS"})
