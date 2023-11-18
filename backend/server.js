@@ -38,9 +38,9 @@ app.use(bodyParser.urlencoded({
 app.use("/api", apiRouter) // api router
 
 //sockets
-io.on("connection", (socket) => {
+/* io.on("connection", (socket) => {
     console.log(socket.handshake.headers.cookie)
-})
+}) */
 io.of("/chat-server").use(auth)
 io.of("/chat-server").on("connection", () => console.log("user connected"))
 io.of("/chat-server", (socket) => registerChatHandler(io, socket))

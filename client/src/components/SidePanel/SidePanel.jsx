@@ -27,7 +27,7 @@ const SidePanel = () => {
     try {
       setLoadError(false)
       setIsLoading(true)
-      const res = await fetch("backend/api/user/chats",
+      const res = await fetch(backendConfig.user.contacts.url,
         {
           method: backendConfig.user.contacts.method,
           mode: "cors",

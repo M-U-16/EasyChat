@@ -53,7 +53,7 @@ const AddContact = ({displayContact, setDisplayContact }) => {
       }
       xhttp.open(
         backendConfig.user.newChat.method, //method
-        `http://${backendConfig.user.newChat.url}`, //url
+        `${backendConfig.user.newChat.url}`, //url
         true //async = true
       )
       xhttp.setRequestHeader("Content-type", "application/json")
