@@ -1,4 +1,3 @@
-import logo from "../assets/icons/logo2.png"
 import loginIcon from "../assets/icons/arrow-right.svg"
 import sendIcon from "../assets/icons/send.svg"
 import arrowRight from "../assets/icons/arrow-right.svg"
@@ -8,7 +7,6 @@ import profileIcon from "../assets/icons/person-profile.svg"
 import testProfile from "../assets/icons/test-profile.jpg"
 
 export default {
-    logo,
     loginIcon,
     sendIcon,
     arrowRight,

@@ -17,28 +17,41 @@ const Chat = () => {
   const [isConnected, setIsConnected] = useState(socket.connected)
   const [messages, setMessages] = useState([])
   const [message, setMessage] = useState("")
+  const [currentChat, setCurrentChat] = useState(null)
+  const [prevChat, setPrevChat] = useState(null)
 
   const sendMessage = () => {
-    console.log("sending message")
     if (message == "") return // check if message is empty
-    socket.emit(":send_message", message, () => { console.log("server got message") })
+    console.log(new Date().toLocaleString())
+    socket.emit(":send_message",
+      {content: message, date: new Date().toLocaleString()}, //message object with date
+      () => { console.log("server got message") //callback
+    })
     setMessage("")
   }
 
+  const joinChat = (room_id) => {
+    if (currentChat != prevChat) {
+      socket.emit(":join_room", {room_id: room_id}, (response) => {
+        setMessages(response.messages)
+        setPrevChat(room_id)
+      })
+    }
+  }
+
+  useEffect(() => {
+    if (currentChat != null) joinChat(currentChat)
+  }, [currentChat])
+
   useEffect(() => {
     const connect = () => {
+      console.log("connecting")
       socket.connect()
       setIsConnected(true)
     }
     const onDisconnect = () => setIsConnected(false)
-    const onMessage = (message) => {
-      console.log(message)
-      setMessages(prev => [...prev, message])
-      console.log("new message: ", message)
-      //console.log("messages: ", messages)
-    }
-
-    socket.on("connect", () => { console.log("hello") })
+    const onMessage = (message) => { console.log(message) }
+    //socket.on("connect", () => { console.log("hello") })
     socket.on("disconnect", onDisconnect)
     socket.on("new_message", onMessage)
     //connecting to socket io server
@@ -62,7 +75,13 @@ const Chat = () => {
       <Navbar />
       <div className='app__chat-container'>
         <chatContext.Provider value={{
-          messages, setMessages, setMessage, sendMessage
+          messages,
+          setMessages,
+          setMessage,
+          sendMessage,
+          setCurrentChat,
+          currentChat,
+          joinChat
         }}>
           <SidePanel />
           <ChatPanel />

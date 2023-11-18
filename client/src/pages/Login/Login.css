@@ -15,12 +15,10 @@
 .app__login-register {
     display: flex;
     flex-direction: row;
-    margin: 1rem 0rem;
-}
-.app__login-register :nth-child(2) {
-    margin-left: 0.5rem;
+    margin: 0rem 0rem;
 }
 .app__login-register .link__to-register {
+    margin-left: 0.5rem;
     color: var(--highlight-blue);
     text-decoration: underline;
 }

@@ -7,6 +7,8 @@ import { Link, Navigate } from 'react-router-dom'
 import { useState } from 'react'
 import { backendConfig } from '../../constants'
 
+console.log(import.meta.env.VITE_BACKEND_URL)
+
 const Login = () => {
 
   const [formData, setFormData] = useState(null)
@@ -45,7 +47,6 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const url = `http://${backendConfig.user.login.url}`
     const headers = {
       "Accept": "application/json",
       "Content-Type": "application/json",
@@ -55,7 +56,7 @@ const Login = () => {
       resetErrors()
       try {
         setIsLoading(true)
-
+        const url = backendConfig.user.login.url
         const res = await fetch(url, {
           method: backendConfig.user.login.method,
           headers: headers,
@@ -94,7 +95,7 @@ const Login = () => {
           
           <SubmitButton isLoading={isLoading} />
           <div className="app__login-register">
-            <p>Haben Sie noch keinen Account?</p>
+            <p>Haben Sie noch keinen Account? |</p>
             <Link to={`/registrieren`} className='link__to-register'>Registrieren</Link>
           </div>
         </form>

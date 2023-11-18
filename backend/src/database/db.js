@@ -1,4 +1,4 @@
-import dbConf from "../config/db.conf.js"
+import dbConf from "../../config/db.conf.js"
 import mysql2 from "mysql2"
 
 const connection = mysql2.createConnection(dbConf)

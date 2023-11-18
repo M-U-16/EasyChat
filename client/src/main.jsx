@@ -3,22 +3,22 @@ import ReactDOM from 'react-dom/client'
 import {
   BrowserRouter,
   Routes,
-  Route
+  Route,
 } from "react-router-dom"
-import App from './App/App'
+
 import Login from "./pages/Login/Login"
 import Errorpage from './pages/Errorpage/Errorpage'
 import Register from './pages/Register/Register'
 import Chat from './pages/Chat/Chat.jsx'
+import Home from './pages/Home/Home.jsx'
 import PrivateRoute from './pages/PrivateRoute/PrivateRoute.jsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {/* <RouterProvider router={router}/> */}
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
+        <Route path="/" element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="registrieren" element={<Register />}/>
         <Route path="chat" element={<PrivateRoute> <Chat/> </PrivateRoute>}/>

@@ -6,7 +6,7 @@ import "./HomeButton.css"
 const HomeButton = () => {
   return (
     <Link to={`/`} className='app__home-button'>
-        <img src={images.home} />
+      <img src={images.home} />
     </Link>
   )
 }

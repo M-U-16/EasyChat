@@ -12,8 +12,9 @@ const PrivateRoute = (props) => {
 
     useEffect(() => {
         //checks if user is logged in
+        const url = `backend/${backendConfig.user.isLoggedIn.url}`
         checkLoggedIn(
-            backendConfig.user.isLoggedIn.url,
+            "backend/api/user/isLoggedIn",
             backendConfig.user.isLoggedIn.method,
             (result) => { setIsLoggedIn(result) }
         )

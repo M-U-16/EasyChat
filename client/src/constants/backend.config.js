@@ -1,34 +1,29 @@
 export default {
     host: "localhost:3000",
-    test: "hello",
     user: {
-        route: "user",
         register: {
             method: "POST",
-            url: "localhost:3000/user/register"
+            url: "backend/api/user/register"
         },
         login: {
             method: "POST",
-            url: "localhost:3000/user/login"
+            url: "backend/api/user/login"
         },
         contacts: {
             method: "GET",
-            url: "localhost:3000/user/chats"
+            url: "backend/api/user/chats"
         },
         logout: {
             method: "POST",
-            url: "localhost:3000/user/logout"
+            url: "backend/api/user/logout"
         },
         newChat: {
             method: "POST",
-            url: "localhost:3000/user/chats/new-chat"
+            url: "backend/api/user/chats/new-chat"
         },
         isLoggedIn: {
             method: "GET",
-            url: "http://localhost:3000/user/isLoggedIn"
+            url: "backend/api/user/isLoggedIn"
         }
     },
-    chat: {
-        route: "chat"
-    } 
 }

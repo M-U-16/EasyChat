@@ -7,6 +7,7 @@ import {
 
 //login user
 const login = (req, res) => {
+    console.log(req.originalUrl)
     const inputPassword = req.body.password
 
     if (!inputPassword) {

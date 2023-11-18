@@ -1,5 +1,6 @@
 import React from 'react'
 import "./Header.css"
+import { motion } from "framer-motion"
 import { images, icons } from '../../constants'
 import { LoginButton, ActionButton } from '../../elements'
 
@@ -16,10 +17,14 @@ const Header = () => {
             </span>
           </h1>
         </div>
-        <p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1}}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           ... ermöglicht es dir
           mit Freunden und Familie zu Chatten und in Kontakt zu bleiben.
-        </p>
+        </motion.p>
         <div className="app__cta-container">
           <LoginButton className="app__landing-cta" />
           <ActionButton action={"/registrieren"} content={"Registrieren"} />

@@ -7,23 +7,15 @@ import { chatContext } from '../../pages/Chat/Chat'
 const ContactPanel = (props) => {
 
     const contact = props.contact
-    const { messages, setMessages } = useContext(chatContext)
+    const chat = useContext(chatContext)
 
-    const joinChat = () => {
-        if (contact.room_id != props.currentChat) {
-            socket.emit(":join_room", {room_id: contact.room_id}, (response) => {
-                setMessages(response.messages)
-                console.log(messages)
-            })
-            props.setCurrentChat(contact.room_id)
-        }
-    }
+    const join = () => chat.setCurrentChat(contact.room_id)
 
     return (
         <div 
             className='app__chat-panel no-select'
             title={`Chat mit ${contact.username} öffnen`}
-            onClick={joinChat}
+            onClick={join}
         >
             <div className="panel__profile-wrapper">
                 <div className="panel__profile-container">

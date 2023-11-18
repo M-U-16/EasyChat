@@ -13,7 +13,6 @@ const ChatInputContainer = () => {
   const updateMessage = () => chat.setMessage(chatInput.current.value)
   
   const sendMessage = () => {
-    console.log("button click")
     chatInput.current.value = ""
     chat.sendMessage()
   }

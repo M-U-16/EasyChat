@@ -1,11 +1,9 @@
 import { io } from 'socket.io-client'
 
-const URL = "http://localhost:3000/chat"
+const URL ="http://localhost:3000/chat-server"
 export const socket = io(URL, {
     autoConnect: false,
     withCredentials: true,
-    extraHeaders: {
-        "Send-Credentials": ""
-    },
-    transports: ['websocket', 'polling', 'flashsocket']
+    transports: ['websocket', 'polling'],
+    path: "/api/chat"
 })

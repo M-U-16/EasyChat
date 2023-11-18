@@ -27,7 +27,7 @@ const RegisterForm = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     setIsLoading(true)
-    const url = `http://${backendConfig.user.register.url}`
+    const url = `backend/${backendConfig.user.register.url}`
     const headers = {
       "Accept": "application/json",
       "Content-Type": "application/json",

@@ -18,7 +18,6 @@ const Register = () => {
         { showRegister && <RegisterForm setShowRegister={setShowRegister}/> }
         { !showRegister && <RegisterSuccess />}
       </div>
-      {/* <BackButton /> */}
     </>
   )
 }

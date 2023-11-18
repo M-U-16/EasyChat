@@ -3,11 +3,9 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 import "./Menu.css"
-import { 
-  MenuButton,
-  HomeButton
-} from "../../../elements"
-import { backendConfig, icons } from '../../../constants'
+import { MenuButton, HomeButton } from '../../elements'
+import { backendConfig, icons } from '../../constants'
+import MenuContainer from './MenuContainer/MenuContainer'
 
 const Menu = (props) => {
   const showLogin = props.showLogin
@@ -16,7 +14,7 @@ const Menu = (props) => {
 
   const logoutUser = () => {
     fetch(
-      `http://${backendConfig.user.logout.url}`,
+      `backend/${backendConfig.user.logout.url}`,
       { 
         method: backendConfig.user.logout.method,
         credentials: "include",
@@ -52,6 +50,17 @@ const Menu = (props) => {
             Abmelden <img src={icons.logout}/>
           </Link>
         </div>
+        {/* <MenuContainer activeMenu={activeMenu}>
+          <Link className='link' to={"/chat"}>
+            Chat <img className='chatbox' src={icons.chatboxIcon}/>
+          </Link>
+          <Link className='link' to={"/profil"}>
+            Profil <img src={icons.blueProfileIcon}/>
+          </Link>
+          <Link className='link' to={"/"} onClick={logoutUser}>
+            Abmelden <img src={icons.logout}/>
+          </Link>
+        </MenuContainer> */}
       </div>
     </div>
   )

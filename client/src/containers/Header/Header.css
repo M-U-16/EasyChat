@@ -6,9 +6,9 @@
     grid-template-columns: 2fr 1fr;
     place-items: center;
     align-content: center;
-   /*  background: 
+    background: 
         radial-gradient(circle at 50% 50%, rgba(0, 0, 255, 0.292), transparent),
-        rgb(15, 15, 15); */
+        rgb(15, 15, 15);
     background-attachment: fixed;
 }
 .app__landing-section {

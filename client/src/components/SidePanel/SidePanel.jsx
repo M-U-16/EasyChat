@@ -1,5 +1,6 @@
 import React, {
   createContext,
+  useContext,
   useState,
   useEffect,
   useRef
@@ -10,26 +11,23 @@ import { icons } from '../../constants'
 import { backendConfig } from '../../constants'
 import ContactPanel from '../ContactPanel/ContactPanel'
 import ControlPanel from '../ControlPanel/ControlPanel'
+import { chatContext } from '../../pages/Chat/Chat'
 
 export const contactsContext = createContext()
 
 const SidePanel = () => {
   
-  const url = `http://${backendConfig.user.contacts.url}`
+  const chat = useContext(chatContext)
   const [contacts, setContacts] = useState([])
-
   const [isLoading, setIsLoading] = useState(false)
   const [loadError, setLoadError] = useState(false)
-  const [currentChat, setCurrentChat] = useState(null)
-  const [prevChat, setPrevChat] = useState(null)
-
   const contactsContainer = useRef()
   
   const getUserContacts = async() => {
     try {
       setLoadError(false)
       setIsLoading(true)
-      const res = await fetch(url,
+      const res = await fetch("backend/api/user/chats",
         {
           method: backendConfig.user.contacts.method,
           mode: "cors",
@@ -46,7 +44,7 @@ const SidePanel = () => {
         const arr = await jsonRes.contacts.map(contact => contact)
         if (arr) setIsLoading(false)
         setContacts(arr)
-        setCurrentChat(arr[0].room_id)
+        chat.setCurrentChat(arr[0].room_id)
       } else {
         setLoadError(true)
         setIsLoading(false)
@@ -79,15 +77,11 @@ const SidePanel = () => {
             <ContactPanel
               contact={contact}
               key={index}
-              setCurrentChat={setCurrentChat}
-              currentChat={currentChat}
-              prevChat={prevChat}
-              setPrevChat={setPrevChat}
             />
           )
         }
       </div>
-      {
+      {/* {
         loadError &&
         <button
           className='app__chat-refresh-btn'
@@ -95,7 +89,7 @@ const SidePanel = () => {
         >
           <img src={icons.refreshIcon} />
         </button>
-      }
+      } */}
 
       { isLoading && <div className='loading-spinner'></div>}
     </nav>

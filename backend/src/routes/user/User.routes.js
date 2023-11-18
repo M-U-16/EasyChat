@@ -6,11 +6,11 @@ import {
     logoutRoute,
     registerRoute,
     isAuthorized
-} from "./user/auth/index.js"
+} from "./auth/index.js"
 //chat routes
-import { chatRouter } from "./user/chats/User.chat.js";
+import { chatRouter } from "./chats/User.chat.js";
 //middleware for authentication
-import validateToken from "../middleware/auth/validateToken.js";
+import validateToken from "../../middleware/auth/validateToken.js";
 
 //authentication
 router.use("/logout", logoutRoute)
@@ -20,5 +20,4 @@ router.get("/isLoggedIn", isAuthorized)
 //chats
 router.use("/chats", validateToken, chatRouter)
 
-//exportin everything as userRoute
 export { router as userRoute }

@@ -3,28 +3,29 @@ import bodyParser from "body-parser"
 import express from "express"
 import cors from "cors"
 import http from "http"
-import { Server } from "socket.io"
+import { Server as SocketIoServer } from "socket.io"
 
-import SERVER_CONFIG from "./app/config/server.conf.js"
-import { auth } from "./app/socket-server/middleware/socket-auth.js"
-import { userRoute } from "./app/routes/User.routes.js"
+//importing config files
+import { socketConf } from "./config/socket.server.conf.js"
+import { apiRoute as apiRouter } from "./src/routes/api.routes.js"
 
 import {
     startingServer,
     corsOptions
-} from "./app/config/server.conf.js"
-import {
-    socketConf
-} from "./app/config/socket.server.conf.js"
-import { registerChatHandler } from "./app/socket-server/handlers/handler.chat.js"
+} from "./config/server.conf.js"
+
+import { auth } from "./src/websocket/middleware/socket-auth.js"
+import { registerChatHandler } from "./src/websocket/handlers/handler.chat.js"
+
 //creating express app
 const app = express()
 //creating http server
 const server = http.createServer(app)
 //creating websocket server on top of http server
-export const io = new Server(server, socketConf)
+export const io = new SocketIoServer(server, socketConf)
 
-//middleware
+//middleware and configuration
+app.use(express.static("public"))
 app.use(cookieParser())
 app.use(express.json())
 app.use(cors(corsOptions))
@@ -34,18 +35,25 @@ app.use(bodyParser.urlencoded({
 }))
 
 //routes
-app.use("/user", userRoute)
+app.use("/api", apiRouter) // api router
 
 //sockets
-io.of("/chat").use(auth)
-io.of("/chat").on("connection", () => console.log("user connected"))
-io.of("/chat", (socket) => registerChatHandler(io, socket))
+io.on("connection", (socket) => {
+    console.log(socket.handshake.headers.cookie)
+})
+io.of("/chat-server").use(auth)
+io.of("/chat-server").on("connection", () => console.log("user connected"))
+io.of("/chat-server", (socket) => registerChatHandler(io, socket))
+
+app.get("/", () => {
+    
+})
 
 server.listen(
-    SERVER_CONFIG.port,
-    SERVER_CONFIG.hostname,
+    process.env.SERVER_PORT,
+    process.env.SERVER_HOSTNAME,
     startingServer(
-        SERVER_CONFIG.hostname,
-        SERVER_CONFIG.port,
+        process.env.SERVER_HOSTNAME,
+        process.env.SERVER_PORT,
     )
 )

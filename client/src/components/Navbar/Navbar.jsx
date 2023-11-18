@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 
 import "./Navbar.css"
-import Menu from "./Menu/Menu";
+import Menu from "../Menu/Menu";
 
 const Navbar = (props) => {
 
