@@ -4,6 +4,6 @@ const URL ="http://localhost:3000/chat-server"
 export const socket = io(URL, {
     autoConnect: false,
     withCredentials: true,
-    transports: ['websocket', 'polling'],
+    transports: ["websocket"],
     path: "/api/chat"
 })

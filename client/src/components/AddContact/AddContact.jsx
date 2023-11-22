@@ -86,7 +86,7 @@ const AddContact = ({displayContact, setDisplayContact }) => {
           <h2>Kontakt hinzufügen</h2>
         </div>
         <div className="addContact__input-container">
-          <label className="no-select" htmlFor="contact-name-input">
+          <label className="username__input-label no-select" htmlFor="contact-name-input">
             Benutzername
           </label>
           <input 

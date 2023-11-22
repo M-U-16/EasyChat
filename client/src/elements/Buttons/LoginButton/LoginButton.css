@@ -21,7 +21,7 @@
     border: none;
 }
 .app__menu-login-button:hover span {
-    margin-left: -1rem;
+    margin-left: -1.5rem;
 }
 .app__menu-login-button img {
     width: 1.5rem;

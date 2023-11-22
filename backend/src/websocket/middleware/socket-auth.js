@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 const { verify } = jwt
 
-const formatCookie = (cookieString) => {
+const formatCookies = (cookieString) => {
     try {
         const cookieObject = {}
         const cookieArray = cookieString
@@ -10,20 +10,23 @@ const formatCookie = (cookieString) => {
             cookieArray.forEach(cookie => {
                 cookieObject[cookie[0]] = cookie[1]
             });
-            return cookieObject
+        return cookieObject
     } catch(err) {
-        console.error(err)
+        console.log(err)
         return null
     }
 }
-
 export const auth = (socket, next) => {
+    console.log(socket)
     try {
-        const cookies = formatCookie(socket.handshake.headers.cookie)
+        const cookies = socket.handshake.headers.cookie
+        console.log(cookies)
         if (!cookies) return next(new Error("NOT_AUTHENTICATED"))
 
+        const cookieObj = formatCookies(cookies)
+
         //check if access token is there
-        if (!Object.keys(cookies).includes(process.env.TOKEN_NAME)) return next(new Error("NOT_AUTHENTICATED"))
+        if (!Object.keys(cookieObj).includes(process.env.TOKEN_NAME)) return next(new Error("NOT_AUTHENTICATED"))
         //get the token out of the cookies object
         const TOKEN = cookies[process.env.TOKEN_NAME]
         //checks if token is valid

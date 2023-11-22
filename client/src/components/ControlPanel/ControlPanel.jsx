@@ -14,7 +14,9 @@ const ControlPanel = () => {
         className='chat__new-chat-btn'
         title='Kontak hinzufügen'
         onClick={handleContactDisplay}
-      >+</button>
+      >
+        <img src={icons.plus} alt="" />
+      </button>
       <div className="search-container">
         <button title='Nach Kontakt Suchen' className='chat__search-btn'>
           <img src={icons.searchIcon} />

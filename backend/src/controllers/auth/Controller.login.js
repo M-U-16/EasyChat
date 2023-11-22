@@ -28,13 +28,14 @@ const login = (req, res) => {
                         const token = createTokens(user)
                         res.clearCookie(getTokenName())
                         res.cookie(
-                            getTokenName(),
+                            process.env.TOKEN_NAME,
                             token,
                             {
                                 maxAge:36000000,
                                 sameSite: "none",
                                 secure: true,
-                                httpOnly: true
+                                httpOnly: true,
+                                path: "/"
                             }
                         )
                         res.json({error: false, message: null})

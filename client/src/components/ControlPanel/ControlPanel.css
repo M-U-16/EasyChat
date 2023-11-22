@@ -13,6 +13,9 @@
 .chat__new-chat-btn {
     width: 3rem;
     height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     aspect-ratio: 1;
     height: var(--control-panel-height);
     cursor: pointer;
@@ -24,6 +27,9 @@
     outline: none;
     border-radius: 5px;
     margin: 0rem 0.8rem 0rem 0.8rem;
+}
+.chat__new-chat-btn img {
+    width: 2rem;
 }
 .chat__new-chat-btn:hover {
     background-color: #171717;

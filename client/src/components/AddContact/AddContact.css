@@ -66,18 +66,20 @@
     margin-top: 1rem;
 }
 .chat__addContact-form label {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 500;
     display: block;
     text-align: center;
     border-radius: 0;
     position: absolute;
-    bottom: 55%;
+    top: 50%;
+    transform: translateY(-50%);
     left: 1rem;
     color: rgba(67, 67, 67, 0.768);
+    pointer-events: none;
 }
 .chat__addContact-form input {
-    padding: 1.5rem 0.5rem 0.5rem 1rem;
+    padding: 1rem;
     font-size: 1.3rem;
     outline: none;
     border: none;
@@ -86,9 +88,18 @@
     background: white;
     box-shadow: inset 0px 0px 3px black;
     color: black;
+    transition: padding 0.3s ease;
+    padding-left: 1rem !important;
+}
+.chat__addContact-form input:focus {
+    padding: 1.3rem;
+}
+input:focus-within > .username__input-label {
+    display: none;
+    color: rebeccapurple;
 }
 .chat__addContact-submit {
-    margin-top: 50%;
+    margin-top: 1rem;
     padding: 1rem;
     border-radius: 10px;
     cursor: pointer;

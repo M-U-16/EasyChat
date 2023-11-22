@@ -3,27 +3,27 @@ export default {
     user: {
         register: {
             method: "POST",
-            url: "backend/api/user/register"
+            url: "/api/user/register"
         },
         login: {
             method: "POST",
-            url: "backend/api/user/login"
+            url: "/api/user/login"
         },
         contacts: {
             method: "GET",
-            url: "backend/api/user/chats"
+            url: "/api/user/chats"
         },
         logout: {
             method: "POST",
-            url: "backend/api/user/logout"
+            url: "/api/user/logout"
         },
         newChat: {
             method: "POST",
-            url: "backend/api/user/chats/new-chat"
+            url: "/api/user/chats/new-chat"
         },
         isLoggedIn: {
             method: "GET",
-            url: "backend/api/user/isLoggedIn"
+            url: "/api/user/isLoggedIn"
         }
     },
 }

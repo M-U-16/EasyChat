@@ -14,7 +14,7 @@ const Menu = (props) => {
 
   const logoutUser = () => {
     fetch(
-      `backend/${backendConfig.user.logout.url}`,
+      backendConfig.user.logout.url,
       { 
         method: backendConfig.user.logout.method,
         credentials: "include",

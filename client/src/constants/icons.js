@@ -11,6 +11,7 @@ import logout from "../assets/icons/log-out.svg"
 import refreshIcon from "../assets/icons/refresh.svg"
 import searchIcon from "../assets/icons/search.svg"
 import close from "../assets/icons/close-outline.svg"
+import plus from "../assets/icons/add.svg"
 
 export default {
     chatBoxEllipse,
@@ -26,4 +27,5 @@ export default {
     logout,
     close,
     home,
+    plus
 }

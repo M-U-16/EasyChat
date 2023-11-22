@@ -12,9 +12,8 @@ const PrivateRoute = (props) => {
 
     useEffect(() => {
         //checks if user is logged in
-        const url = `backend/${backendConfig.user.isLoggedIn.url}`
         checkLoggedIn(
-            "backend/api/user/isLoggedIn",
+            backendConfig.user.isLoggedIn.url,
             backendConfig.user.isLoggedIn.method,
             (result) => { setIsLoggedIn(result) }
         )
@@ -23,7 +22,7 @@ const PrivateRoute = (props) => {
     if (isLoggedIn != null) {
         //redirects to login if not logged in
         if (isLoggedIn.redirect) window.location = "/login"
-        //returns the chat app if logged in
+        //renders the chat app if logged in
         if (!isLoggedIn.redirect) {
             return props.children
         }

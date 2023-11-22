@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import "./ContactPanel.css"
 import { images } from '../../constants'
-import { socket } from '../../SOCKET/socket'
 import { chatContext } from '../../pages/Chat/Chat'
 
 const ContactPanel = (props) => {

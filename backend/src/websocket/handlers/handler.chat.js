@@ -2,10 +2,6 @@ import { joinRoom } from "../helpers/helpers.js"
 import { encryptToken } from "../../helpers/JWT.js"
 import getChat from "../helpers/helper.getChat.js"
 
-import sendMessageEvent from "../helpers/chat/sendMessage.js"
-import setChatHeaders from "../helpers/chat/chatHeaders.js"
-import joinRoomEvent from "../helpers/chat/join_room.js"
-
 export const registerChatHandler = (io, socket) => {
     let currentRoom
     const online = {}
