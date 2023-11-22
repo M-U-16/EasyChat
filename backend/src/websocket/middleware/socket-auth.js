@@ -17,7 +17,7 @@ const formatCookies = (cookieString) => {
     }
 }
 export const auth = (socket, next) => {
-    console.log(socket)
+    console.log(socket.handshake)
     try {
         const cookies = socket.handshake.headers.cookie
         console.log(cookies)

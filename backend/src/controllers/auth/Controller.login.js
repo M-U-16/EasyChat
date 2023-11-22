@@ -1,49 +1,38 @@
-import { createTokens } from "../../helpers/JWT.js"
-import { getTokenName } from "../../helpers/env.js"
+import { createToken } from "../../helpers/JWT.js"
 import { 
     findUser,
     comparePassHash
 } from "../../models/user.js"
 
 //login user
-const login = (req, res) => {
-    console.log(req.originalUrl)
+const login = async(req, res) => {
+    //console.log(req.originalUrl)
     const inputPassword = req.body.password
-
-    if (!inputPassword) {
-        res.send({error: true, message: "PASSWORD IS REQUIRED!" })
-    } else {
-
-        findUser(req.body.email)
-        .then(result => result[0][0])
-        .then(user => {
-            if (!user) {
-                res.send({error: true, message: "EMAIL_DOES_NOT_EXISTS"})
-            }
-            if (user) {
-                comparePassHash(inputPassword, user.password)
-                .then(doesMatch => {
-                    if (!doesMatch) res.json({error: true, message: "PASSWORD_IS_INCORECT"})
-                    if (doesMatch) {
-                        const token = createTokens(user)
-                        res.clearCookie(getTokenName())
-                        res.cookie(
-                            process.env.TOKEN_NAME,
-                            token,
-                            {
-                                maxAge:36000000,
-                                sameSite: "none",
-                                secure: true,
-                                httpOnly: true,
-                                path: "/"
-                            }
-                        )
-                        res.json({error: false, message: null})
-                    }
-                })
-            }
-        })
-
-    }
+    if (!inputPassword) return res.send({error: true, message: "PASSWORD IS REQUIRED!" })
+    
+    const user = await findUser(req.body.email)
+        .then(res => res[0][0])
+    if (!user) return res.send({error: true, message: "EMAIL_DOES_NOT_EXISTS"})
+        
+    const doesMatch = await comparePassHash(inputPassword, user.password)
+    if (!doesMatch) return res.json({error: true, message: "PASSWORD_IS_INCORECT"})
+            
+    //removing old token
+    res.clearCookie(process.env.TOKEN_NAME)
+    //setting new cookie
+    res.cookie(
+        process.env.TOKEN_NAME,
+        createToken(user),
+        //cookie settings
+        {
+            maxAge:36000000,
+            sameSite: "lax",
+            secure: false,
+            httpOnly: true,
+            path: "/",
+        }
+                        
+    )
+    return res.json({error: false, message: null})      
 }
 export default login

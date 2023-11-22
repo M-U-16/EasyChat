@@ -1,22 +1,21 @@
 import jwt from "jsonwebtoken"
 const {sign, verify} = jwt
-import { getTokenSecret } from "./env.js"
 
-const createTokens = (user) => {
+const createToken = (user) => {
     const accessToken = sign(
         {
             username: user.username,
             user_id: user.user_id
         },
-        getTokenSecret()
+        process.env.TOKEN_SECRET
     )
     return accessToken
 }
 const encryptToken = (token) => {
     if (!token) return {error: true, message: "TOKEN NOT THERE"}
-    return verify(token, getTokenSecret())
+    return verify(token, process.env.TOKEN_SECRET)
 }
 export {
-    createTokens,
+    createToken,
     encryptToken
 }

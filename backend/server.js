@@ -3,6 +3,7 @@ import bodyParser from "body-parser"
 import express from "express"
 import cors from "cors"
 import http from "http"
+import "dotenv/config"
 import { Server as SocketIoServer } from "socket.io"
 
 //importing config files
@@ -26,13 +27,14 @@ export const io = new SocketIoServer(server, socketConf)
 
 //middleware and configuration
 app.use(express.static("public"))
-app.use(cookieParser())
 app.use(express.json())
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
     extended: true
 }))
+app.use(cookieParser())
+app.set("trust proxy", 1)
 
 //routes
 app.use("/api", apiRouter)
@@ -41,10 +43,6 @@ app.use("/api", apiRouter)
 io.of("/chat-server").use(auth)
 io.of("/chat-server").on("connection", () => console.log("user connected"))
 io.of("/chat-server", (socket) => registerChatHandler(io, socket))
-
-app.get("/", () => {
-    
-})
 
 server.listen(
     process.env.SERVER_PORT,

@@ -5,5 +5,5 @@ export const socket = io(URL, {
     autoConnect: false,
     withCredentials: true,
     transports: ["websocket"],
-    path: "/api/chat"
+    path: "/api/socket"
 })
