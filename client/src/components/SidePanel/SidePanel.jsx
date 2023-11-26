@@ -23,6 +23,10 @@ const SidePanel = () => {
   const [loadError, setLoadError] = useState(false)
   const contactsContainer = useRef()
   
+  useEffect(() => {
+    console.log(contacts)
+  }, [contacts])
+
   const getUserContacts = async() => {
     try {
       setLoadError(false)

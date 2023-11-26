@@ -45,6 +45,7 @@ const AddContact = ({displayContact, setDisplayContact }) => {
       xhttp.onreadystatechange = () => {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
           const res = JSON.parse(xhttp.responseText)
+          console.log(res)
           if (!res.error) {
             refreshChat()
             removeDisplay()
@@ -59,9 +60,7 @@ const AddContact = ({displayContact, setDisplayContact }) => {
       xhttp.setRequestHeader("Content-type", "application/json")
       const body = JSON.stringify({ contactName: contactName })
       xhttp.send(body)
-    } catch(err) {
-      console.log(err)
-    }
+    } catch(err) { console.log(err) }
   }
 
   return (

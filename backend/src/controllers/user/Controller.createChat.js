@@ -3,8 +3,6 @@ import { getQueryResults } from "../../database/db-actions/dbQueryResult.js"
 
 const createChat = async(req, res) => {
 
-    console.log("hello")
-
     const isPrivate = true
     const user_id = req.user_id
     const contactName = req.body.contactName

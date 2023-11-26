@@ -72,11 +72,10 @@
     text-align: center;
     border-radius: 0;
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     left: 1rem;
     color: rgba(67, 67, 67, 0.768);
     pointer-events: none;
+    display: none;
 }
 .chat__addContact-form input {
     padding: 1rem;
@@ -90,13 +89,6 @@
     color: black;
     transition: padding 0.3s ease;
     padding-left: 1rem !important;
-}
-.chat__addContact-form input:focus {
-    padding: 1.3rem;
-}
-input:focus-within > .username__input-label {
-    display: none;
-    color: rebeccapurple;
 }
 .chat__addContact-submit {
     margin-top: 1rem;

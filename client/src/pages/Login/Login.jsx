@@ -7,8 +7,6 @@ import { Link, Navigate } from 'react-router-dom'
 import { useState } from 'react'
 import { backendConfig } from '../../constants'
 
-console.log(import.meta.env.VITE_BACKEND_URL)
-
 const Login = () => {
 
   const [formData, setFormData] = useState(null)

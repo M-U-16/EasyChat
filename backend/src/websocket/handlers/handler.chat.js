@@ -1,5 +1,4 @@
 import { joinRoom } from "../helpers/helpers.js"
-import { encryptToken } from "../../helpers/JWT.js"
 import getChat from "../helpers/helper.getChat.js"
 
 export const registerChatHandler = (io, socket) => {
@@ -8,24 +7,30 @@ export const registerChatHandler = (io, socket) => {
     
     //handeling users joining to specific rooms
     socket.on(":join_room", async(data, callback) => {
+       console.log(data.room_id)
         try {
-            const user_id = socket.data.user_id
-            const room = data.room_id
             //joins the socket to the room for realtime chatting
             joinRoom(
                 socket,
-                room,
+                data.room_id,
                 currentRoom,
-                user_id,
+                socket.data.user_id,
                 (room) => currentRoom = room
             )
+            
             //returns the messages of the room stored in messages table
-            callback(await getChat(room, user_id))
+            callback(await getChat(data.room_id, socket.data.user_id))
+        
         } catch(err) { console.log(err) }
     })
-    socket.on(":send_message", (data, callback) => {
+    socket.on(":send_message", (message, callback) => {
         try {
-            io.of("/chat").to(currentRoom).emit("new_message", data)
+            console.log({
+                user: socket.data.user_id,
+                currentRoom,
+                message,
+            })
+            socket.to(currentRoom).emit("new_message", message)
         } catch(err) { console.log(err) }
     })
     socket.on("disconnect", () => console.log("user disconnected"))

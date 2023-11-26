@@ -7,7 +7,7 @@ const MessagesContainer = () => {
   const chat = useContext(chatContext)
 
   useEffect(() => {
-    console.log(chat.messages)
+    //console.log(chat.messages)
 
   }, [chat.messages])
 

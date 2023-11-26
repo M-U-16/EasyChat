@@ -22,12 +22,11 @@ const Chat = () => {
 
   const sendMessage = () => {
     if (message == "") return // check if message is empty
-    console.log(new Date().toLocaleString())
+    setMessage("")
     socket.emit(":send_message",
       {content: message, date: new Date().toLocaleString()}, //message object with date
       () => { console.log("server got message") //callback
     })
-    setMessage("")
   }
 
   const joinChat = (room_id) => {
@@ -45,15 +44,19 @@ const Chat = () => {
 
   useEffect(() => {
     const connect = () => {
-      console.log("connecting")
       socket.connect()
       setIsConnected(true)
     }
     const onDisconnect = () => setIsConnected(false)
-    const onMessage = (message) => { console.log(message) }
+    const newMessage = (message) => {
+      console.log("new message: ", message)
+    }
 
     socket.on("disconnect", onDisconnect)
-    socket.on("new_message", onMessage)
+    socket.on("new_message", newMessage)
+    socket.on("user_online", () => {
+      console.log("new user online")
+    })
     //connecting to socket io server
     connect()
     //clean up function
@@ -63,7 +66,7 @@ const Chat = () => {
         //clearing connection
         socket.off("connect", () => { console.log("hello") })
         socket.off("disconnect", onDisconnect)
-        socket.off("new_message", onMessage)
+        socket.off("new_message", newMessage)
         //disconnecting from socket io server
         socket.disconnect()
       }

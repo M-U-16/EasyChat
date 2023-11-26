@@ -10,12 +10,9 @@ export const joinRoom = async(
     if (room == currentRoom) return
     
     if (await checkRoom(room, user_id)) {
-        console.log("join: ", currentRoom)
         if (currentRoom) socket.leave(currentRoom)
         socket.join(room)
-        console.log(socket.rooms)
-        socket.broadcast.to(room).emit("user_online")
-        
+        socket.broadcast.timeout(5000).to(room).emit("user_online")
         setCurrentRoom(room)
     }
 }
