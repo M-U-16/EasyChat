@@ -8,11 +8,6 @@ const HomeButton = () => {
   return (
     <motion.button
       className='app__home-button-wrapper'
-      whileHover={{
-        scale: 1.1
-      }}
-      
-      transition={{ duration: 0.2 }}
     >
       <Link to={`/`} className='app__home-button'>
         <img src={images.home} />

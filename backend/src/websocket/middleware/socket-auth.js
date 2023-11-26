@@ -17,24 +17,27 @@ const formatCookies = (cookieString) => {
     }
 }
 export const auth = (socket, next) => {
-    console.log(socket.handshake)
     try {
-        const cookies = socket.handshake.headers.cookie
-        console.log(cookies)
-        if (!cookies) return next(new Error("NOT_AUTHENTICATED"))
 
-        const cookieObj = formatCookies(cookies)
+        const cookies = socket.handshake.headers.cookie
+        if (!cookies) return next(new Error("NOT_AUTHENTICATED"))
+        const cookieObjs = formatCookies(cookies)
 
         //check if access token is there
-        if (!Object.keys(cookieObj).includes(process.env.TOKEN_NAME)) return next(new Error("NOT_AUTHENTICATED"))
+        if (!Object.keys(cookieObjs).includes(process.env.TOKEN_NAME)) return next(new Error("NOT_AUTHENTICATED"))
         //get the token out of the cookies object
-        const TOKEN = cookies[process.env.TOKEN_NAME]
+        const TOKEN = cookieObjs[process.env.TOKEN_NAME]
         //checks if token is valid
         const validToken = verify(TOKEN, process.env.TOKEN_SECRET)
-        if (validToken) return next()
-        return next(new Error("NOT_AUTHENTICATED"))
+
+        //return error if not valid
+        if (!validToken) return next(new Error("NOT_AUTHENTICATED"))
+        //forward reqeuest
+        socket.data = validToken
+        return next()
     } catch(err) {
         //returns error if token is invalid
+        console.log(err)
         return next(new Error("NOT_AUTHENTICATED"))
     }
 }

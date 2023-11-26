@@ -9,16 +9,13 @@ export const registerChatHandler = (io, socket) => {
     //handeling users joining to specific rooms
     socket.on(":join_room", async(data, callback) => {
         try {
-            const cookieRegex = /=(.*)/
-            const TOKEN = socket.handshake.headers.cookie.match(cookieRegex)[1]
-            const user_id = encryptToken(TOKEN).user_id
+            const user_id = socket.data.user_id
             const room = data.room_id
-            console.log(room)
             //joins the socket to the room for realtime chatting
             joinRoom(
                 socket,
-                room.toString(),
-                currentRoom, //!= undefined ? currentRoom.toString() : currentRoom
+                room,
+                currentRoom,
                 user_id,
                 (room) => currentRoom = room
             )

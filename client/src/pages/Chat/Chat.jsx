@@ -51,7 +51,7 @@ const Chat = () => {
     }
     const onDisconnect = () => setIsConnected(false)
     const onMessage = (message) => { console.log(message) }
-    //socket.on("connect", () => { console.log("hello") })
+
     socket.on("disconnect", onDisconnect)
     socket.on("new_message", onMessage)
     //connecting to socket io server
