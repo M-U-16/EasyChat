@@ -25,7 +25,7 @@ const login = async(req, res) => {
         createToken(user),
         //cookie settings
         {
-            maxAge:36000000,
+            maxAge: 31557600000,
             sameSite: "lax",
             secure: false,
             httpOnly: true,

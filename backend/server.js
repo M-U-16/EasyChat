@@ -42,10 +42,10 @@ app.use("/api", apiRouter)
 //sockets
 io.of("/chat-server").use(auth)
 io.of("/chat-server").on("connection", (socket) => {
-    console.log("user connected")
-    registerChatHandler(io, socket)
+    //console.log("user connected")
+    socket.io = io
+    registerChatHandler(socket)
 })
-//io.of("/chat-server", (socket) => registerChatHandler(io, socket) )
 
 server.listen(
     process.env.SERVER_PORT,

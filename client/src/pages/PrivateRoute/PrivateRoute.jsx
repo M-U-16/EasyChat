@@ -8,7 +8,17 @@ import { LoadingSpinner } from '../../elements'
 const PrivateRoute = (props) => {
 
     const [isLoggedIn, setIsLoggedIn] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
 
+    useEffect(() => {
+        if (isLoggedIn === null) return
+        setTimeout(() => {
+            //redirects to login if not logged in
+            if (isLoggedIn.redirect) window.location = "/login"
+            //renders the chat app if logged in
+            if (!isLoggedIn.redirect) setIsLoading(false)
+        }, 1000);
+    }, [isLoggedIn])
 
     useEffect(() => {
         //checks if user is logged in
@@ -19,13 +29,8 @@ const PrivateRoute = (props) => {
         )
     }, [])
 
-    if (isLoggedIn != null) {
-        //redirects to login if not logged in
-        if (isLoggedIn.redirect) window.location = "/login"
-        //renders the chat app if logged in
-        if (!isLoggedIn.redirect) {
-            return props.children
-        }
+    if (!isLoading) {
+        return props.children
     } else {
         //returns a loading page while checking user
         return (

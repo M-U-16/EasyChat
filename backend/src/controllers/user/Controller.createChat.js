@@ -1,60 +1,42 @@
-import connection from "../../database/db.js"
-import { getQueryResults } from "../../database/db-actions/dbQueryResult.js"
+import { queryDb } from "../../models/db.js"
 
+const isPrivate = true
 const createChat = async(req, res) => {
-
-    const isPrivate = true
     const user_id = req.user_id
+    const username = req.username
     const contactName = req.body.contactName
-
+    const roomName = contactName + "-" + username
+    //checks if user information is there
     if (!contactName || !user_id) return res.json({error: true, message: "CONTACT_IS_REQUIRED"})
 
     //get the id from new contact username
-    const contactId = await connection
-        .promise()
-        .query("select user_id from users where username=?", [contactName])
-        .then(result => getQueryResults(result))
-    
-    if (!contactId) return res.json({error: true, message: "CONTACT_NOT_FOUND"})
+    const contactInfo = await queryDb("select user_id, username from users where username=?", [contactName])
+    .then(result => result[0])
+    if (!contactInfo) return res.json({error: true, message: "CONTACT_NOT_FOUND"})
     
     //check if rooom already exists
-    const checkRoom = await connection
-        .promise()
-        .query("select * from rooms where room_name=?", [contactName])
-        .then(result => result[0])
-        .then(result => {
-            if (result.length < 1) return false
-            return true
-        })
+    const checkRoom = await queryDb("select * from rooms where room_name=?", [roomName])
+    .then(result => result.length === 0 ? false : true)
+    if (checkRoom) return res.json({error: true, message: "ROOM_ALREADY_EXISTS"})
 
-    //creates a new chat room
+    //--------------------------creates a new chat room----------------
     const chatQuery = "insert into rooms (room_name, private) values (?, ?)"
-    if (!checkRoom) {
-        const newChat = await connection
-            .promise()
-            .query(chatQuery, [contactName, isPrivate])
-        //get the current auto_increment value from rooms table
-        if (newChat) {
-            const roomId = await connection
-                .promise()
-                .query("SELECT last_insert_id()")
-                .then(result => result[0][0]["last_insert_id()"])
-            if (roomId) {
-                const participantList = [user_id, contactId.user_id]
-                const participantSql = "insert into participants (room_id, user_id) values (?, ?)"
+    await queryDb(chatQuery, [roomName, isPrivate])
+    //get the current auto_increment value of the room_id from rooms table
+    const roomId = await queryDb("SELECT room_id from rooms where room_name=?", [roomName])
+    .then(result => result[0].room_id)
 
-                participantList.forEach((participant) => {
-                    connection.query(participantSql, [roomId, participant], (err, result)=>{
-                        if (err) throw err
-                    })
-                })
-            }
-            return res.json({error: false, message: null})
-        } else {
-            return res.json({error: true, message: "error"})
-        }
-    } else {
-        return res.json({error: true, message: "ROOM_ALREADY_EXISTS"})
+    const participantList = [user_id, contactInfo.user_id]
+    const participantSql = "insert into participants (room_id, user_id) values (?, ?)"
+
+    try {
+        participantList.forEach((participant) => {
+            queryDb(participantSql, [roomId, participant])
+        })
+    } catch(err) {
+        console.log(err)
+        return res.json({error: true, message: "COULD_NOT_ADD_USER"})
     }
+    return res.json({error: false, message: null})
 }
 export default createChat

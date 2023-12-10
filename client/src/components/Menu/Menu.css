@@ -38,38 +38,9 @@
     opacity: 1;
     pointer-events: none;
     width: 0;
+    overflow: hidden;
     transition:
         0.5s ease-in-out;
-}
-.app__menu-container .link {
-    position: relative;
-    padding: 1.5rem 0rem 1.5rem 3rem;
-    text-decoration: none;
-    color: white;
-    font-size: 1.4rem;
-    width: 100%;
-    transition: 0.3s ease;
-    display: flex;
-    align-items: center;
-}
-.app__menu-container .link:hover {
-    background-color: rgba(0, 0, 0, 0.468);
-}
-.app__menu-container .link img {
-    width: 2rem;
-    height: 2rem;
-    margin: 0 0 0 0.5rem;
-}
-.current-page::before {
-    content: "";
-    position: absolute;
-    background-color: var(--highlight-blue);
-    width: 0.5rem;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    top: 50%;
-    left: 1.8rem;
-    transform: translateY(-50%);
 }
 .active-app-menu {
     transition: width 0.5s ease-in-out;

@@ -1,5 +1,21 @@
-import connection from "../../database/db.js"
-import { format } from "mysql2"
+import { queryDb, getUsername } from "../../models/db.js"
+
+
+const getLastMessage = async(room_id, user_id) => {
+    //get the last message in the given room
+    const lastMessage = await queryDb(
+        `
+            select user_id, message from messages
+            where room_id=? and message_id=(select max(message_id)
+            from messages where room_id=?)
+        `,
+        [room_id, room_id]
+    ).then(result => result[0])
+    //gets the username for that user
+    lastMessage.username = await getUsername(lastMessage.user_id)
+    lastMessage.you = lastMessage.user_id == user_id ? true:false
+    return lastMessage
+}
 
 const getUsersInRoom = async(rooms, user_id) => {
     
@@ -8,17 +24,12 @@ const getUsersInRoom = async(rooms, user_id) => {
     const roomString = rooms
         .map(room => room.room_id.toString())
         .join(",")
+    const sql = `select user_id, room_id from participants where room_id in (${roomString}) and user_id <> ?`
 
-    const query = `select user_id, room_id from participants where room_id in (${roomString}) and user_id <> ?`
-
-    const res = await connection
-        .promise()
-        .query(query, [user_id])
-        .then(result => result[0].map(user => {
+    return await queryDb(sql, [user_id])
+        .then(result => result.map(user => {
             return {user_id: user.user_id, room_id: user.room_id}
         }))
-
-    return res
 }
 
 const getContactInformation = async(users) => {
@@ -27,11 +38,10 @@ const getContactInformation = async(users) => {
         .join(",")
 
     const sql = `select username from users where user_id in (${userString})`
-    return await connection
-        .promise()
-        .query(sql)
+
+    return await queryDb(sql)
         .then(results => {
-            return results[0].map((result, index) => {
+            return results.map((result, index) => {
 
                 return {
                     username: result.username,
@@ -41,37 +51,31 @@ const getContactInformation = async(users) => {
         })
 }
 
-const createContactObject = (userInf) => {
+const createContactObject = async(userInf, user_id) => {
 
-    return userInf.map(user => {
+    const obj = userInf.map(async(user) => {
         return {
             username: user.username,
-            lastMessage: {
-                username: "You",
-                message: "helisfj kfjidjfkd?"
-            },
+            lastMessage: await getLastMessage(user.room_id, user_id),
             newMessages: 0,
             status: false,
             room_id: user.room_id,
         }
     })
+    return await Promise.all(obj)
 }
 
 const getContacts = async(req, res) => {
 
     const userId = req.user_id
-    const sql = format("select room_id from participants where user_id=?", [userId])
+    const sql = "select room_id from participants where user_id=?"
     
-    const rooms = await connection
-        .promise()
-        .query(sql)
-        .then(result => result[0])
-
+    const rooms = await queryDb(sql, [userId])
     const users = await getUsersInRoom(rooms, userId)
 
     if (users) {
         const userInfo = await getContactInformation(users)
-        const obj = createContactObject(userInfo)
+        const obj = await createContactObject(userInfo, userId)
         return res.json({contacts: obj})
     }
     return res.json({error: true, message: "NO_CONTACTS_FOR_THIS_USER"})

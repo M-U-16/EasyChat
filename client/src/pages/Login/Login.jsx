@@ -6,6 +6,7 @@ import { SubmitButton } from '../../elements'
 import { Link, Navigate } from 'react-router-dom'
 import { useState } from 'react'
 import { backendConfig } from '../../constants'
+import MenuItem from "../../components/MenuItem/MenuItem"
 
 const Login = () => {
 
@@ -70,23 +71,28 @@ const Login = () => {
 
   return (
     <>
-      <Navbar showLogin={false}/>
+      <Navbar>
+        <MenuItem content="Startseite" path="/" />
+        <MenuItem content="Registrieren" path="/registrieren" />
+      </Navbar>
       <div className='app__login-wrapper flex_center-full_height'>
         <form onSubmit={handleSubmit} className='app__login-form app__form'>
           <h1>Anmelden</h1>
           <div className="app__input-wrapper">
             {emailError && <p>Email existiert nicht!</p>}
-            <label id='form-label' htmlFor="login-email-input">Email</label>
+            {/* <label id='form-label' htmlFor="login-email-input">Email</label> */}
             <input
+              placeholder='Email'
               required type="email" name='email'
               onChange={handleInput} id="login-email-input"
             />
           </div>
           <div className='app__input-wrapper'>
-            <label id='form-label' htmlFor="login-email-input">Passwort</label>
+            {/* <label id='form-label' htmlFor="login-email-input">Passwort</label> */}
             {passwordError && <p>Passwort ist nicht richtig!</p>}
             <input
               required type="password"
+              placeholder='Passwort'
               onChange={handleInput} name='password'
             />
           </div>

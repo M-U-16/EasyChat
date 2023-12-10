@@ -1,6 +1,6 @@
 import { checkRoom } from "../middleware/checkRoom.js"
 
-export const joinRoom = async(
+const joinRoom = async(
     socket,
     room,
     currentRoom,
@@ -12,7 +12,9 @@ export const joinRoom = async(
     if (await checkRoom(room, user_id)) {
         if (currentRoom) socket.leave(currentRoom)
         socket.join(room)
-        socket.broadcast.timeout(5000).to(room).emit("user_online")
+        socket.broadcast.to(room).emit("user_online")
         setCurrentRoom(room)
     }
 }
+
+export default joinRoom

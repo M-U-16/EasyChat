@@ -45,7 +45,6 @@ const AddContact = ({displayContact, setDisplayContact }) => {
       xhttp.onreadystatechange = () => {
         if (xhttp.readyState === 4 && xhttp.status === 200) {
           const res = JSON.parse(xhttp.responseText)
-          console.log(res)
           if (!res.error) {
             refreshChat()
             removeDisplay()
@@ -85,10 +84,8 @@ const AddContact = ({displayContact, setDisplayContact }) => {
           <h2>Kontakt hinzufügen</h2>
         </div>
         <div className="addContact__input-container">
-          <label className="username__input-label no-select" htmlFor="contact-name-input">
-            Benutzername
-          </label>
           <input 
+            placeholder='Benutzername'
             id='contact-name-input'
             name="username"
             type="text"

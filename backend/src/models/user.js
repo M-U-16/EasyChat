@@ -1,10 +1,10 @@
 import mysql2 from "mysql2"
 import bcrypt from "bcrypt"
 
-import connection from "../database/db.js"
+import connection, { queryDb } from "./db.js"
 
 //validating that the user not already exists
-const checkUser = async(newUser) => {
+export const checkUser = async(newUser) => {
     const sqlEmail = "SELECT email FROM users WHERE email=?"
     const sqlUsername = "SELECT username FROM users WHERE username=?"
 
@@ -28,37 +28,27 @@ const checkUser = async(newUser) => {
     return { error: false }
 }
 //function for adding user to database
-const addUser = async(user) => {
+export const addUser = async(user) => {
     try {
         const hashedPassword = await bcrypt.hash(user.password, 10)
-        const sql = mysql2.format(
+        await queryDb(
             "INSERT INTO users (password, email, username, status) VALUES (?, ?, ?, ?)",
-            [hashedPassword, user.email, user.username, true] //set values for user and also default status of true   
+            [hashedPassword, user.email, user.username, true]
         )
-        const result = await connection.promise().query(sql)
         return true
-
     } catch(err) { return false }
 }
 //finds a user in database
-const findUser = async(email) => {
-
+export const findUser = async(email) => {
     try {
         const sql = "SELECT * FROM users WHERE email=?"
         return await connection.promise().query(sql, [email])
     } catch(err) { if (err) throw err }
 }
 //compares password from user and from database
-const comparePassHash = async(user_password, db_hash) => {
+export const comparePassHash = async(user_password, db_hash) => {
 
     const match = await bcrypt.compare(user_password, db_hash)
     if (!match) return false
     return true
-}
-
-export {
-    checkUser,
-    addUser,
-    findUser,
-    comparePassHash
 }

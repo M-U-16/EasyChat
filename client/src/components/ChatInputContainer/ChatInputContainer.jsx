@@ -1,7 +1,7 @@
 import React, { useRef, useContext, useEffect } from 'react'
 import "./ChatInputContainer.css"
 import { icons } from '../../constants'
-import { socket } from '../../SOCKET/socket'
+import socket from '../../SOCKET/socket.js'
 import { chatContext } from '../../pages/Chat/Chat'
 
 
@@ -10,16 +10,13 @@ const ChatInputContainer = () => {
   const chatInput = useRef()
   const chatButton = useRef()
   const chat = useContext(chatContext)
-  const updateMessage = () => chat.setMessage(chatInput.current.value)
+  const updateInput = () => chat.setMessage(chatInput.current.value)
   
   const sendMessage = () => {
     chatInput.current.value = ""
     chat.sendMessage()
   }
-
-  useEffect(() => {
-    
-  }, [])
+  const checkEnter = (e) => e.key == "Enter" ?sendMessage():null 
 
   return (
     <div className='chat__input-container'>
@@ -27,9 +24,10 @@ const ChatInputContainer = () => {
         <input
           className='chat__input'
           type="text"
-          onChange={updateMessage}
+          onChange={updateInput}
           ref={chatInput}
           placeholder='Nachricht Senden...'
+          onKeyDown={checkEnter}
         />
         <button
           className='chat__input-send-btn'

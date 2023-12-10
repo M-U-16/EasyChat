@@ -8,8 +8,9 @@ React,
 import "./Chat.css"
 import { Navbar } from '../../components'
 import { SidePanel } from '../../components'
-import { socket } from '../../SOCKET/socket.js'
+import socket from '../../SOCKET/socket.js'
 import ChatPanel from '../../components/ChatPanel/ChatPanel'
+import LogoutButton from '../../elements/Buttons/LogoutButton/LogoutButton.jsx'
 
 export const chatContext = createContext()
 
@@ -22,11 +23,11 @@ const Chat = () => {
 
   const sendMessage = () => {
     if (message == "") return // check if message is empty
-    setMessage("")
     socket.emit(":send_message",
-      {content: message, date: new Date().toLocaleString()}, //message object with date
-      () => { console.log("server got message") //callback
-    })
+      {message: message, date: new Date().toLocaleString()}, //message object with date
+      (res) => { newMessage(res) } //callback function
+    )
+    setMessage("")
   }
 
   const joinChat = (room_id) => {
@@ -38,6 +39,23 @@ const Chat = () => {
     }
   }
 
+  const newMessage = (new_message) => {
+    //setting new message to messages state
+    //accounting for multiple renders and double messages
+    setMessages(prev => {
+      const filterd_uuids = prev
+        .map(item => item.uuid)
+        .filter(uuid => uuid !== null)
+
+      if (filterd_uuids.includes(new_message.uuid)) return prev
+      return [...prev, new_message]
+    })
+  }
+
+  useEffect(() => {
+    //console.log(messages)
+  }, [messages])
+
   useEffect(() => {
     if (currentChat != null) joinChat(currentChat)
   }, [currentChat])
@@ -48,15 +66,10 @@ const Chat = () => {
       setIsConnected(true)
     }
     const onDisconnect = () => setIsConnected(false)
-    const newMessage = (message) => {
-      console.log("new message: ", message)
-    }
 
     socket.on("disconnect", onDisconnect)
     socket.on("new_message", newMessage)
-    socket.on("user_online", () => {
-      console.log("new user online")
-    })
+    socket.on("user_online", () => console.log("user online"))
     //connecting to socket io server
     connect()
     //clean up function
@@ -64,9 +77,7 @@ const Chat = () => {
       
       if (socket.connected) {
         //clearing connection
-        socket.off("connect", () => { console.log("hello") })
-        socket.off("disconnect", onDisconnect)
-        socket.off("new_message", newMessage)
+        socket.removeAllListeners()
         //disconnecting from socket io server
         socket.disconnect()
       }
@@ -75,8 +86,11 @@ const Chat = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar>
+        <LogoutButton />
+      </Navbar>
       <div className='app__chat-container'>
+        {/* context for messages and functions */}
         <chatContext.Provider value={{
           messages,
           setMessages,

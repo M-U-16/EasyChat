@@ -7,7 +7,6 @@ import React, {
 } from 'react'
 
 import "./SidePanel.css"
-import { icons } from '../../constants'
 import { backendConfig } from '../../constants'
 import ContactPanel from '../ContactPanel/ContactPanel'
 import ControlPanel from '../ControlPanel/ControlPanel'
@@ -22,10 +21,6 @@ const SidePanel = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [loadError, setLoadError] = useState(false)
   const contactsContainer = useRef()
-  
-  useEffect(() => {
-    console.log(contacts)
-  }, [contacts])
 
   const getUserContacts = async() => {
     try {
@@ -55,7 +50,7 @@ const SidePanel = () => {
       }
       
     } catch(err) { 
-      console.log({err: err})
+      //console.log({err: err})
       setIsLoading(false)
       setLoadError(true)
     }

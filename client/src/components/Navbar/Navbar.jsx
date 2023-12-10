@@ -1,12 +1,10 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
 
 import "./Navbar.css"
 import Menu from "../Menu/Menu";
 
 const Navbar = (props) => {
-
 
     return (
         <nav className="app__navbar">
@@ -14,7 +12,9 @@ const Navbar = (props) => {
                 <h2>Easy</h2>
                 <h1>Chat</h1>
             </Link>
-            <Menu showLogin={props.showLogin}/>
+            <Menu
+                links={props.children}
+            />
         </nav>
     )
 }

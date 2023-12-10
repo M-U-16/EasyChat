@@ -6,7 +6,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--primary-blue);
 }
 .chat__input-wrapper {
     width: 90%;

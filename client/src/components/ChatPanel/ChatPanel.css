@@ -1,10 +1,10 @@
 .chat__panel-conatainer {
     width: 100%;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: hidden;
     position: relative;
     display: grid;
     grid-template-rows: 1fr auto;
+    height: calc(100vh - var(--navbar-height));
 }
 .chat__panel-conatainer::-webkit-scrollbar{
     width: 0px;

@@ -6,6 +6,7 @@ import { chatContext } from '../../pages/Chat/Chat'
 const ContactPanel = (props) => {
 
     const contact = props.contact
+    console.log(contact)
     const chat = useContext(chatContext)
 
     const join = () => chat.setCurrentChat(contact.room_id)
@@ -26,7 +27,9 @@ const ContactPanel = (props) => {
             <div className="panel__text-wrapper">
                 <h1 className='app__panel-username'>{contact.username}</h1>
                 <div className='app__panel-lastmessage-container'>
-                    <h2>{contact.lastMessage.username}:</h2>
+                    <h2>
+                        {contact.lastMessage.you ? "Du" : contact.lastMessage.username}:
+                    </h2>
                     <p>{contact.lastMessage.message}</p>
                 </div>
             </div>

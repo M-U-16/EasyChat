@@ -27,7 +27,7 @@ const RegisterForm = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     setIsLoading(true)
-    const url = `backend/${backendConfig.user.register.url}`
+    const url = backendConfig.user.register.url
     const headers = {
       "Accept": "application/json",
       "Content-Type": "application/json",
@@ -57,10 +57,11 @@ const RegisterForm = (props) => {
     <form className='app__register-form app__form'  onSubmit={handleSubmit}>
       <h1>Registrieren</h1>
       <div className='app__input-wrapper'>
-        <label htmlFor="register-username-input">
+        {/* <label htmlFor="register-username-input">
           Email
-        </label>
+        </label> */}
         <input
+          placeholder='Email'
           required
           name="email"
           type="email"
@@ -68,10 +69,11 @@ const RegisterForm = (props) => {
         />
       </div>
       <div className='app__input-wrapper'>
-        <label htmlFor="register-username-input">
+        {/* <label htmlFor="register-username-input">
           Benutzername
-        </label>
-        <input 
+        </label> */}
+        <input
+          placeholder='Benutzername'
           id='register-username-input'
           required
           name="username"
@@ -80,10 +82,11 @@ const RegisterForm = (props) => {
         />
       </div>
       <div className='app__input-wrapper'>
-        <label htmlFor="register-username-input">
+        {/* <label htmlFor="register-username-input">
           Passwort
-        </label>
+        </label> */}
         <input
+          placeholder='Passwort'
           id='register-password-input'
           required
           name="password"
