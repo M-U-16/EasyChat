@@ -30,7 +30,6 @@ const getChat = async(room_id, user_id) => {
     const sql = "select * from messages where room_id=?"
     const result = await queryDb(sql, room_id)
 
-    console.log("getting messages")
     return { messages: await formatMessages(result, user_id) }
 }
 export default getChat

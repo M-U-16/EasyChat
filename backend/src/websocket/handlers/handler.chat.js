@@ -9,7 +9,6 @@ export const registerChatHandler = (socket) => {
     const online = {}
     //handeling users joining to specific rooms
     socket.on(":join_room", async(data, callback) => {
-        console.log("joining room")
         try {
             //joins the socket to the room for realtime chatting
             joinRoom(
@@ -41,7 +40,6 @@ export const registerChatHandler = (socket) => {
                 socket.data.user_id,
                 v4()
             )
-            console.log("received message")
             //sending message event to all clients
             socket.broadcast.to(socket.data.currentRoom).emit("new_message", formatedMessage)
             //socket.io.of("/chat-server").to(socket.data.currentRoom).emit("new_message", formatedMessage)

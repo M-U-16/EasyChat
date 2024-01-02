@@ -12,7 +12,9 @@ export default defineConfig({
       },
       "/socket": {
         target:"ws://localhost:3000",
-        ws: true
+        changeOrigin: true,
+        ws: true,
+        secure: true
       }
     }
   },

@@ -8,18 +8,29 @@ import "./MessagesContainer.css"
 import { chatContext } from '../../pages/Chat/Chat'
 
 const MessagesContainer = () => {
-  const { messages } = useContext(chatContext)
+  const { messages, currentChat } = useContext(chatContext)
   const bottom = useRef(null)
   const container = useRef(null)
+
+  const scrollToBottomSmooth = () => {
+    container.current.style.scrollBehavior = "smooth"
+    container.current.scrollTop = container.current.scrollHeight
+    container.current.style.scrollBehavior = "instant"
+  }
+  const scrollToBottomInstant = () => {
+    container.current.style.scrollBehavior = "instant"
+    container.current.scrollTop = container.current.scrollHeight
+  }
   
   useEffect(() => {
-    if (bottom.current) {
-      bottom.current.scrollIntoView({behavior: "smooth"})
-    }
-  }, [])
-
+    //bottom.current.scrollIntoView({behavior: "smooth"})
+  }, [currentChat])
+  
   useEffect(() => {
-    bottom.current.scrollIntoView({behavior: "smooth"})
+    //console.log(container.current.scrollHeight)
+    //container.current.style.scrollBehaviour
+    /* bottom.current.scrollIntoView({behavior: "smooth"}) */
+    scrollToBottomSmooth()
   }, [messages])
 
   return (

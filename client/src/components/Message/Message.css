@@ -7,7 +7,7 @@
     align-items: center;
     padding: 1rem;
     margin: 1rem;
-    /* min-width: 15rem; */
+    border-radius: 5px;
 }
 .message__profile-container {
     width: 2.5rem;
@@ -26,14 +26,11 @@
     font-weight: 600;
     background: rgba(255, 255, 255, 0);
     color: rgb(255, 255, 255);
-    border-bottom: 1px solid rgb(128, 128, 128);
 }
 .chat__message-content {
-    padding: 1rem;
+    /* padding: 0.5rem 0 1rem 0; */
     border-radius: 5px;
     border-radius: 0px 0px 5px 5px;
-}
-.chat__message-content {
     width: 100%;
 }
 .is-you-true {
@@ -43,18 +40,8 @@
     background: rgba(31, 96, 202, 0.882);
 
 }
-.is-you-true .chat__message-content {
-    background: rgba(31, 96, 202, 0.882);
-}
-.is-you-false .chat__message-content {
-    background: rgba(0, 0, 0, 0.427);
-}
 .is-you-false {
     float: left;
     color: rgb(255, 255, 255);
-    background: rgba(0, 0, 0, 0.427);
-}
-.is-you-false,
-.is-you-true {
-    background: transparent;
+    background: rgb(21, 21, 21);
 }
