@@ -36,8 +36,8 @@
 /* ACTIVE STATES */
 .active-menu-button span:nth-child(1){
     top: 50%;
-    transition: rotate var(--span-rotation-duration) ease;
-    rotate: -45deg;
+    transition: transform var(--span-rotation-duration) ease;
+    transform: rotate(-45deg);
 }
 .active-menu-button span:nth-child(2) {
     opacity: 0;
@@ -45,8 +45,8 @@
 }
 .active-menu-button span:nth-child(3){
     top: 50%;
-    rotate: 45deg;
-    transition: rotate var(--span-rotation-duration) ease;
+    transform: rotate(45deg);
+    transition: transform var(--span-rotation-duration) ease;
 }
 .app__link-menu {
     position: absolute;

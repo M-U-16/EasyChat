@@ -7,7 +7,6 @@ import React, {
 } from 'react'
 
 import "./SidePanel.css"
-import { backendConfig } from '../../constants'
 import ContactPanel from '../ContactPanel/ContactPanel'
 import ControlPanel from '../ControlPanel/ControlPanel'
 import { chatContext } from '../../pages/Chat/Chat'
@@ -26,9 +25,9 @@ const SidePanel = () => {
     try {
       setLoadError(false)
       setIsLoading(true)
-      const res = await fetch(backendConfig.user.contacts.url,
+      const res = await fetch("/api/user/chats",
         {
-          method: backendConfig.user.contacts.method,
+          method: "GET",
           mode: "cors",
           credentials: "include",
           sameSite: "none",
@@ -80,15 +79,6 @@ const SidePanel = () => {
           )
         }
       </div>
-      {/* {
-        loadError &&
-        <button
-          className='app__chat-refresh-btn'
-          onClick={getUserContacts}
-        >
-          <img src={icons.refreshIcon} />
-        </button>
-      } */}
 
       { isLoading && <div className='loading-spinner'></div>}
     </nav>

@@ -53,10 +53,6 @@ const Chat = () => {
   }
 
   useEffect(() => {
-    //console.log(messages)
-  }, [messages])
-
-  useEffect(() => {
     if (currentChat != null) joinChat(currentChat)
   }, [currentChat])
 

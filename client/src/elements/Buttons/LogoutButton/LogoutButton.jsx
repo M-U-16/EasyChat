@@ -2,14 +2,13 @@ import React from 'react'
 import "./LogoutButton.css"
 import { Link } from 'react-router-dom'
 import { icons } from '../../../constants'
-import { backendConfig } from '../../../constants'
 
 const LogoutButton = () => {
     const logoutUser = () => {
         fetch(
-          backendConfig.user.logout.url,
+            "api/user/logout",
           { 
-            method: backendConfig.user.logout.method,
+            method: "POST",
             credentials: "include",
             mode: "no-cors"
           }

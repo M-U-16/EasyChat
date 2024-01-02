@@ -1,4 +1,4 @@
-import { createToken } from "../../helpers/JWT.js"
+import { createToken } from "../../helpers/auth/JWT.js"
 import { 
     findUser,
     comparePassHash

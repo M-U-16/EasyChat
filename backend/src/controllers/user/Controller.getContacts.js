@@ -78,6 +78,7 @@ const getContacts = async(req, res) => {
         const obj = await createContactObject(userInfo, userId)
         return res.json({contacts: obj})
     }
+
     return res.json({error: true, message: "NO_CONTACTS_FOR_THIS_USER"})
 }
 export default getContacts

@@ -5,7 +5,7 @@ import React, {
   useRef
 } from 'react'
 import "./AddContact.css"
-import { backendConfig, icons } from "../../constants"
+import { icons } from "../../constants"
 import {contactsContext} from "../SidePanel/SidePanel"
 
 const AddContact = ({displayContact, setDisplayContact }) => {
@@ -52,8 +52,8 @@ const AddContact = ({displayContact, setDisplayContact }) => {
         }
       }
       xhttp.open(
-        backendConfig.user.newChat.method, //method
-        `${backendConfig.user.newChat.url}`, //url
+        "/api/user/chats/new-chat",
+        "POST",
         true //async = true
       )
       xhttp.setRequestHeader("Content-type", "application/json")

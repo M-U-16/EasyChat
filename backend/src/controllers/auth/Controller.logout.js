@@ -7,5 +7,4 @@ const logOut = (req, res) => {
     })
     return res.json({error: false, message: "SUCCESSFULLY_LOGGED_OUT_USER"})
 }
-
 export default logOut

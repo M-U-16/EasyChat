@@ -16,9 +16,11 @@
   --primary-color: violet;
   --normal-transition: 0.3s ease;
 
-  --primary-blue: #292841;
-  --secondary-blue: #1C1B29;
+  /* --primary-blue: #292841;
+  --secondary-blue: #1C1B29; */
   --highlight-blue: #0099ff;
+  --primary-blue: #070705;
+  --secondary-blue: #070705;
 }
 * {
   padding: 0;

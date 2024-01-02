@@ -1,11 +1,14 @@
 import React from 'react'
 import "./Profile.css"
 
+import { Navbar } from '../../components'
+
 const Profile = () => {
   return (
-    <div>
-      
-    </div>
+    <>
+      <Navbar></Navbar>
+      <h1>Your Profile</h1>
+    </>
   )
 }
 

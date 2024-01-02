@@ -13,12 +13,13 @@ const MessagesContainer = () => {
   const container = useRef(null)
   
   useEffect(() => {
-    bottom.current.scrollIntoView()
+    if (bottom.current) {
+      bottom.current.scrollIntoView({behavior: "smooth"})
+    }
   }, [])
 
   useEffect(() => {
-    //console.log(chat.messages)
-    bottom.current.scrollIntoView({behavior: "instant"})
+    bottom.current.scrollIntoView({behavior: "smooth"})
   }, [messages])
 
   return (

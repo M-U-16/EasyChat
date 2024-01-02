@@ -5,7 +5,6 @@ import { Navbar } from '../../components'
 import { SubmitButton } from '../../elements'
 import { Link, Navigate } from 'react-router-dom'
 import { useState } from 'react'
-import { backendConfig } from '../../constants'
 import MenuItem from "../../components/MenuItem/MenuItem"
 
 const Login = () => {
@@ -55,13 +54,15 @@ const Login = () => {
       resetErrors()
       try {
         setIsLoading(true)
-        const url = backendConfig.user.login.url
-        const res = await fetch(url, {
-          method: backendConfig.user.login.method,
-          headers: headers,
-          credentials: "include",
-          body: JSON.stringify(formData)
-        })
+        const res = await fetch(
+          "/api/user/login",
+          {
+            method: "POST",
+            headers: headers,
+            credentials: "include",
+            body: JSON.stringify(formData)
+          }
+        )
         const resJson = await res.json()
         handleResponse(resJson)
         

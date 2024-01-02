@@ -6,7 +6,6 @@ import { chatContext } from '../../pages/Chat/Chat'
 const ContactPanel = (props) => {
 
     const contact = props.contact
-    console.log(contact)
     const chat = useContext(chatContext)
 
     const join = () => chat.setCurrentChat(contact.room_id)

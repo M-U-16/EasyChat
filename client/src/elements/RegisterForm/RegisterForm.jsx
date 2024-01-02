@@ -1,9 +1,5 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./RegisterForm.css"
-
-import { useState } from 'react'
-import { backendConfig } from '../../constants'
-
 import SubmitButton from '../Buttons/SubmitButton/SubmitButton'
 
 const RegisterForm = (props) => {
@@ -27,7 +23,6 @@ const RegisterForm = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     setIsLoading(true)
-    const url = backendConfig.user.register.url
     const headers = {
       "Accept": "application/json",
       "Content-Type": "application/json",
@@ -35,11 +30,14 @@ const RegisterForm = (props) => {
     }
     if (!isLoading) {
       try {
-        const res = await fetch(url,{
-          method: backendConfig.user.register.method,
-          headers: headers,
-          body: JSON.stringify(formData)
-        })
+        const res = await fetch(
+          "/api/user/register",
+          {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify(formData)
+          }
+        )
         const resJson = await res.json()
         
         //shows result of registration
@@ -98,5 +96,4 @@ const RegisterForm = (props) => {
     </form>
   )
 }
-
 export default RegisterForm

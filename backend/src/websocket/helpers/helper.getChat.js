@@ -29,7 +29,8 @@ const getChat = async(room_id, user_id) => {
     if (!user_id || !room_id) return {message: "AN_ERROR_OCCURED_WHILE_LOADING_MESSAGES"}
     const sql = "select * from messages where room_id=?"
     const result = await queryDb(sql, room_id)
-    
+
+    console.log("getting messages")
     return { messages: await formatMessages(result, user_id) }
 }
 export default getChat

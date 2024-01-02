@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import "./PrivateRoute.css"
 
 import { checkLoggedIn } from '../../SERVER/checkAuth' //function for sendig auth request to server
-import { backendConfig } from '../../constants'
 import { LoadingSpinner } from '../../elements'
 
 const PrivateRoute = (props) => {
@@ -23,8 +22,7 @@ const PrivateRoute = (props) => {
     useEffect(() => {
         //checks if user is logged in
         checkLoggedIn(
-            backendConfig.user.isLoggedIn.url,
-            backendConfig.user.isLoggedIn.method,
+            "/api/user/isLoggedIn", "GET",
             (result) => { setIsLoggedIn(result) }
         )
     }, [])
@@ -35,7 +33,7 @@ const PrivateRoute = (props) => {
         //returns a loading page while checking user
         return (
            <div className='privateroute__overlay'>
-                <h1>Chat wird geladen <LoadingSpinner /></h1>
+                <h1>{props.loadingMessage} <LoadingSpinner /></h1>
            </div>
         )
     }
