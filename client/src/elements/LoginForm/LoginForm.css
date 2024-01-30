@@ -1,0 +1,11 @@
+.app__login-register {
+    display: flex;
+    font-size: 0.8rem;
+    color: rgb(202, 202, 202);
+}
+.app__login-register a {
+    font-size: 0.8rem;
+    text-decoration: none;
+    margin-left: 0.2rem;
+    color: lightblue;
+}

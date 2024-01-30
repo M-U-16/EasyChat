@@ -8,6 +8,8 @@
     padding: 1rem;
     margin: 1rem;
     border-radius: 5px;
+    min-width: 0;
+    overflow: hidden;
 }
 .message__profile-container {
     width: 2.5rem;

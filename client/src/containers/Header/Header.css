@@ -3,12 +3,10 @@
 .app__homepage-header {
     min-height: 100vh;
     display: grid;
+    overflow-x: hidden;
     grid-template-columns: 2fr 1fr;
     place-items: center;
     align-content: center;
-    /* background: 
-        radial-gradient(circle at 50% 50%, rgba(0, 0, 255, 0.268), transparent),
-        rgb(15, 15, 15); */
     background:
         radial-gradient(circle at 0 0, rgb(0, 0, 0), transparent),
         radial-gradient(circle at 100% 0, rgba(0, 0, 255, 0.585), transparent);
@@ -105,4 +103,14 @@
         margin: 0 0 1rem 0;
     }
     
+}
+@media screen and (max-width: 500px) {
+    .app__homepage-header {
+        grid-template-columns: 1fr;
+    }
+    
+    .app__landing-section {
+        padding: 1rem;
+        margin-left: 0;
+    }
 }

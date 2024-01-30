@@ -9,7 +9,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.176);
+    background-color: rgba(0, 0, 0, 0.324);
     animation: fadein 0.5s ease 1;
 }
 /* ADD CONTACT FORM */

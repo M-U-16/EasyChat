@@ -1,18 +1,11 @@
 import React from 'react'
 import "./Header.css"
-import { motion, useMotionValue, useTransform } from "framer-motion"
-import { images, icons } from '../../constants'
+import { icons } from '../../constants'
 import { LoginButton, ActionButton } from '../../elements'
 
 
 
 const Header = () => {
-  
-  const x = useMotionValue(0)
-  const input = [-200, 0, 200]
-  const output = [0, 1, 0]
-  const opacity = useTransform(x, input, output)
-
   
   return (
     <header className='app__homepage-header'>
@@ -26,13 +19,10 @@ const Header = () => {
             </span>
           </h1>
         </div>
-        <motion.p
-          drag="x"
-          style={{x, opacity}}
-        >
+        <p>
           ... ermöglicht es dir
           mit Freunden und Familie zu Chatten und in Kontakt zu bleiben.
-        </motion.p>
+        </p>
         <div className="app__cta-container">
           <LoginButton className="app__landing-cta" />
           <ActionButton action={"/registrieren"} content={"Registrieren"} />

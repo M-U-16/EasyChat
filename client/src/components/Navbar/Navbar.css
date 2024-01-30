@@ -2,7 +2,7 @@
     height: var(--navbar-height);
     width: 100%;
 
-    background: var(--secondary-blue);
+    background: #121211;
     box-shadow: 0px 0px 2px rgb(26, 103, 255);
     
     position: fixed;
