@@ -8,15 +8,15 @@ import { Server as SocketIoServer } from "socket.io"
 
 //importing config files
 import { socketConf } from "./config/socket.server.conf.js"
-import { apiRoute as apiRouter } from "./src/routes/api.routes.js"
+import { apiRoute as apiRouter } from "./src/routes/api.js"
 
 import {
     startingServer,
     corsOptions
 } from "./config/server.conf.js"
 
-import { auth } from "./src/websocket/middleware/socket-auth.js"
-import { registerChatHandler } from "./src/websocket/handlers/handler.chat.js"
+import { auth } from "./src/websocket/middleware/auth.socket.js"
+import { registerChatHandler } from "./src/websocket/handler.chat.js"
 
 //creating express app
 const app = express()
@@ -42,7 +42,7 @@ app.use("/api", apiRouter)
 //sockets
 io.of("/chat-server").use(auth)
 io.of("/chat-server").on("connection", (socket) => {
-    //console.log("user connected")
+    
     socket.io = io
     registerChatHandler(socket)
 })

@@ -1,0 +1,54 @@
+<button 
+    type='submit'
+    class="app__submit-button"
+    class:active={active}
+>
+    <span>Ok</span>
+    <div></div>
+</button>
+
+<style>
+    button[type="submit"] {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        border-radius: 10px;
+        margin-top: 1rem;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: white;
+        background: var(--highlight-blue);
+    }
+
+    .spinner span {
+        /* display: none; */
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .spinner div {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        position: absolute;
+        background: transparent;
+        border: 5px solid rgba(255, 255, 255, 0.168);
+        border-left: 5px solid rgb(255, 255, 255);
+        animation: spin infinite 1s linear;
+    }
+    
+    @keyframes spin {
+        from {
+            rotate: 0deg;
+        }
+        to {
+            rotate: 360deg;
+        }
+    }    
+</style>
+<script>
+    let active = false
+</script>

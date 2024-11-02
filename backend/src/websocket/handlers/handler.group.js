@@ -1,3 +1,0 @@
-const registerGroupHandler = (io, socket) => {
-    
-}

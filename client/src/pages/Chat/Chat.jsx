@@ -66,6 +66,7 @@ const Chat = () => {
     socket.on("disconnect", onDisconnect)
     socket.on("new_message", newMessage)
     socket.on("user_online", () => console.log("user online"))
+    
     //connecting to socket io server
     connect()
     //clean up function
@@ -86,7 +87,6 @@ const Chat = () => {
         <LogoutButton />
       </Navbar>
       <div className='app__chat-container'>
-        {/* context for messages and functions */}
         <chatContext.Provider value={{
           messages,
           setMessages,

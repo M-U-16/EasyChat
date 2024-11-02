@@ -6,8 +6,8 @@ import "./LoginButton.css"
 const LoginButton = () => {
   return (
     <Link to={`/login`} className="app__menu-login-button">
-        <span>Anmelden</span>
-        <img src={images.loginIcon} />
+      <span>Anmelden</span>
+      <img src={images.loginIcon} />
     </Link>
   )
 }

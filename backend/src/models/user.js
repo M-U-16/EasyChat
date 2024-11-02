@@ -1,53 +1,61 @@
-import mysql2 from "mysql2"
 import bcrypt from "bcrypt"
-
 import connection, { queryDb } from "./db.js"
 
+function formatResponse(res, value) {
+    if (!res[0]) return
+    return res[0][value]
+}
+
 //validating that the user not already exists
-export const checkUser = async(newUser) => {
+export async function checkUser(newUser) {
+    /* return {error: false} */
+
     const sqlEmail = "SELECT email FROM users WHERE email=?"
     const sqlUsername = "SELECT username FROM users WHERE username=?"
-
-    const username = [newUser.username] // username for query
-    const email = [newUser.email] // email for query
-
-    const resultEmail = await connection.promise().query(sqlEmail, email)
-    const resultUsername = await connection.promise().query(sqlUsername, username)
     
-    const result = {email: resultEmail[0], username: resultUsername[0]}
-    if (
-        result.email.length > 0 ||
-        result.username.length > 0
-    ) { 
+    const email = formatResponse(
+        await queryDb(sqlEmail, [newUser.email]),
+        "email"
+    )
+    const username = formatResponse(
+        await queryDb(sqlUsername, [newUser.username]),
+        "username"
+    )
+
+    if (email || username) {
         return {
             error: true,
-            email: result.email.length > 0,
-            username: result.username > 0
+            emailError: email != undefined,
+            usernameError: username != undefined
         }
     }
+
     return { error: false }
 }
+
 //function for adding user to database
-export const addUser = async(user) => {
+export async function addUser(user) {
     try {
         const hashedPassword = await bcrypt.hash(user.password, 10)
         await queryDb(
-            "INSERT INTO users (password, email, username, status) VALUES (?, ?, ?, ?)",
-            [hashedPassword, user.email, user.username, true]
+            "INSERT INTO users (password, email, username, userDir) VALUES (?, ?, ?, ?)",
+            [hashedPassword, user.email, user.username, user.dir]
         )
         return true
     } catch(err) { return false }
 }
+
 //finds a user in database
-export const findUser = async(email) => {
+export async function findUser(email) {
     try {
         const sql = "SELECT * FROM users WHERE email=?"
-        return await connection.promise().query(sql, [email])
+        const user = await queryDb(sql, [email])
+        return user[0]
     } catch(err) { if (err) throw err }
 }
-//compares password from user and from database
-export const comparePassHash = async(user_password, db_hash) => {
 
+//compares password from user and from database
+export async function comparePassHash(user_password, db_hash) {
     const match = await bcrypt.compare(user_password, db_hash)
     if (!match) return false
     return true

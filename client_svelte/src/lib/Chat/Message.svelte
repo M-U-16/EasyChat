@@ -1,0 +1,73 @@
+<div class='message__container'>
+    <div
+        class="chat__message"
+        class:is_you={data.username == $page.data.username}
+    >
+        <div class="message__profile-container">
+            <img src="/api/user/profile/{data.username}" alt="{data.username}" />
+        </div>
+        <div class="message__text-content">
+            <p class="chat__message-name">
+                {data.username}:
+            </p>
+            <p class="chat__message-content">
+                {data.message}
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+.message__container {
+    width: 100%;
+}
+.chat__message {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 5px;
+    min-width: 0;
+    overflow: hidden;
+    float: left;
+    color: #ffffff;
+    background: rgb(21, 21, 21);
+}
+.chat__message.is_you {
+    float: right;
+    position: relative;
+    color: white;
+    background: rgba(31, 96, 202, 0.882) !important;
+}
+
+.message__profile-container {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0.5rem;
+}
+.message__profile-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.chat__message-name {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0);
+    color: rgb(255, 255, 255);
+}
+.chat__message-content {
+    border-radius: 5px;
+    border-radius: 0px 0px 5px 5px;
+    width: 100%;
+}
+</style>
+
+<script>
+    import {page} from "$app/stores"
+    import testProfile from "$lib/assets/icons/test-profile.jpg"
+    export let data
+</script>

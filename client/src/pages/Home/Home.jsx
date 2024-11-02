@@ -3,7 +3,6 @@ import "./Home.css"
 import Homepage from '../Homepage/Homepage'
 import { Navbar, Footer } from '../../components'
 import MenuItem from '../../components/MenuItem/MenuItem'
-import { icons } from '../../constants'
 
 {
   /* <Link className='link' to={"/chat"}>

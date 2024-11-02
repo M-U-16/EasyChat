@@ -1,6 +1,5 @@
 .app__chat-sidepanel {
     --profile-img-width: 50px;
-    --breakpoint-800: 800px;
     --side-panel-width: 20rem;
     
     width: var(--side-panel-width);
@@ -23,7 +22,7 @@
     display: none;
 }
 .chat__contacts-container {
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 /* LODING */

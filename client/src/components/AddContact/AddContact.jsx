@@ -52,8 +52,8 @@ const AddContact = ({displayContact, setDisplayContact }) => {
         }
       }
       xhttp.open(
-        "/api/user/chats/new-chat",
         "POST",
+        "/api/user/chats/new-chat",
         true //async = true
       )
       xhttp.setRequestHeader("Content-type", "application/json")

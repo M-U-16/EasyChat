@@ -1,6 +1,7 @@
 .app__chat-container {
     margin-top: var(--navbar-height);
     height: calc(100% - var(--navbar-height));
+    /* height: calc(100svh - var(--navbar-height)); */
     overflow: hidden;
     width: 100%;
     display: grid;

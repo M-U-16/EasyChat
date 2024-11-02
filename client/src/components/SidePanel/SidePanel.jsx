@@ -32,7 +32,7 @@ const SidePanel = () => {
           credentials: "include",
           sameSite: "none",
           headers: {
-            Accept: "application/json",
+            "Accept": "application/json",
             "Content-Type": "application/json"
           }
         }

@@ -74,8 +74,7 @@
     background-color: var(--secondary-blue);
 }
 .true, .false {
-    border: 
-        3px solid var(--online-status-border-clr);
+    border: 3px solid var(--online-status-border-clr);
 }
 .true {
     box-shadow: inset 0px 0px 50px rgb(0, 171, 0);
@@ -90,7 +89,6 @@
 .app__panel-lastmessage-container {
     display: flex;
     align-items: center;
-    /* max-width: 50%; */
     overflow-x: hidden;
 }
 .app__panel-lastmessage-container h2,
