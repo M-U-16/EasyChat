@@ -42,7 +42,6 @@ app.use("/api", apiRouter)
 //sockets
 io.of("/chat-server").use(auth)
 io.of("/chat-server").on("connection", (socket) => {
-    
     socket.io = io
     registerChatHandler(socket)
 })
