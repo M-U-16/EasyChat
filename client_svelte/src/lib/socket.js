@@ -1,7 +1,10 @@
 import { io } from 'socket.io-client'
+import {
+    PUBLIC_API_URL
+} from "$env/static/public"
 
 const socket = io(
-    "http://localhost:3000/chat-server", {
+    PUBLIC_API_URL+ "/chat-server", {
         autoConnect: false,
         withCredentials: true,
         transports: ["websocket"],
