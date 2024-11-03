@@ -46,11 +46,21 @@ io.of("/chat-server").on("connection", (socket) => {
     registerChatHandler(socket)
 })
 
-server.listen(
-    process.env.SERVER_PORT,
-    process.env.SERVER_HOSTNAME,
-    startingServer(
-        process.env.SERVER_HOSTNAME,
-        process.env.SERVER_PORT,
+if (process.env.EASYCHAT_SOCKET_PATH) {
+    server.listen(
+        process.env.EASYCHAT_SOCKET_PATH,
+        console.log(
+            "listening on: ",
+            process.env.EASYCHAT_SOCKET_PATH
+        )
     )
-)
+} else {
+    server.listen(
+        process.env.SERVER_PORT,
+        process.env.SERVER_HOSTNAME,
+        startingServer(
+            process.env.SERVER_HOSTNAME,
+            process.env.SERVER_PORT,
+        )
+    )
+}
