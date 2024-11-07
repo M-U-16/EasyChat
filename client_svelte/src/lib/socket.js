@@ -8,7 +8,7 @@ const socket = io(
         autoConnect: false,
         withCredentials: true,
         transports: ["websocket"],
-        path: "/api/socket.io",
+        path: "/socket.io",
         secure: false,
         sameSite: "none"
     }
