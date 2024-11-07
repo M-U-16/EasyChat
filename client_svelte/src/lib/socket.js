@@ -4,13 +4,14 @@ import {
 } from "$env/static/public"
 
 const socket = io(
-    PUBLIC_API_URL+ "/chat-server", {
+    PUBLIC_API_URL + "/chat-server", {
         autoConnect: false,
         withCredentials: true,
         transports: ["websocket"],
-        path: "/api/chat",
+        path: "/api/socket.io",
         secure: false,
         sameSite: "none"
     }
 )
+
 export default socket

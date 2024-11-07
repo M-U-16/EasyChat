@@ -1,20 +1,15 @@
-import cookieParser from "cookie-parser"
-import bodyParser from "body-parser"
-import express from "express"
+import "dotenv/config"
 import cors from "cors"
 import http from "http"
-import "dotenv/config"
+import express from "express"
+import bodyParser from "body-parser"
+import cookieParser from "cookie-parser"
 import { Server as SocketIoServer } from "socket.io"
 
 //importing config files
 import { socketConf } from "./config/socket.server.conf.js"
 import { apiRoute as apiRouter } from "./src/routes/api.js"
-
-import {
-    startingServer,
-    corsOptions
-} from "./config/server.conf.js"
-
+import { corsOptions } from "./config/server.conf.js"
 import { auth } from "./src/websocket/middleware/auth.socket.js"
 import { registerChatHandler } from "./src/websocket/handler.chat.js"
 
@@ -26,7 +21,6 @@ const server = http.createServer(app)
 export const io = new SocketIoServer(server, socketConf)
 
 //middleware and configuration
-app.use(express.static("public"))
 app.use(express.json())
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
@@ -46,21 +40,21 @@ io.of("/chat-server").on("connection", (socket) => {
     registerChatHandler(socket)
 })
 
-if (process.env.EASYCHAT_SOCKET_PATH) {
-    server.listen(
-        process.env.EASYCHAT_SOCKET_PATH,
-        console.log(
-            "listening on: ",
-            process.env.EASYCHAT_SOCKET_PATH
+try {
+    if (process.env.SOCKET_PATH) {
+        server.listen(
+            process.env.EASYCHAT_SOCKET_PATH,
+            console.log(
+                "listening on: ",
+                process.env.EASYCHAT_SOCKET_PATH
+            )
         )
-    )
-} else {
-    server.listen(
-        process.env.SERVER_PORT,
-        process.env.SERVER_HOSTNAME,
-        startingServer(
-            process.env.SERVER_HOSTNAME,
+    } else {
+        server.listen(
             process.env.SERVER_PORT,
+            process.env.SERVER_HOSTNAME
         )
-    )
-}
+    }
+} catch(error) {
+    process.exit(-1)
+} 
