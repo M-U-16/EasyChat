@@ -1,4 +1,8 @@
+import fs from "fs"
 import "dotenv/config"
+if (process.env.SOCKET_PATH) {
+    fs.unlinkSync("/var/tmp/"+process.env.SOCKET_PATH)
+}
 import cors from "cors"
 import http from "http"
 import express from "express"
@@ -42,13 +46,7 @@ io.of("/chat-server").on("connection", (socket) => {
 
 try {
     if (process.env.SOCKET_PATH) {
-        server.listen(
-            process.env.EASYCHAT_SOCKET_PATH,
-            console.log(
-                "listening on: ",
-                process.env.EASYCHAT_SOCKET_PATH
-            )
-        )
+        server.listen(process.env.EASYCHAT_SOCKET_PATH)
     } else {
         server.listen(
             process.env.SERVER_PORT,
