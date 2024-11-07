@@ -1,7 +1,8 @@
 import fs from "fs"
 import "dotenv/config"
 if (process.env.SOCKET_PATH) {
-    fs.unlinkSync("/var/tmp/"+process.env.SOCKET_PATH)
+    const path = "/var/tmp/"+process.env.SOCKET_PATH
+    fs.existsSync(path) && fs.unlinkSync(path)
 }
 import cors from "cors"
 import http from "http"
