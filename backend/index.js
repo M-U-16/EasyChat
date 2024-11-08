@@ -3,7 +3,9 @@ import "dotenv/config"
 
 if (process.env.SOCKET_PATH) {
     const path = process.env.SOCKET_PATH
-    fs.existsSync(path) && fs.unlinkSync(path)
+    if (fs.existsSync(path)) {
+        fs.unlinkSync(path)
+    }
 }
 
 import cors from "cors"
@@ -27,15 +29,17 @@ const server = http.createServer(app)
 //creating websocket server on top of http server
 export const io = new SocketIoServer(server, socketConf)
 
-process.on("SIGINT", () => {
+function CloseServer() {
     server.close(()=>{
         console.log("Server Closed")
         if (process.env.SOCKET_PATH) {
             fs.unlinkSync(process.env.SOCKET_PATH)
-            process.exit(0)
         }
     })
-})
+}
+
+process.on("SIGINT", CloseServer)
+process.on("SIGTERM", CloseServer)
 
 //middleware and configuration
 app.use(express.json())
@@ -68,4 +72,4 @@ try {
     }
 } catch(error) {
     process.exit(-1)
-} 
+}
