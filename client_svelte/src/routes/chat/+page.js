@@ -19,10 +19,8 @@ export async function load({fetch}) {
         username = await fetch("/api/user/username")
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 return data.username
             })
-        console.log(username)
     }
 
     await fetch("/api/test", {

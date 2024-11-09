@@ -1,6 +1,10 @@
 import fs from "fs"
 import "dotenv/config"
+import winston from "winston"
 
+// if listening on linux domain socket
+// delete old file if it exists to prevent
+// ERRADDRINUSE
 if (process.env.SOCKET_PATH) {
     const path = process.env.SOCKET_PATH
     if (fs.existsSync(path)) {
@@ -22,6 +26,7 @@ import { corsOptions } from "./config/server.conf.js"
 import { auth } from "./src/websocket/middleware/auth.socket.js"
 import { registerChatHandler } from "./src/websocket/handler.chat.js"
 
+
 //creating express app
 const app = express()
 //creating http server
@@ -31,7 +36,7 @@ export const io = new SocketIoServer(server, socketConf)
 
 function CloseServer() {
     server.close(()=>{
-        console.log("Server Closed")
+        winston
         if (process.env.SOCKET_PATH) {
             fs.unlinkSync(process.env.SOCKET_PATH)
         }

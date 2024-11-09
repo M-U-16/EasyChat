@@ -135,6 +135,4 @@
     import checkbox from "$lib/assets/icons/chatbox-ellipse.svg"
     import LoginButton from "$lib/buttons/LoginButton.svelte";
     import RegisterButton from "$lib/buttons/RegisterButton.svelte";
-
-    console.log(checkbox)
 </script>
