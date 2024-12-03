@@ -10,6 +10,9 @@
   },
   "type": "module",
   "keywords": [],
+  "imports": {
+    "#root/*.js": "./*.js"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {

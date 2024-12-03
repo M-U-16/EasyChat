@@ -32,9 +32,6 @@ async function register(req, res) {
         username: user.username,
         userDir: user.dir
     })
-    /* profile_process.on("message", (message)=>{
-            console.log(message)
-    }) */
 
     // adds new user to db
     addUser(user).then(userAdded => {

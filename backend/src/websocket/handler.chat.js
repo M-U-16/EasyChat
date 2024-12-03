@@ -3,6 +3,7 @@ import addMessage from "./helper.addMessage.js"
 import joinRoom from "./helper.joinRoom.js"
 import { v4 } from "uuid"
 import { queryDb } from "../models/db.js"
+import { logger } from "#root/logger.js"
 
 const online = new Map()
 
@@ -46,7 +47,7 @@ export async function registerChatHandler(socket) {
         try {
             //returns the messages of the room stored in messages table
             callback(await getChat(data.room_id, socket.data.user_id))
-        } catch(err) { console.log(err) }
+        } catch(err) { logger.error(err) }
     })
 
     socket.on(":join_room", async(data, callback) => {
@@ -65,7 +66,7 @@ export async function registerChatHandler(socket) {
 
             //returns the messages of the room stored in messages table
             callback(await getChat(data.room_id, socket.data.user_id))
-        } catch(err) { console.log(err) }
+        } catch(err) { logger.error(err) }
     })
 
     socket.on(":send_message", async(data, callback) => {
@@ -91,11 +92,11 @@ export async function registerChatHandler(socket) {
             socket.broadcast.to(data.room_id).emit(":new_message", message)
             callback(message)
 
-        } catch(err) { console.log(err) }
+        } catch(err) { logger.error(err) }
     })
 
     socket.on("disconnect", () => {
-        console.log("user disconnected")
+        logger.info("user disconnected")
         allRooms.forEach(room => {
             if (online.get(room) == 1) {
                 online.delete(room)

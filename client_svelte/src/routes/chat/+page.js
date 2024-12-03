@@ -23,16 +23,6 @@ export async function load({fetch}) {
             })
     }
 
-    await fetch("/api/test", {
-        method:"POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "mode": "cors"
-        },
-        body: JSON.stringify({...loggedin, username: username})
-    })
-
     return {
         isAuthorized: loggedin.isAuthorized,
         username: username

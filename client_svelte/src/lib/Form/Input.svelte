@@ -1,7 +1,8 @@
 <div class='input-wrapper'>
-    {#if errorMessage != "" || errorMessage != undefined}
-        <div class="error-message no-select">{errorMessage}</div>
-    {/if}
+    <div
+        class="error-message no-select"
+        class:active={errorMessage!==""}
+    >{errorMessage}</div>
 
     <label for={name} class:active={active}>
         {placeholder}
@@ -26,7 +27,6 @@
     .input-wrapper {
         margin-top: 0.8rem;
         position: relative;
-        /* overflow: hidden; */
     }
 
     .input-wrapper label {
@@ -58,7 +58,7 @@
         font-size: 1.2rem;
         background: white;
         border-radius: 10px;
-        transition: 0.2s ease;
+        transition: 0.4s ease;
         border: 2px solid rgb(157, 157, 157);
     }
     
@@ -67,17 +67,26 @@
         border: 2px solid var(--highlight-blue);
     }
 
-    .error {
+    input.error {
         border: 2px solid red !important;
     }
 
     .error-message {
-        position: absolute;
         color: red;
         top: 0.2rem;
         right: 0.5rem;
+        opacity: 0;
+        transition: 0.3s ease;
+        transform: translateY(-10px);
+        position: absolute;
         pointer-events: none;
     }
+
+    .error-message.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
 </style>
 
 <script>

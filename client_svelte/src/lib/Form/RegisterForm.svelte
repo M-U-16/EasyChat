@@ -32,7 +32,7 @@
     import Form from "$lib/Form/Form.svelte";
     import Input from "$lib/Form/Input.svelte"
 
-    let success = false
+    export let success
 
     let email = writable("")
     let username = writable("")
@@ -78,9 +78,15 @@
         
         console.log(res)
         if (!res.error) {
-            success = true
+            success()
         } else {
+            if (res.emailError) {
+                emailError = "Email existiert bereits!"
+            }
 
+            if (res.usernameError) {
+                usernameError = "Benutzername existiert bereits!"
+            }
         }
     }
 </script>

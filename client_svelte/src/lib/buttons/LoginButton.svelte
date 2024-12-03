@@ -12,7 +12,7 @@ a {
     padding: 0.8rem 1rem 0.8rem 1rem;
     border-radius: 10px;
     border: none;
-    width: 10rem;
+    width: 100%;
     background: var(--highlight-blue);
     font-size: 1.2rem;
     font-weight: 600;

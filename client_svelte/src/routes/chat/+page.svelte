@@ -24,6 +24,8 @@
             <div
                 class="chat-messages-input"
             >
+                <p>{navigator.userAgent}</p>
+
                 {#if $showAddContact}
                     <AddContact toggle={showAddContact}/>
                 {/if}

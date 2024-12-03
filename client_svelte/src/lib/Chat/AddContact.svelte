@@ -16,17 +16,23 @@
         on:submit={handleSubmit}
         class:slide-out={popupClosed}
     >
-        <button
-            class='contact-close-bnt'
-            type='button'
-            on:click={closePopup}
-        >
-            <img src={close} alt="Schließen" />
-        </button>
-        <div class='contact-heading'>
-            <h2>Kontakt hinzufügen</h2>
+        <div class="top">
+            <div class='contact-heading'>
+                <h2>Kontakt hinzufügen</h2>
+            </div>
+            <button
+                class='contact-close-bnt'
+                type='button'
+                on:click={closePopup}
+            >
+                <img src={close} alt="Schließen" />
+            </button>
         </div>
-        <div class="contact-input-container">
+
+        <div
+            class="contact-input-container"
+            class:searching={searching}
+        >
             <input 
                 placeholder='Benutzername'
                 id='contact-name-input'
@@ -35,13 +41,22 @@
                 bind:this={input}
                 on:change={handleContact}
             />
+            <div
+                class="search-container"
+            >
+
+                {#each data as user}
+                    <button class="user-container">
+                        <img src={user.profile} alt="">
+                        <p>{user.username}</p>
+                    </button>
+                {/each}
+            </div>
         </div>
         <button
             class='contact-submit'
             type='submit'
-        >Hinzufügen
-            <!-- <Loader /> -->
-        </button>
+        >Hinzufügen</button>
     </form>
 </div>
 
@@ -52,9 +67,10 @@
     let ref
     let form
     let input
+    let searching
+    export let toggle
     let firstClick = true
     let popupClosed = false
-    export let toggle
 
     function handleContact() {}
     function closePopup() {
@@ -91,6 +107,12 @@
         } catch(err) { console.log(err) }
     }
 
+    const data = [
+        {profile: "/api/user/profile/king", username: "king"},
+        {profile: "/api/user/profile/king", username: "king"},
+        {profile: "/api/user/profile/king", username: "king"}
+    ]
+
 </script>
 
 <style>
@@ -117,17 +139,24 @@
     display: flex;
     flex-direction: column;
     background-color: rgb(13, 13, 13);
-    padding: 3rem;
+    padding: 2rem;
     height: auto;
     max-width: 25rem;
     position: relative;
     animation: slidein 1 0.8s ease;
     border-radius: 5px;
     width: 100%;
-    min-height: 30rem;
 }
+
+.contact-form .top {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .contact-form h2 {
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .contact-heading {
@@ -137,62 +166,93 @@
 }
 
 .contact-close-bnt {
-    position: absolute;
-    width: 2rem;
-    height: 2rem;
     scale: 1.5;
-    cursor: pointer;
-    background-color: transparent;
+    width: 2rem;
     border: none;
+    height: 2rem;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 1rem;
-    right: 1rem;
+    cursor: pointer;
     border-radius: 50%;
+    align-items: center;
     transition: 0.3s ease;
+    justify-content: center;
+    background-color: transparent;
 }
+
 .contact-close-bnt img {
     width: 1.5rem;
     height: 1.5rem;
 }
+
 .contact-close-bnt:hover {
     background: rgba(70, 70, 70, 0.312);
 }
+
 .contact-close-bnt:active {
     scale: 0.9;
 }
 
 .contact-input-container {
-    position: relative;
     margin-top: 1rem;
+    position: relative;
 }
 
 .contact-form input {
-    padding: 1rem;
-    font-size: 1.3rem;
-    outline: none;
+    padding: 0.9rem;
     border: none;
-    border-radius: 10px;
     width: 100%;
-    background: white;
-    box-shadow: inset 0px 0px 3px black;
+    outline: none;
     color: black;
+    font-size: 1.3rem;
+    border-radius: 5px;
+    background: white;
     transition: padding 0.3s ease;
     padding-left: 1rem !important;
 }
 
+.contact-input-container.searching input {
+    border-radius: 5px 5px 0 0;
+}
+
 .contact-submit {
     display: flex;
+    border: none;
+    padding: 0.9rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    border-radius: 5px;
     align-items: center;
     justify-content: center;
-    margin-top: 1rem;
-    padding: 0.9rem;
-    border-radius: 10px;
-    cursor: pointer;
     background: var(--highlight-blue);
-    border: none;
-    font-size: 1.2rem;
+}
+
+.search-container {
+    width: 100%;
+    overflow: hidden;
+    position: absolute;
+    border-radius: 0 0 5px 5px;
+    background-color: rgb(0, 0, 0);
+}
+
+.search-container button {
+    border: 0;
+    gap: 0.5rem;
+    width: 100%;
+    display: flex;
+    padding: 0.5rem;
+    cursor: pointer;
+    align-items: center;
+    background-color: transparent;
+}
+
+.search-container button:hover {
+    box-shadow: inset 0px 0px 5px var(--highlight-blue);
+}
+
+.search-container button img {
+    width: 3rem;
+    border-radius: 50%;
 }
 
 .fade-out {

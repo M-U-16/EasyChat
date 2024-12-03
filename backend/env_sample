@@ -1,0 +1,16 @@
+DB_NAME="name of database if using mysql"
+DB_PASSWORD="password if using mysql with authentication"
+DB_USERNAME="username if using mysql with authentication"
+TOKEN_SECRET="secret used to encrypt and decrypt tokens"
+TOKEN_NAME="used as name for jwt cookie for authentication"
+
+SERVER_PORT="port of server"
+SERVER_HOSTNAME="host name of server"
+
+IMAGES_PATH="path to store images"
+SQL_PATH="path to sql schemas"
+DATABASE_PATH="path to database file"
+
+LOGGING_FILES_PATH="path directory for logs"
+LOGGING_LEVEL="logging level for winston"
+NODE_ENV="the current environment"

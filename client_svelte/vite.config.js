@@ -18,12 +18,12 @@ export default ({mode}) => {
 					changeOrigin: true,
 					secure: true,
 				},
-				/* "/socket": {
-					target:"https://localhost:3000",
+				"/socket.io": {
+					target: API_TARGET,
 					changeOrigin: true,
 					ws: true,
 					secure: true
-				} */
+				}
 			}
 		},
 		plugins: [sveltekit()]

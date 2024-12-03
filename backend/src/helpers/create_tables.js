@@ -2,6 +2,7 @@ import fs from "fs"
 import "dotenv/config"
 import path from "path"
 import sqlite3 from "sqlite3"
+import { logger } from "#root/logger.js"
 
 const tables = path.join(
     process.env.SQL_PATH,
@@ -15,15 +16,15 @@ const db = new sqlite3.Database(
         if (err)  {
             return console.error(err.message)
         }
-        console.log("Connected to Sqlite Database.")
+        logger.info("Connected to Sqlite Database.")
     }
 )
 db.exec(fs.readFileSync(tables).toString(),
     (err)=>{
         if (err) {
-            console.log(err)
+            logger.error(err)
         } else {
-            console.log("Created tables for Database.")
+            logger.info("Created tables for Database.")
         }
     }
 )

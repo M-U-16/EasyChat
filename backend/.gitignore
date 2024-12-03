@@ -4,3 +4,4 @@ public
 *conf.js
 uploads
 users
+*.log

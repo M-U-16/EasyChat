@@ -1,3 +1,4 @@
+import { logger } from "#root/logger.js";
 import jwt from "jsonwebtoken"
 const { verify } = jwt
 
@@ -18,8 +19,7 @@ export function formatCookies(cookieString) {
 }
 
 export function auth(socket, next) {
-    console.log("client connecting")
-    //console.log(socket.handshake.headers)
+    logger.debug("client connecting")
 
     try {
         const cookies = socket.handshake.headers.cookie
@@ -36,11 +36,11 @@ export function auth(socket, next) {
         if (!validToken) return next(new Error("NOT_AUTHENTICATED"))
         
         socket.data = {...validToken, ...socket.data}
+        
         //forward request
         return next()
 
     } catch(err) {
-        //error if token is invalid
         return next(new Error("NOT_AUTHENTICATED"))
     }
 }

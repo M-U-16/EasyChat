@@ -14,7 +14,6 @@ const validateToken = (req, res, next) => {
             return next()
         }
     } catch(err) {
-        console.log(err)
         return next(new Error("TOKEN_NOT_VALID"))
     }
 }

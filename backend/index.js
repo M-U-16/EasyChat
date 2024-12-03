@@ -1,6 +1,5 @@
 import fs from "fs"
 import "dotenv/config"
-import winston from "winston"
 
 // if listening on linux domain socket
 // delete old file if it exists to prevent
@@ -55,6 +54,8 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(cookieParser())
 app.set("trust proxy", 1)
+
+app.use(express.static("static"))
 
 //routes
 app.use("/api", apiRouter)

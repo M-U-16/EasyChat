@@ -1,3 +1,4 @@
+import { logger } from "#root/logger.js"
 import { queryDb } from "../models/db.js"
 
 const isPrivate = true
@@ -37,7 +38,7 @@ export async function createChat(req, res) {
             queryDb(participantSql, [roomId, participant])
         })
     } catch(err) {
-        console.log(err)
+        logger.error(err)
         return res.json({
             error: true,
             message: "COULD_NOT_ADD_USER"

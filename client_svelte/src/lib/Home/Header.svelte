@@ -98,7 +98,12 @@
     display: flex;
     justify-content: space-between;
     max-width: 22rem;
-    margin-bottom: 2rem;
+    /* margin-bottom: 2rem; */
+    gap: 1rem;
+}
+
+.app__cta-container:last-child {
+    margin: 0 !important;
 }
 
 @media screen and (max-width: 750px) {
@@ -109,6 +114,7 @@
 
     .app__cta-container {
         flex-direction: column;
+        gap: 0;
     }
 
     :global(.app__cta-container > a) {
@@ -122,7 +128,6 @@
 }
 
 @media screen and (max-width: 500px) {
-    
     
     .app__landing-section {
         padding: 1rem;

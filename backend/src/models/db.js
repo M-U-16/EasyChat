@@ -1,12 +1,7 @@
 /* import mysql2 from "mysql2" */
 import sqlite3 from "sqlite3"
-import config from "../../config/db.config.js"
+import { logger } from "#root/logger.js"
 
-/* const connection = mysql2.createConnection(config)
-connection.connect((err) => {
-    if (err) throw err
-    console.log("Connected to Database!")
-}) */
 const connection = new sqlite3.Database(
     process.env.DATABASE_PATH,
     sqlite3.OPEN_READWRITE,
@@ -14,7 +9,7 @@ const connection = new sqlite3.Database(
         if (err) {
             throw err
         }
-        console.log("Connected to Database!")
+        logger.info("Connected to Database!")
     }
 )
 
@@ -23,10 +18,6 @@ export function queryDb(
     query_var=[],
 ) {
     return new Promise((resolve, reject) => {
-        /* connection.query(query_string, query_var, (err, result) => {
-            if (err) return reject(err)
-            resolve(result)
-        }) */
         connection.all(query_string, query_var, (err, result)=>{
             if (err) return reject(err)
             resolve(result)

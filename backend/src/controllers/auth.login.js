@@ -16,7 +16,6 @@ async function login(req, res) {
     const doesMatch = await comparePassHash(inputPassword, user.password)
     if (!doesMatch) return res.json({error: true, message: "PASSWORD_IS_INCORRECT"})
     
-    console.log("hallo")
     //removing old token
     res.clearCookie(process.env.TOKEN_NAME)
     //setting new cookie

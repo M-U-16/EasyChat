@@ -1,7 +1,7 @@
-import jwt from "jsonwebtoken"
 const {sign, verify} = jwt
+import jwt from "jsonwebtoken"
 
-function createToken(user) {
+export function createToken(user) {
     const accessToken = sign(
         {
             username: user.username,
@@ -12,12 +12,7 @@ function createToken(user) {
     return accessToken
 }
 
-function encryptToken(token) {
+export function encryptToken(token) {
     if (!token) return {error: true, message: "TOKEN NOT THERE"}
     return verify(token, process.env.TOKEN_SECRET)
-}
-
-export {
-    createToken,
-    encryptToken
 }
