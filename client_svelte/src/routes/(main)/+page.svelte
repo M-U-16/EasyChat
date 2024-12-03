@@ -1,4 +1,4 @@
 <Header />
 <script>
-    import Header from "$lib/home/Header.svelte";
+    import Header from "$lib/Home/Header.svelte";
 </script>
