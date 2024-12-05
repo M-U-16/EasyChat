@@ -1,18 +1,18 @@
 import path from "path"
-import express, { query } from "express";
+import express from "express";
 const router = express.Router()
 
 //chat routes
 import { chatRouter } from "./user.chat.js";
 
 //middleware for authentication
-import validateToken from "../middleware/auth.validateToken.js";
-import isAuthorized from "../controllers/auth.isAuthorized.js";
-import { queryDb } from "../models/db.js";
-import register from "../controllers/auth.register.js";
-import logOut from "../controllers/auth.logout.js";
-import login from "../controllers/auth.login.js";
-import { searchUsers } from "../controllers/user.searchUsers.js";
+import validateToken from "#root/src/middleware/auth.validateToken.js";
+import isAuthorized from "#root/src/controllers/auth.isAuthorized.js";
+import { queryDb } from "#root/src/models/db.js";
+import register from "#root/src/controllers/auth.register.js";
+import logOut from "#root/src/controllers/auth.logout.js";
+import login from "#root/src/controllers/auth.login.js";
+import { searchUsers } from "#root/src/controllers/user.searchUsers.js";
 
 //authentication
 router.use("/login", login)

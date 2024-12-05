@@ -1,8 +1,0 @@
-const DB_CONFIG_SAMPLE = {
-    DB_HOST: "localhost",
-    DB_USER: "DB_USER",
-    DB_PASSWORD: "DB_PASSWORD",
-    DB_NAME: "DB_NAME",
-    TOKEN_SECRET: "RANDOM_STRING"
-}
-export default DB_CONFIG_SAMPLE

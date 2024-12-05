@@ -24,7 +24,7 @@
             <div
                 class="chat-messages-input"
             >
-                <p>{navigator.userAgent}</p>
+                <!-- <p>{navigator.userAgent}</p> -->
 
                 {#if $showAddContact}
                     <AddContact toggle={showAddContact}/>
@@ -208,6 +208,5 @@
         overflow-x: hidden;
         overflow-y: auto;
         scrollbar-color: rgb(110, 110, 110) black;
-       /*  scroll-behavior: smooth; */
     }
 </style>

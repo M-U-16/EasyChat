@@ -6,9 +6,10 @@ COPY . .
 
 RUN npm install
 RUN npm run build
-RUN cp build/* /home/chatapp/
+RUN cp build -r /home/chatapp
+RUN cp package*.json /home/chatapp
+WORKDIR /home/chatapp
 RUN rm -r /tmp/chatapp
 
-WORKDIR /home/chatapp
 RUN npm install --omit dev
 CMD [ "node" ]

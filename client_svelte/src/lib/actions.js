@@ -1,6 +1,6 @@
 export async function logout() {
     return fetch(
-        "api/user/logout",
+        "/api/user/logout",
         { 
             method: "POST",
             credentials: "include",

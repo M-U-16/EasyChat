@@ -1,0 +1,23 @@
+version: "3"
+services:
+  frontend:
+    image: "localhost/easychat-ui"
+    restart: on-failure:5
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=http://localhost:3000
+      - VITE_HOST=localhost
+  backend:
+    image: "localhost/easychat-backend"
+    restart: on-failure:5
+    environment:
+      - HOST=localhost
+      - PORT=3000
+    env_file:
+      - .env.backend
+    volumes:
+      - data:/var/lib/easychat/data
+
+volumes:
+  data:

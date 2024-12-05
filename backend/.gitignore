@@ -1,7 +1,5 @@
 node_modules
 .env
-public
-*conf.js
 uploads
 users
 *.log

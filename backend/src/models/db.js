@@ -1,9 +1,16 @@
-/* import mysql2 from "mysql2" */
 import sqlite3 from "sqlite3"
 import { logger } from "#root/logger.js"
+import path from "path"
+import fs from "fs"
+
+let database_path = path.join(process.env.DATA_DIR, process.env.DATABASE_NAME)
+if (!fs.existsSync(database_path)) {
+    logger.error(`Database '${database_path}' does not exist...`)
+    process.exit(1)
+}
 
 const connection = new sqlite3.Database(
-    process.env.DATABASE_PATH,
+    database_path,
     sqlite3.OPEN_READWRITE,
     (err) => {
         if (err) {
@@ -31,5 +38,4 @@ export async function getUsername(user_id) {
         .then(result => result[0].username)
 }
 
-/* export default connection */
 export default connection
