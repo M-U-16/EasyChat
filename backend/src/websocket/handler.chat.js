@@ -4,6 +4,7 @@ import joinRoom from "./helper.joinRoom.js"
 import { v4 } from "uuid"
 import { queryDb } from "../models/db.js"
 import { logger } from "#root/logger.js"
+import { connection as db } from "#root/src/models/connections.js"
 
 const online = new Map()
 
@@ -13,6 +14,7 @@ export async function registerChatHandler(socket) {
     
     if (typeof(socket.data.user_id) == 'number') {
         allRooms = await queryDb(
+            db, 
             "select room_id as id from participants where user_id=?",
             [socket.data.user_id]
         )

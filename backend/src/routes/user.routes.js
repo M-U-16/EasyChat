@@ -14,6 +14,8 @@ import logOut from "#root/src/controllers/auth.logout.js";
 import login from "#root/src/controllers/auth.login.js";
 import { searchUsers } from "#root/src/controllers/user.searchUsers.js";
 
+import { connection as db} from "#root/src/models/connections.js";
+
 //authentication
 router.use("/login", login)
 router.use("/logout", logOut)
@@ -25,15 +27,17 @@ router.get("/username", validateToken, (req, res) => {
     res.json({username: req.username})
 })
 
-router.get("/profile/:username", validateToken, async(req, res) => {
+router.get("/profile/:username", async(req, res) => {
 
     const user = (await queryDb(
+        db,
         "select userDir from users where username=?",
         [req.params.username]
     ))[0]
     if (!user) {
         return res.status(404).send("404 Not Found")
     }
+    
     const {userDir} = user
     const userpic = path.join(userDir, "profile.png")
 

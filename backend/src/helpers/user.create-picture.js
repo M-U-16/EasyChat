@@ -14,17 +14,16 @@ function create64x64Profile(firstLetter, path) {
     context.fillStyle = getRandomColor()
     context.fillRect(0, 0, 64, 64)
     context.fillStyle = "#fff"
-    context.fillText(firstLetter, 32, 40)
+    context.fillText(firstLetter, 32, 43)
     const buffer = canvas.toBuffer("image/png")
     fs.writeFileSync(path, buffer)
 }
 
 process.on("message", message => {
-    /* create64x64Profile() */
     create64x64Profile(
         message.username[0],
         path.join(message.userDir, "profile.png")
     )
     process.send("done")
-    process.exit()
+    process.exit(0)
 })

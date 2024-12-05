@@ -19,7 +19,7 @@ async function register(req, res) {
     if (check.error) return res.json(check) //sends a error that user already exists
     
     user.dir = path.join(
-        process.env.IMAGES_PATH,
+        process.env.DATA_DIR,
         "users",
         user.username
     )
@@ -28,6 +28,7 @@ async function register(req, res) {
     const profile_process = child_process.fork(
         "src/helpers/user.create-picture.js"
     )
+
     profile_process.send({
         username: user.username,
         userDir: user.dir
@@ -48,4 +49,5 @@ async function register(req, res) {
         return
     })
 }
+
 export default register

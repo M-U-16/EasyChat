@@ -1,4 +1,5 @@
 import { queryDb } from "../models/db.js";
+import { connection as db } from "#root/src/models/connections.js";
 
 async function addMessage(
     room, message,
@@ -9,6 +10,7 @@ async function addMessage(
     }
     
     await queryDb(
+        db,
         "INSERT INTO messages"+
         "(room_id, message, user_id, created_at)"+
         "values (?, ?, ?, ?)",

@@ -1,36 +1,35 @@
 import bcrypt from "bcrypt"
-import connection, { queryDb } from "./db.js"
-
-function formatResponse(res, value) {
-    if (!res[0]) return
-    return res[0][value]
-}
+import { queryDb } from "#root/src/models/db.js"
+import { connection as db } from "#root/src/models/connections.js"
 
 //validating that the user not already exists
 export async function checkUser(newUser) {
-    /* return {error: false} */
+    const sql = "SELECT 'username' as type, count(*) as count " +
+    "FROM users " +
+    "WHERE username = ? " +
+    "UNION ALL " +
+    "SELECT 'email' as type, count(*) as count " +
+    "FROM users " +
+    "WHERE email = ?"
 
-    const sqlEmail = "SELECT email FROM users WHERE email=?"
-    const sqlUsername = "SELECT username FROM users WHERE username=?"
-    
-    const email = formatResponse(
-        await queryDb(sqlEmail, [newUser.email]),
-        "email"
-    )
-    const username = formatResponse(
-        await queryDb(sqlUsername, [newUser.username]),
-        "username"
-    )
-
-    if (email || username) {
-        return {
-            error: true,
-            emailError: email != undefined,
-            usernameError: username != undefined
+    const rows = await queryDb(db, sql, [newUser.username, newUser.email])
+    let result = (function() {
+        let values = {
+            "username": 0,
+            "email": 0
         }
-    }
+        rows.forEach(element => {
+            values[element.type] = element.count
+        });
 
-    return { error: false }
+        return values
+    })()
+    
+    return {
+        error: result.email != 0 || result.username != 0,
+        emailError: result.email != 0,
+        usernameError: result.username != 0
+    }
 }
 
 //function for adding user to database
@@ -38,6 +37,7 @@ export async function addUser(user) {
     try {
         const hashedPassword = await bcrypt.hash(user.password, 10)
         await queryDb(
+            db,
             "INSERT INTO users (password, email, username, userDir) VALUES (?, ?, ?, ?)",
             [hashedPassword, user.email, user.username, user.dir]
         )
@@ -49,7 +49,7 @@ export async function addUser(user) {
 export async function findUser(email) {
     try {
         const sql = "SELECT * FROM users WHERE email=?"
-        const user = await queryDb(sql, [email])
+        const user = await queryDb(db, sql, [email])
         return user[0]
     } catch(err) { if (err) throw err }
 }

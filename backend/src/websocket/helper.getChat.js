@@ -1,4 +1,5 @@
 import { queryDb } from "../models/db.js"
+import { connection as db} from "#root/src/models/connections.js"
 
 const getUsername = async(user_id) => {
     const sql = "select username from users where user_id=?"
@@ -28,7 +29,7 @@ const formatMessages = async(messages, user_id=null) => {
 const getChat = async(room_id, user_id) => {
     if (!user_id || !room_id) return {message: "AN_ERROR_OCCURED_WHILE_LOADING_MESSAGES"}
     const sql = "select * from messages where room_id=?"
-    const result = await queryDb(sql, room_id)
+    const result = await queryDb(db, sql, room_id)
     return { messages: await formatMessages(result, user_id) }
 }
 export default getChat

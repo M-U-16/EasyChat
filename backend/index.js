@@ -1,5 +1,19 @@
 import fs from "fs"
 import "dotenv/config"
+import path from "path"
+import { logger } from "#root/logger.js"
+import { check_env, create_default, get_db_path } from "#root/src/models/default.js"
+
+import cors from "cors"
+import http from "http"
+import express from "express"
+import bodyParser from "body-parser"
+import cookieParser from "cookie-parser"
+import { Server as SocketIoServer } from "socket.io"
+
+import { apiRoute as apiRouter } from "#root/src/routes/api.js"
+import { auth } from "#root/src/websocket/middleware/auth.socket.js"
+import { registerChatHandler } from "#root/src/websocket/handler.chat.js"
 
 // if listening on linux domain socket
 // delete old file if it exists to prevent
@@ -11,16 +25,13 @@ if (process.env.SOCKET_PATH) {
     }
 }
 
-import cors from "cors"
-import http from "http"
-import express from "express"
-import bodyParser from "body-parser"
-import cookieParser from "cookie-parser"
-import { Server as SocketIoServer } from "socket.io"
-
-import { apiRoute as apiRouter } from "./src/routes/api.js"
-import { auth } from "./src/websocket/middleware/auth.socket.js"
-import { registerChatHandler } from "./src/websocket/handler.chat.js"
+try {
+    check_env()
+    create_default(get_db_path())
+} catch(err) {
+    logger.error(err)
+    process.exit(1)
+}
 
 //creating express app
 const app = express()
@@ -97,12 +108,15 @@ io.of("/chat-server").on("connection", (socket) => {
 try {
     if (process.env.SOCKET_PATH) {
         server.listen(process.env.EASYCHAT_SOCKET_PATH)
-    } else {
+    } else if (process.env.PORT && process.env.HOSTNAME) {
         server.listen(
-            process.env.SERVER_PORT,
-            process.env.SERVER_HOSTNAME
+            process.env.PORT,
+            process.env.HOSTNAME
         )
+    } else {
+        throw new Error("No UNS or HOSTNAME and PORT pair!")
     }
 } catch(error) {
-    process.exit(-1)
+    logger.error(error)
+    process.exit(1)
 }

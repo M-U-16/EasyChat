@@ -1,8 +1,10 @@
 import { queryDb, getUsername } from "../models/db.js"
+import { connection as db } from "#root/src/models/connections.js"
 
 async function getLastMessage(room_id, user_id) {
     //get the last message in the given room
     const lastMessage = await queryDb(
+        db,
         `
             select user_id, message, created_at from messages
             where room_id=? and message_id=(select max(message_id)
@@ -35,7 +37,7 @@ async function getUsersInRoom(rooms, user_id) {
         .join(",")
     const sql = `select user_id, room_id from participants where room_id in (${roomString}) and user_id <> ?`
 
-    return await queryDb(sql, [user_id])
+    return await queryDb(db, sql, [user_id])
         .then(result => result.map(user => {
             return {user_id: user.user_id, room_id: user.room_id}
         }))
@@ -48,7 +50,7 @@ const getContactInformation = async(users) => {
 
     const sql = `select username from users where user_id in (${userString})`
 
-    return await queryDb(sql)
+    return await queryDb(db, sql)
         .then(results => {
             return results.map((result, index) => {
                 return {
@@ -79,7 +81,7 @@ export async function getContacts(req, res) {
     const userId = req.user_id
     const sql = "select room_id from participants where user_id=?"
     
-    const rooms = await queryDb(sql, [userId])
+    const rooms = await queryDb(db, sql, [userId])
     const users = await getUsersInRoom(rooms, userId)
 
     if (users) {
