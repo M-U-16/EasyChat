@@ -1,8 +1,10 @@
-import { logger } from "#root/logger.js";
 import jwt from "jsonwebtoken"
 const { verify } = jwt
+import { logger } from "@/src/logger";
+import { Socket } from "socket.io";
+import { NextFunction } from "express";
 
-export function formatCookies(cookieString) {
+export function formatCookies(cookieString: string) {
     try {
         const cookieObject = {}
         const cookieArray = cookieString
@@ -18,7 +20,7 @@ export function formatCookies(cookieString) {
     }
 }
 
-export function auth(socket, next) {
+export function auth(socket: Socket, next:NextFunction) {
     logger.debug("client connecting")
 
     try {

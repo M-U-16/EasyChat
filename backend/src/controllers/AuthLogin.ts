@@ -1,11 +1,13 @@
-import { createToken } from "../helpers/auth.jwt.js"
+import { Request, Response } from "express"
+
+import { createToken } from "@/src/helpers/AuthJwt"
 import { 
     findUser,
     comparePassHash
-} from "../models/user.js"
+} from "@/src/models/User"
 
 //login user
-async function login(req, res) {
+export async function login(req: Request, res: Response): Promise<any> {
     const inputPassword = req.body.password
     if (!inputPassword) return res.send({error: true, message: "PASSWORD_IS_REQUIRED" })
     if (!req.body.email) return res.send({error: true, message: "EMAIL_IS_REQUIRED"})
@@ -18,6 +20,7 @@ async function login(req, res) {
     
     //removing old token
     res.clearCookie(process.env.TOKEN_NAME)
+
     //setting new cookie
     res.cookie(
         process.env.TOKEN_NAME,
@@ -25,14 +28,12 @@ async function login(req, res) {
         //cookie settings
         {
             maxAge: 31557600000,
-            sameSite: "None",
+            sameSite: "none",
             secure: true,
             httpOnly: true,
             path: "/",
         }
     )
     
-    res.json({error: false, message: null})
+    return res.json({error: false, message: null})
 }
-
-export default login

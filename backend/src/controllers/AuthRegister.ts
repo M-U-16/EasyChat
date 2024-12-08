@@ -1,16 +1,20 @@
 import fs from "fs"
-import child_process from "child_process"
-
-import { checkUser, addUser } from "../models/user.js"
 import path from "path"
+import child_process from "child_process"
+import { Request, Response } from "express"
+
+import { User } from "@/src/controllers/Auth"
+import { checkUser, addUser } from "@/src/models/User"
 
 //register a new User
-async function register(req, res) {
-    
-    const user = {
+async function register(req: Request, res: Response): Promise<any> {
+    if (!req.db) throw Error("req.db not provided")
+
+    const user: User = {
         username: req.body.username,
         password: req.body.password,
         email: req.body.email,
+        user_id: req.user_id,
         dir: ""
     }
     
@@ -35,7 +39,7 @@ async function register(req, res) {
     })
 
     // adds new user to db
-    addUser(user).then(userAdded => {
+    addUser(req.db, user).then(userAdded => {
         if (!userAdded) return res.send({
             error: true,
             message: "COULD_NOT_ADD_USER"

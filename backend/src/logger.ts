@@ -4,7 +4,8 @@ const {combine, timestamp, printf} = format
 
 const LOGGING_LEVEL = process.env.LOGGING_LEVEL
 const LOGGING_FILES_PATH = process.env.LOGGING_FILES_PATH
-let error_file, combined_file
+
+let error_file: string, combined_file: string
 
 if (LOGGING_FILES_PATH) {
     error_file = path.join(LOGGING_FILES_PATH, "error.log")

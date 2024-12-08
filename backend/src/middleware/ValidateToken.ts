@@ -1,7 +1,8 @@
+import { NextFunction, Request, Response } from "express"
 import jwt from "jsonwebtoken"
 const { verify } = jwt
 
-const validateToken = (req, res, next) => {
+function validateToken(req: Request, res: Response, next: NextFunction): any {
 
     const accessToken = req.cookies[process.env.TOKEN_NAME]
     if (!accessToken) return res.json({error: true, message: "not authenticated!"})
@@ -17,4 +18,5 @@ const validateToken = (req, res, next) => {
         return next(new Error("TOKEN_NOT_VALID"))
     }
 }
+
 export default validateToken

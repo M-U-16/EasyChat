@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "module": "ESNext",
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "outDir": "dist",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "baseUrl": "./",
+        "paths": {
+            "@/*": ["*"]
+        },
+    },
+    "include": ["src/**/*", "src", "*"],
+    "exclude": ["node_modules", "src/**/*.spec.ts"],
+    "lib": [
+        "es2019"
+    ]
+}

@@ -1,18 +1,20 @@
+import sqlite3 from "sqlite3"
 import bcrypt from "bcrypt"
-import { queryDb } from "#root/src/models/db.js"
-import { connection as db } from "#root/src/models/connections.js"
+import { User } from "@/src/controllers/Auth"
+
+import { DbGet, DbRun } from "@/src/models/Db"
 
 //validating that the user not already exists
-export async function checkUser(newUser) {
-    const sql = "SELECT 'username' as type, count(*) as count " +
-    "FROM users " +
-    "WHERE username = ? " +
-    "UNION ALL " +
-    "SELECT 'email' as type, count(*) as count " +
-    "FROM users " +
-    "WHERE email = ?"
+export async function checkUser(db: sqlite3.Database, newUser: User) {
+    const sql = `SELECT 'username' as type, count(*) AS count
+    FROM users WHERE username = ?
+    UNION ALL
+    SELECT 'email' as type, count(*) AS count
+    FROM users
+    WHERE email = ?
+    `
 
-    const rows = await queryDb(db, sql, [newUser.username, newUser.email])
+    const rows = await DbGet(db, sql, [newUser.username, newUser.email])
     let result = (function() {
         let values = {
             "username": 0,
@@ -33,11 +35,10 @@ export async function checkUser(newUser) {
 }
 
 //function for adding user to database
-export async function addUser(user) {
+export async function addUser(db: sqlite3.Database, user: User) {
     try {
         const hashedPassword = await bcrypt.hash(user.password, 10)
-        await queryDb(
-            db,
+        await DbRun(db,
             "INSERT INTO users (password, email, username, userDir) VALUES (?, ?, ?, ?)",
             [hashedPassword, user.email, user.username, user.dir]
         )
@@ -46,11 +47,9 @@ export async function addUser(user) {
 }
 
 //finds a user in database
-export async function findUser(email) {
+export async function findUser(db: sqlite3.Database, email: string): Promise<any> {
     try {
-        const sql = "SELECT * FROM users WHERE email=?"
-        const user = await queryDb(db, sql, [email])
-        return user[0]
+        return DbGet(db, "SELECT * FROM users WHERE email=?", [email])
     } catch(err) { if (err) throw err }
 }
 

@@ -1,13 +1,15 @@
 import fs from "fs"
-import { logger } from "#root/logger.js"
-import { open_database } from "#root/src/models/db.js"
+import sqlite3 from "sqlite3"
 import { join } from "path"
+
+import { logger } from "@/src/logger"
+import { open_database } from "@/src/models/Db"
 
 export function get_db_path() {
     return join(process.env.DATA_DIR, process.env.DATABASE_NAME)
 }
 
-export function create_default(database_path) {
+export function create_default(database_path: string) {
     if (fs.existsSync(database_path)) {
         return
     }
@@ -32,8 +34,8 @@ export function check_env() {
     }
 }
 
-async function create_tables(db) {
-    const tables = path.join(
+async function create_tables(db: sqlite3.Database) {
+    const tables = join(
         process.env.SCHEMAS,
         "tables.sql"
     )

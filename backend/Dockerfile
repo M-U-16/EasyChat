@@ -1,7 +1,7 @@
-FROM node:20.10-alpine3.19
+FROM node:20.18-slim
 RUN mkdir /home/chatapp
 WORKDIR /home/chatapp
 COPY . .
+RUN apk add --no-cache --virtual .gyp python3 py-setuptools make g++
 RUN npm install --omit dev
-RUN node src/create_db.js
 CMD [ "node" ]

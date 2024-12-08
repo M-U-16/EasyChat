@@ -5,11 +5,13 @@ create table if not exists users (
     password varchar(100) not null,
     userDir text not null unique
 );
+
 create table if not exists rooms (
 	room_id INTEGER primary key AUTOINCREMENT,
     room_name varchar(100),
     private boolean
 );
+
 create table if not exists messages (
 	message_id INTEGER primary key AUTOINCREMENT,
     room_id INTEGER not null,
@@ -19,6 +21,7 @@ create table if not exists messages (
     foreign key(user_id) references users(user_id),
     foreign key(room_id) references rooms(room_id)
 );
+
 create table if not exists participants (
 	participant_id INTEGER primary key AUTOINCREMENT,
     room_id INTEGER not null,
