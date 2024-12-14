@@ -9,6 +9,8 @@ FROM node:20.18-slim
 RUN mkdir /home/chatapp
 WORKDIR /home/chatapp
 COPY package*.json .
+COPY assets .
+COPY schemas .
 COPY --from=build /tmp/chatapp/build .
 RUN npm install --omit dev
 CMD [ "node", "index.js" ]
