@@ -4,3 +4,4 @@ uploads
 users
 *.log
 dist
+build

@@ -47,8 +47,7 @@ export async function createChat(req: Request, res: Response): Promise<any> {
                     //get the current auto_increment value of the room_id from rooms table
                     await DbGet(req.db, "SELECT room_id FROM rooms WHERE room_name=?", [roomName])
                     .then(row => {
-                        logger.debug("createChat:", row)
-                        logger.log()
+                        logger.debug("createChat:", {row: row})
                         resolve(row.room_id)
                     })
                 } catch(err) {

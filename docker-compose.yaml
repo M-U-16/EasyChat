@@ -8,12 +8,14 @@ services:
     environment:
       - VITE_API_URL=http://localhost:3000
       - VITE_HOST=localhost
+      - NODE_ENV=production
   backend:
     image: "localhost/easychat-backend"
     restart: on-failure:5
     environment:
       - HOST=localhost
       - PORT=3000
+      - NODE_ENV=production
       - DATA_DIR=/var/lib/easychat/data
       - DATABASE_NAME=chat.sqlite3
       - LOGGING_LEVEL=error
