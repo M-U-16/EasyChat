@@ -16,6 +16,8 @@ services:
   backend:
     image: "localhost/easychat-backend"
     restart: on-failure:5
+    ports:
+      - "3000:3000"
     environment:
       - HOST=localhost
       - PORT=3000
@@ -24,8 +26,6 @@ services:
       - DATABASE_NAME=chat.sqlite3
       - LOGGING_LEVEL=error
       - LOGGING_FILES_PATH=/var/lib/easychat/logs
-    env_file:
-      - .env.backend
     volumes:
       - data:/var/lib/easychat/data
       - logs:/var/lib/easychat/logs
