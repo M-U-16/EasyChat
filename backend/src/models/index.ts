@@ -15,6 +15,11 @@ export function create_default(database_path: string) {
     }
 
     let db = open_database(database_path, sqlite3.OPEN_CREATE | sqlite3.OPEN_READWRITE)
+    if (!db) {
+        const error = new Error("could not open database")
+        logger.error("create_default:", {error: error})
+        throw error
+    }
     create_tables(db)
     db.close()
 }
@@ -22,26 +27,17 @@ export function create_default(database_path: string) {
 export function check_env() {
     if (
         !process.env.DATA_DIR ||
-        !process.env.DATABASE_NAME ||
-        !process.env.SCHEMAS
-    ) {
-        logger.error(
-            `DATA_DIR=${process.env.DATA_DIR}\n` +
-            `DATA_DIR=${process.env.DATABASE_NAME}\n` +
-            `DATA_DIR=${process.env.SCHEMAS}\n`
-        )
-        throw new Error("needed environment variables not found")
+        !process.env.DATABASE_NAME
+    ) { 
+        const error = new Error("needed environment variables not found")
+        logger.error("check_env:", {error: error})
+        throw error
     }
 }
 
 async function create_tables(db: sqlite3.Database) {
-    const tables = join(
-        process.env.SCHEMAS,
-        "tables.sql"
-    )
-
     let error = await new Promise(function(resolve, reject) {
-        let schema = fs.readFileSync(tables).toString()
+        let schema = fs.readFileSync("schemas/tables.sql").toString()
         db.exec(schema,
             (err) => {
                 if (err) {

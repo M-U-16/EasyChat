@@ -11,12 +11,13 @@ import { searchUsers } from "@/src/controllers/User"
 import { isAuthorized } from "@/src/helpers/AuthJwt";
 import register from "@/src/controllers/AuthRegister"
 import validateToken from "@/src/middleware/ValidateToken"
+import { DbProvider } from "../middleware/DbProvider";
 
 //authentication
-router.use("/login", login)
-router.use("/logout", logout)
-router.use("/register", register)
-router.get("/isLoggedIn", function(req: Request, res: Response): any {
+router.post("/login", DbProvider, login)
+router.post("/logout", logout)
+router.post("/register", DbProvider, register)
+router.get("/isLoggedIn", DbProvider, function(req: Request, res: Response): any {
     const accessToken = req.cookies[process.env.TOKEN_NAME]
     if (!accessToken) {
         return res.json({
@@ -37,13 +38,13 @@ router.get("/isLoggedIn", function(req: Request, res: Response): any {
     }
 
 })
-router.get("/search/", validateToken, searchUsers)
+router.get("/search", validateToken, DbProvider, searchUsers)
 router.get("/username", validateToken, (req: Request, res: Response) => {
     res.json({username: req.username})
 })
-router.get("/profile/:username", async(req: Request, res: Response): Promise<any> => {
+router.get("/profile/:username", DbProvider, async(req: Request, res: Response): Promise<any> => {
 
-    const user = await DbGet(db,
+    const user = await DbGet(req.db,
         "select userDir from users where username=?",
         [req.params.username]
     )

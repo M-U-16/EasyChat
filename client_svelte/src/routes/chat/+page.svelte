@@ -12,7 +12,7 @@
             <MenuItem
                 path="/"
                 current={false}
-                content="Logout"
+                content="Abmelden"
                 onClick={logoutAction}
             >
                 <LogoutIcon />
@@ -21,25 +21,24 @@
         </Navbar>
         <div class="chat">
             <Sidepanel />
-            <div
-                class="chat-messages-input"
-            >
-                <!-- <p>{navigator.userAgent}</p> -->
-
-                {#if $showAddContact}
-                    <AddContact toggle={showAddContact}/>
-                {/if}
-                <div
-                    class="messages-container"
-                    bind:this={messagesContainer}
-                    style:scrollBehavior={scrollBehavior}
-                >
-                    {#each $messages as message}
-                        <Message data={message}/>
-                    {/each}
+            {#if $showAddContact}
+                <AddContact toggle={showAddContact}/>
+            {:else}
+                <div class="chat-messages-input">
+                    <div
+                        class="messages-container"
+                        bind:this={messagesContainer}
+                        style:scrollBehavior={scrollBehavior}
+                    >   
+                        {#if Array.isArray($messages)}
+                            {#each $messages as message}
+                            <Message data={message}/>
+                            {/each}
+                        {/if}
+                    </div>
+                    <ChatInputContainer />
                 </div>
-                <ChatInputContainer />
-            </div>
+            {/if}
         </div>
     </div>
 {:else}
@@ -83,7 +82,7 @@
     })
 
     onNavigate(()=> {
-        console.log("navigating...")
+        //console.log("navigating...")
         if (mounted) {
             socket.disconnect()
         }
@@ -142,7 +141,8 @@
         socket.emit(":get_chat", {room_id: room_id},
             (response) => {
                 scrollBehavior = "auto"
-                messages.set(response.messages)
+                console.log(response)
+                messages.set(response)
                 currentRoom = room_id
             }
         )
@@ -202,7 +202,7 @@
     }
 
     .messages-container {
-        height: auto;
+        height: 100%;
         display: flex;
         flex-direction: column;
         overflow-x: hidden;

@@ -8,14 +8,19 @@ import {
 
 //login user
 export async function login(req: Request, res: Response): Promise<any> {
-    const inputPassword = req.body.password
-    if (!inputPassword) return res.send({error: true, message: "PASSWORD_IS_REQUIRED" })
+    if (!req.db) {
+        throw new Error("Request object has no database object")
+    }
+    
+    const password = req.body.password
+
+    if (!password) return res.send({error: true, message: "PASSWORD_IS_REQUIRED" })
     if (!req.body.email) return res.send({error: true, message: "EMAIL_IS_REQUIRED"})
 
-    const user = await findUser(req.body.email)
+    const user = await findUser(req.db, req.body.email)
     if (!user) return res.send({error: true, message: "EMAIL_DOES_NOT_EXIST"})
         
-    const doesMatch = await comparePassHash(inputPassword, user.password)
+    const doesMatch = await comparePassHash(password, user.password)
     if (!doesMatch) return res.json({error: true, message: "PASSWORD_IS_INCORRECT"})
     
     //removing old token

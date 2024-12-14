@@ -5,12 +5,12 @@
         class='chat__contacts-container no-scroll'
         id='chat-contacts-container'
     >
-        {#if $contacts.length > 0}
+        {#if Array.isArray($contacts)}
         {#each $contacts as contact}
             <ContactPanel
-                room_id={contact.room_id}
-                username={contact.username}
-                lastMessage={contact.lastMessage}
+            room_id={contact.room_id}
+            username={contact.username}
+            lastMessage={contact.lastMessage}
             />
         {/each}
         {/if}
@@ -25,7 +25,7 @@
 
 <script>
     import { writable } from "svelte/store";
-    import { getContext, onMount, setContext } from "svelte";
+    import { getContext } from "svelte";
     import ContactPanel from "./ContactPanel.svelte";
 
     let firstLoad = true
@@ -38,6 +38,7 @@
         fetch("/api/user/chats")
         .then(res => res.json())
         .then(data => {
+            console.log("contacts: ", data)
             if (firstLoad) {
                 if (data.contacts.length != 0) {
                     currentRoom.set(data.contacts[0].room_id)

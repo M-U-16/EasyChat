@@ -1,7 +1,7 @@
 version: "3"
 services:
   frontend:
-    image: "localhost/easychat-ui"
+    image: "localhost/easychat-frontend"
     restart: on-failure:5
     depends_on:
       - backend
@@ -15,10 +15,15 @@ services:
       - HOST=localhost
       - PORT=3000
       - DATA_DIR=/var/lib/easychat/data
+      - DATABASE_NAME=chat.sqlite3
+      - LOGGING_LEVEL=error
+      - LOGGING_FILES_PATH=/var/lib/easychat/logs
     env_file:
       - .env.backend
     volumes:
       - data:/var/lib/easychat/data
+      - logs:/var/lib/easychat/logs
 
 volumes:
   data:
+  logs:

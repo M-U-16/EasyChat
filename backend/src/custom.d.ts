@@ -5,7 +5,7 @@ declare global{
         export interface Request {
             user_id: number;
             username: string;
-            db?: sqlite3.Database;
+            db?: sqlite3.Database|undefined;
             authenticated: boolean;
         }
     }

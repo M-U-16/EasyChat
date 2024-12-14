@@ -19,6 +19,7 @@ import { apiRouter } from "@/src/routes/Api"
 import { open_database } from "./src/models/Db"
 import { auth } from "@/src/websocket/middleware/AuthSocket"
 import { ClientConnection } from "@/src/websocket/HandlerConnection"
+import { NewOnlineStorage } from "./src/websocket/OnlineUserStorage"
 
 // if listening on linux domain socket
 // delete old file if it exists to prevent
@@ -34,7 +35,6 @@ try {
     check_env()
     create_default(get_db_path())
 } catch(err) {
-    logger.error(err)
     process.exit(1)
 }
 
@@ -56,9 +56,6 @@ export const io = new SocketIoServer(server, {
         ],
         methods: ["GET", "POST"],
     },
-    /* crendentials: true, */
-    /* ackTimeout: 10000, */
-    /* retries: 3, */
     path: "/socket.io",
     cookie: {
         name: "io",
@@ -103,29 +100,34 @@ app.use(cookieParser())
 app.set("trust proxy", 1)
 app.use(express.static("static"))
 
+app.set("db", db)
 app.use("/api", apiRouter)
+
+const OnlineUsers = NewOnlineStorage()
+const connections = {}
 
 //websockets
 io.of("/chat-server").use(auth)
 io.of("/chat-server").on("connection", (socket: Socket) => {
-    if (!socket.data.user_id) {
-        logger.error("socket connection: no user_id")
-        return
-    }
-
-    new ClientConnection(socket)
+    connections[socket.id] = ClientConnection(
+        socket, db, OnlineUsers,
+        function(id: string) {
+            //console.debug("Deleting Socket:", id)
+            delete connections[id]
+        }
+    )
 })
 
 try {
     if (process.env.SOCKET_PATH) {
         server.listen(process.env.EASYCHAT_SOCKET_PATH)
-    } else if (process.env.PORT && process.env.HOSTNAME) {
+    } else if (process.env.PORT && process.env.HOST) {
         server.listen(
             parseInt(process.env.PORT),
-            process.env.HOSTNAME,()=>{}
+            process.env.HOST,()=>{}
         )
     } else {
-        throw new Error("No UNS or HOSTNAME and PORT pair!")
+        throw new Error("No UNS or HOST and PORT pair!")
     }
 } catch(error) {
     logger.error(error)

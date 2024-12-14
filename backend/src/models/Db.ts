@@ -5,10 +5,12 @@ export function open_database(database_path: string, mode: number): sqlite3.Data
     return new sqlite3.Database(
         database_path, mode,
         (err: Error) => {
-            if (err)  {
-                return console.error(err.message)
+            if (err) {
+                logger.error("open_database:", {error: err})
+                return
             }
-            logger.info("Connected to Sqlite Database.")
+
+            logger.info("Connected to Sqlite Database")
         }
     )
 }

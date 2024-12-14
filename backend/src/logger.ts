@@ -1,4 +1,6 @@
 import path from "path"
+import util from "util"
+import { isNumberObject, isStringObject } from "util/types"
 import {createLogger, format, transports } from "winston" 
 const {combine, timestamp, printf} = format
 
@@ -8,14 +10,24 @@ const LOGGING_FILES_PATH = process.env.LOGGING_FILES_PATH
 let error_file: string, combined_file: string
 
 if (LOGGING_FILES_PATH) {
-    error_file = path.join(LOGGING_FILES_PATH, "error.log")
-    combined_file = path.join(LOGGING_FILES_PATH, "combined.log")
+    if (LOGGING_LEVEL == "error") {
+        error_file = path.join(LOGGING_FILES_PATH, "error.log")
+    } else {
+        combined_file = path.join(LOGGING_FILES_PATH, "combined.log")
+    }
 }
 
 const logFormat = combine(
-    timestamp(),
-    printf(({level, message, timestamp}) => {
-        return `${timestamp} ${level.toUpperCase()}: ${message}`
+    timestamp({
+        format: "YYYY/DD/MM h:mm:s"
+    }),
+    format.metadata({ fillExcept: ['message', 'level', 'timestamp'] }),
+    printf(({level, message, timestamp, metadata}) => {
+        let out = `[${timestamp}] ${level.toUpperCase()}: ${message}`
+        if (Object.keys(metadata).length > 0) {
+            return util.format(out + " %O", metadata)
+        }
+        return out
     })
 )
 

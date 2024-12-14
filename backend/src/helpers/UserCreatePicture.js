@@ -3,33 +3,36 @@ import "dotenv/config"
 import path from "path";
 import * as PImage from "pureimage"
 
-interface UserPic {
-    username: string;
-    userDir: string;
-}
-
-const font = PImage.registerFont(
-    "../../assets/Roboto/Roboto-Medium.ttf",
+/* const font = PImage.registerFont(
+    "assets/Roboto/Roboto-Medium.ttf",
     "Roboto"
+)
+font.loadSync() */
+const font = PImage.registerFont(
+    "C:/Users/Maurice/Documents/Projekte/Webseiten/CHATAPP/backend/assets/Verdana/Verdana-Bold.ttf",
+    "Verdana"
 )
 font.loadSync()
 
 const getRandom255 = () => Math.floor(Math.random() * 255)
 const getRandomColor = () => `rgb(${getRandom255()},${getRandom255()},${getRandom255()})`
 
-function create64x64Profile(firstLetter, path) {
-    const canvas = PImage.make(64, 64)
-    const context = canvas.getContext("2d")
-    context.font = "20pt Roboto"
+const canvas = PImage.make(128, 128)
+const context = canvas.getContext("2d")
+
+async function create64x64Profile(firstLetter, path) {
+    context.font = "50pt Verdana"
     context.textAlign = "center"
     context.fillStyle = getRandomColor()
-    context.fillRect(0, 0, 64, 64)
+    context.fillRect(0, 0, 128, 128)
     context.fillStyle = "#fff"
-    context.fillText(firstLetter, 32, 43)
-    return PImage.encodePNGToStream(canvas, fs.createWriteStream(path))
+    //context.fillText(firstLetter, 32, 43)
+    context.fillText(firstLetter.toUpperCase(), 64, 80)
+    await PImage.encodePNGToStream(canvas, fs.createWriteStream(path))
+    return
 }
 
-process.on("message", async(message: UserPic) => {
+process.on("message", async(message) => {
     if (message.username.length === 0) {
         process.send(new Error("username length zero"))
         process.exit(1)

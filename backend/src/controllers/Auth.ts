@@ -6,7 +6,7 @@ export interface User {
     password: string;
     email: string;
     dir: string;
-    user_id: number;
+    user_id?: number|null;
     db?: sqlite3.Database;
 }
 

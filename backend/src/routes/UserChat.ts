@@ -1,9 +1,11 @@
 import { Router } from "express";
 import {createChat} from "@/src/controllers/UserCreateChat"
 import {GetContacts} from "@/src/controllers/User"
+import validateToken from "@/src/middleware/ValidateToken";
+import { DbProvider } from "@/src/middleware/DbProvider";
 
 const router = Router()
-router.get("/", GetContacts)
-router.post("/new-chat", createChat)
+router.get("/", validateToken, DbProvider, GetContacts)
+router.post("/new-chat", validateToken, DbProvider, createChat)
 
 export { router as chatRouter }

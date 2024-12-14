@@ -20,7 +20,7 @@ export function formatCookies(cookieString: string) {
     }
 }
 
-export function auth(socket: Socket, next:NextFunction) {
+export function auth(socket: Socket, next: NextFunction) {
     logger.debug("client connecting")
 
     try {

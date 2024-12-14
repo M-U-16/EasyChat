@@ -2,7 +2,7 @@ import sqlite3 from "sqlite3"
 import bcrypt from "bcrypt"
 import { User } from "@/src/controllers/Auth"
 
-import { DbGet, DbRun } from "@/src/models/Db"
+import { DbAll, DbGet, DbRun } from "@/src/models/Db"
 
 //validating that the user not already exists
 export async function checkUser(db: sqlite3.Database, newUser: User) {
@@ -14,7 +14,8 @@ export async function checkUser(db: sqlite3.Database, newUser: User) {
     WHERE email = ?
     `
 
-    const rows = await DbGet(db, sql, [newUser.username, newUser.email])
+    const rows = await DbAll(db, sql, [newUser.username, newUser.email])
+    
     let result = (function() {
         let values = {
             "username": 0,
