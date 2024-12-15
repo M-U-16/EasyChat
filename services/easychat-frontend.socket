@@ -1,0 +1,9 @@
+[Unit]
+Description=EasyChat Frontend Socket
+
+[Socket]
+Listen=/tmp/easychat-frontend.sock
+Accept=yes
+
+[Install]
+WantedBy=sockets.target

@@ -1,0 +1,21 @@
+[Unit]
+Description=EasyChat Frontend
+Requires=easychat-frontend.socket
+Requires=easychat-backend.socket
+After=network.target
+After=easychat-backend.service
+
+[Service]
+ExecStart=/usr/bin/podman run --rm \
+    -v /tmp/easychat-frontend.sock:/tmp/easychat.sock \
+    -e SOCKET_PATH=/tmp/easychat.sock \
+    easychat-frontend
+Restart=on-failure
+KillMode=process
+TimeoutStopSec=300
+RestartSec=3
+StartLimitBurst=3
+StartLimitIntervalSec=60
+
+[Install]
+WantedBy=multi-user.target

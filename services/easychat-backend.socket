@@ -1,0 +1,9 @@
+[Unit]
+Description=EasyChat Backend Socket
+
+[Socket]
+Listen=/tmp/easychat-backend.sock
+Accept=yes
+
+[Install]
+WantedBy=sockets.target
