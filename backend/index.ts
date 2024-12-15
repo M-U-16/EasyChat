@@ -1,6 +1,7 @@
 import "dotenv/config"
 
 import fs from "fs"
+import process from "process"
 import cors from "cors"
 import http from "http"
 import sqlite3 from "sqlite3"
@@ -118,16 +119,34 @@ io.of("/chat-server").on("connection", (socket: Socket) => {
     )
 })
 
+let listen_pid = parseInt(process.env.LISTEN_PID);
+if (!listen_pid) {
+    listen_pid = 0
+}
+let listen_fds = parseInt(process.env.LISTEN_FDS);
+if (!listen_fds) {
+    listen_fds = 0
+}
+const SD_LISTEN_FDS_START = 3
+
+if (listen_pid !== 0 && listen_pid !== process.pid) {
+	throw new Error(`received LISTEN_PID ${listen_pid} but current process id is ${process.pid}`);
+}
+if (listen_fds > 1) {
+    throw new Error(`only one socket is allowed for socket activation, but LISTEN_FDS was set to ${listen_fds}`);
+}
+
+const socket_activation = listen_pid === process.pid && listen_fds === 1;
+
 try {
-    if (process.env.SOCKET_PATH) {
+    if (socket_activation) {
+        server.listen(SD_LISTEN_FDS_START, ()=>{})
+    } else if (process.env.SOCKET_PATH) {
         server.listen(process.env.SOCKET_PATH)
     } else if (process.env.PORT && process.env.HOST) {
-        server.listen(
-            parseInt(process.env.PORT),
-            process.env.HOST,()=>{}
-        )
+        server.listen(parseInt(process.env.PORT))
     } else {
-        throw new Error("No UNS or HOST and PORT pair!")
+        throw new Error("No UNS, FD or HOST and PORT pair!")
     }
 } catch(error) {
     logger.error(error)
