@@ -2,8 +2,10 @@
 Description=EasyChat Frontend Socket
 
 [Socket]
-ListenStream=/tmp/easychat-frontend.sock
 Accept=no
+RemoveOnStop=yes
+Service=easychat-frontend.service
+ListenStream=/tmp/easychat-frontend.sock
 
 [Install]
 WantedBy=sockets.target

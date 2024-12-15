@@ -1,8 +1,6 @@
 [Unit]
 Description=EasyChat Frontend
-Requires=easychat-frontend.socket
 After=network.target
-After=easychat-backend.service
 StartLimitBurst=3
 StartLimitIntervalSec=60
 

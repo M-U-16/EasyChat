@@ -2,9 +2,10 @@
 Description=EasyChat Backend Socket
 
 [Socket]
-ListenStream=/tmp/easychat-backend.sock
-Service=easychat-backend.service
 Accept=no
+RemoveOnStop=yes
+Service=easychat-backend.service
+ListenStream=/tmp/easychat-backend.sock
 
 [Install]
 WantedBy=sockets.target

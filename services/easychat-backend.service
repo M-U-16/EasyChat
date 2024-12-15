@@ -1,16 +1,15 @@
 [Unit]
 Description=EasyChat Backend
-Requires=easychat-backend.socket
 After=network.target
-Before=easychat-frontend.service
-After=easychat-backend.socket
-RestartSec=3
+Wants=easychat-backend.service
 StartLimitBurst=3
 StartLimitIntervalSec=60
 
 [Service]
 ExecStart=/usr/bin/podman run --rm --name easychat-backend_service \
     -v /tmp/easychat-backend.sock:/tmp/easychat.sock \
+    -v easychat_data:/var/lib/easychat/data \
+    -v easychat_logs:/var/lib/easychat/logs \
     -e NODE_ENV=production \
     -e DATA_DIR=/var/lib/easychat/data \
     -e DATABASE_NAME=chat.sqlite3 \
@@ -20,7 +19,7 @@ ExecStart=/usr/bin/podman run --rm --name easychat-backend_service \
     easychat-backend
 ExecStop=/usr/bin/podman stop easychat-backend_service
 Restart=on-failure
-TimeoutStopSec=300
+RestartSec=3
 
 [Install]
 WantedBy=multi-user.target
