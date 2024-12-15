@@ -4,6 +4,9 @@ Requires=easychat-backend.socket
 After=network.target
 Before=easychat-frontend.service
 After=easychat-backend.socket
+RestartSec=3
+StartLimitBurst=3
+StartLimitIntervalSec=60
 
 [Service]
 ExecStart=/usr/bin/podman run --rm --name easychat-backend_service \
@@ -18,9 +21,6 @@ ExecStart=/usr/bin/podman run --rm --name easychat-backend_service \
 ExecStop=/usr/bin/podman stop easychat-backend_service
 Restart=on-failure
 TimeoutStopSec=300
-RestartSec=3
-StartLimitBurst=3
-StartLimitIntervalSec=60
 
 [Install]
 WantedBy=multi-user.target

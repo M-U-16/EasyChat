@@ -2,7 +2,7 @@
 Description=EasyChat Frontend Socket
 
 [Socket]
-Listen=/tmp/easychat-frontend.sock
+ListenStream=/tmp/easychat-frontend.sock
 Accept=no
 
 [Install]

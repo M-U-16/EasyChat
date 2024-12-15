@@ -2,7 +2,7 @@
 Description=EasyChat Backend Socket
 
 [Socket]
-Listen=/tmp/easychat-backend.sock
+ListenStream=/tmp/easychat-backend.sock
 Service=easychat-backend.service
 Accept=no
 
