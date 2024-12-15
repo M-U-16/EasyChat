@@ -24,12 +24,12 @@ import { NewOnlineStorage } from "./src/websocket/OnlineUserStorage"
 // if listening on linux domain socket
 // delete old file if it exists to prevent
 // ERRADDRINUSE
-if (process.env.SOCKET_PATH) {
+/* if (process.env.SOCKET_PATH) {
     const path = process.env.SOCKET_PATH
     if (fs.existsSync(path)) {
         fs.unlinkSync(path)
     }
-}
+} */
 
 try {
     check_env()
@@ -120,7 +120,7 @@ io.of("/chat-server").on("connection", (socket: Socket) => {
 
 try {
     if (process.env.SOCKET_PATH) {
-        server.listen(process.env.EASYCHAT_SOCKET_PATH)
+        server.listen(process.env.SOCKET_PATH)
     } else if (process.env.PORT && process.env.HOST) {
         server.listen(
             parseInt(process.env.PORT),
