@@ -3,7 +3,8 @@ Description=EasyChat Backend Socket
 
 [Socket]
 Listen=/tmp/easychat-backend.sock
-Accept=yes
+Service=easychat-backend.service
+Accept=no
 
 [Install]
 WantedBy=sockets.target

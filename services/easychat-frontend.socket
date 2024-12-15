@@ -3,7 +3,7 @@ Description=EasyChat Frontend Socket
 
 [Socket]
 Listen=/tmp/easychat-frontend.sock
-Accept=yes
+Accept=no
 
 [Install]
 WantedBy=sockets.target

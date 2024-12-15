@@ -1,21 +1,22 @@
 [Unit]
 Description=EasyChat Backend
-Requires=easychat-backend.socket easychat-frontend.socket
+Requires=easychat-backend.socket
 After=network.target
 Before=easychat-frontend.service
+After=easychat-backend.socket
 
 [Service]
-ExecStart=/usr/bin/podman run --rm \
+ExecStart=/usr/bin/podman run --rm --name easychat-backend_service \
     -v /tmp/easychat-backend.sock:/tmp/easychat.sock \
     -e NODE_ENV=production \
     -e DATA_DIR=/var/lib/easychat/data \
-    -e DATABASE_NAME=chat.sqlite3
-    -e LOGGING_LEVEL=error
-    -e LOGGING_FILES_PATH=/var/lib/easychat/logs
+    -e DATABASE_NAME=chat.sqlite3 \
+    -e LOGGING_LEVEL=error \
+    -e LOGGING_FILES_PATH=/var/lib/easychat/logs \
     -e SOCKET_PATH=/tmp/easychat.sock \
     easychat-backend
+ExecStop=/usr/bin/podman stop easychat-backend_service
 Restart=on-failure
-KillMode=process
 TimeoutStopSec=300
 RestartSec=3
 StartLimitBurst=3
