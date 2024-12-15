@@ -7,6 +7,11 @@ Before=easychat-frontend.service
 [Service]
 ExecStart=/usr/bin/podman run --rm \
     -v /tmp/easychat-backend.sock:/tmp/easychat.sock \
+    -e NODE_ENV=production \
+    -e DATA_DIR=/var/lib/easychat/data \
+    -e DATABASE_NAME=chat.sqlite3
+    -e LOGGING_LEVEL=error
+    -e LOGGING_FILES_PATH=/var/lib/easychat/logs
     -e SOCKET_PATH=/tmp/easychat.sock \
     easychat-backend
 Restart=on-failure

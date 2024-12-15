@@ -6,13 +6,11 @@ services:
     depends_on:
       - backend
     environment:
-      - VITE_API_URL=http://localhost:3000
-      - VITE_HOST=localhost
       - NODE_ENV=production
       - HOST=0.0.0.0
       - PORT=80
     ports:
-      - "8080:80"
+      - "80:80"
   backend:
     image: "localhost/easychat-backend"
     restart: on-failure:5
