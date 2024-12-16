@@ -146,7 +146,7 @@ try {
     } else if (process.env.PORT && process.env.HOST) {
         server.listen(parseInt(process.env.PORT))
     } else {
-        throw new Error("No UNS, FD or HOST and PORT pair!")
+        throw new Error("No UDS, FD or HOST and PORT pair!")
     }
 } catch(error) {
     logger.error(error)
