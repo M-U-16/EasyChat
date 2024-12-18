@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "module": "ESNext",
+        "module": "ES2022",
         "esModuleInterop": true,
         "moduleResolution": "node",
         "sourceMap": true,
@@ -9,15 +9,19 @@
         "experimentalDecorators": true,
         "baseUrl": "./",
         "removeComments": true,
-        
         "paths": {
             "@/*": ["*"]
         },
+        "allowJs": true
     },
     "tsc-alias": {
         "resolveFullPaths": true
     },
-    "include": ["src/**/*", "src", "*"],
+    "include": [
+        "src/**/*",
+        "src", "*",
+        "src/helpers/UserCreatePicture.js"
+    ],
     "exclude": ["node_modules", "src/**/*.spec.ts"],
     "lib": [
         "es2019"

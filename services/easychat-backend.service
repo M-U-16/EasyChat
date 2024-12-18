@@ -1,9 +1,10 @@
 [Unit]
 Description=EasyChat Backend
 After=network.target
-Wants=easychat-backend.service
 StartLimitBurst=3
 StartLimitIntervalSec=60
+Requires=easychat-backend.socket
+After=easychat-backend.socket
 
 [Service]
 ExecStart=/usr/bin/podman run --rm --name easychat-backend_service \

@@ -3,13 +3,8 @@ import "dotenv/config"
 import path from "path";
 import * as PImage from "pureimage"
 
-/* const font = PImage.registerFont(
-    "assets/Roboto/Roboto-Medium.ttf",
-    "Roboto"
-)
-font.loadSync() */
 const font = PImage.registerFont(
-    "C:/Users/Maurice/Documents/Projekte/Webseiten/CHATAPP/backend/assets/Verdana/Verdana-Bold.ttf",
+    "assets/Verdana/Verdana-Bold.ttf",
     "Verdana"
 )
 font.loadSync()
@@ -26,10 +21,8 @@ async function create64x64Profile(firstLetter, path) {
     context.fillStyle = getRandomColor()
     context.fillRect(0, 0, 128, 128)
     context.fillStyle = "#fff"
-    //context.fillText(firstLetter, 32, 43)
     context.fillText(firstLetter.toUpperCase(), 64, 80)
     await PImage.encodePNGToStream(canvas, fs.createWriteStream(path))
-    return
 }
 
 process.on("message", async(message) => {
@@ -46,5 +39,8 @@ process.on("message", async(message) => {
     ).then(()=>{
         process.send("done")
         process.exit(0)
+    }).catch(()=>{
+        process.send("error")
+        process.exit(1)
     })
 })

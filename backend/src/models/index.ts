@@ -20,6 +20,7 @@ export function create_default(database_path: string) {
         logger.error("create_default:", {error: error})
         throw error
     }
+
     create_tables(db)
     db.close()
 }

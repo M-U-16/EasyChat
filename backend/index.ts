@@ -144,7 +144,7 @@ try {
     } else if (process.env.SOCKET_PATH) {
         server.listen(process.env.SOCKET_PATH)
     } else if (process.env.PORT && process.env.HOST) {
-        server.listen(parseInt(process.env.PORT))
+        server.listen(parseInt(process.env.PORT), process.env.HOST)
     } else {
         throw new Error("No UDS, FD or HOST and PORT pair!")
     }
