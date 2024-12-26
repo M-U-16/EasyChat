@@ -28,11 +28,19 @@
                     <div
                         class="messages-container"
                         bind:this={messagesContainer}
-                        style:scrollBehavior={scrollBehavior}
+                        class:smooth={smoothScrolling}
                     >   
                         {#if Array.isArray($messages)}
-                            {#each $messages as message}
-                            <Message data={message}/>
+                            {#each $messages as message, idx}
+                                {#if idx != 0}
+                                    {#if $messages[idx-1].username == message.username}
+                                        <Message data={message} lastIsSame={true}/>
+                                    {:else}
+                                        <Message data={message} lastIsSame={false}/>
+                                    {/if}
+                                {:else}
+                                    <Message data={message} lastIsSame={false}/>
+                                {/if}
                             {/each}
                         {/if}
                     </div>
@@ -52,17 +60,18 @@
     import { onMount, setContext } from "svelte";
     import { writable } from "svelte/store";
     import { logout as logoutAction } from "$lib/actions.js"
+
     import Message from "$lib/Chat/Message.svelte";
     import LogoutIcon from "$lib/icons/logout.svelte"
     import MenuItem from "$lib/components/MenuItem.svelte";
     import Navbar from "$lib/components/Navbar.svelte"
     import Sidepanel from "$lib/Chat/Sidepanel.svelte"
-    import AddContact from "$lib/Chat/AddContact.svelte";
+    import AddContact from "$lib/AddContact/AddContact.svelte";
     import ChatInputContainer from "$lib/Chat/ChatInputContainer.svelte"
 
     import socket from "$lib/socket.js"
     let messagesContainer
-    let scrollBehavior = "auto;"
+    let smoothScrolling = true
 
     let CurrentRoom
     let mounted = false
@@ -82,7 +91,8 @@
     })
 
     onNavigate(()=> {
-        //console.log("navigating...")
+        // check if navigating away from
+        // current page
         if (mounted) {
             socket.disconnect()
         }
@@ -90,6 +100,8 @@
 
     socket.on(":new_message", (data) => {
         console.log(data.room_id, CurrentRoom)
+        smoothScrolling = true
+        
         contactMessenger.set(data)
         if (data.room_id == CurrentRoom) {
             messages.update((prev) => {
@@ -97,6 +109,8 @@
                 return prev
             })
         }
+
+        smoothScrolling = false
     })
 
     currentRoom.subscribe((room) => {
@@ -113,7 +127,6 @@
         setTimeout(()=> {
             const height = messagesContainer.scrollHeight-messagesContainer.clientHeight
             messagesContainer.scrollTo(0, height)
-            if (scrollBehavior != "") scrollBehavior = ""
         }, 10)
     })
 
@@ -140,7 +153,6 @@
 
         socket.emit(":get_chat", {room_id: room_id},
             (response) => {
-                scrollBehavior = "auto"
                 console.log(response)
                 messages.set(response)
                 currentRoom = room_id
@@ -208,5 +220,10 @@
         overflow-x: hidden;
         overflow-y: auto;
         scrollbar-color: rgb(110, 110, 110) black;
+        scroll-behavior: smooth;
+    }
+
+    .messages-container.smooth {
+        scroll-behavior: auto;
     }
 </style>

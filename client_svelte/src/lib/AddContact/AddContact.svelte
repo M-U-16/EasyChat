@@ -47,69 +47,74 @@
                 <div class="slider"></div>
             </div>
         </div>
-
-        {#if contactType == "contact" && $users.length > 0}
-            <div class="new-users-container">
-                {#each $users as user}
-                    <div class="user">
-                        <img
+        {#if $users.length != 0}
+        <div class="new-users-container">
+            {#each $users as user (user.username)}
+                <div class="user">
+                    <img
                         src={"/api/user/profile/"+user.username}
                         alt="Profilbild von '{user.username}'"
                     >
-                        <p>{user.username}</p>
-                        <button type="button" class="delete-user">
-                            <Close />
-                        </button>
-                    </div>
-                {/each}
-            </div>
-        {:else}
-            <div
-                class="contact-input-container"
-                class:searching={searching}
-            >
-                <input 
-                    placeholder='Suchen...'
-                    id='contact-name-input'
-                    name="username"
-                    type="text"
-                    bind:this={input}
-                    on:input={handleSearchInput}
-                    on:focusin={(e) => {searchFocus = true}}
-                    on:focusout={(e)=>{searchFocus = false}}
-                    on:keydown={(e) => {
-                        if (e.code == "Escape" && searchFocus) {
-                            resetSearch()
-                        }
-                    }}
-                />
-                <div class="search-container">
-                    {#if Array.isArray($searchResults)}
-                        {#if $searchResults.length == 0}
-                        <p class="no-result">Keine Ergebnisse</p>
-                        {:else}
-                        {#each $searchResults as user}
-                            <button
-                                class="user-container"
-                                type="button"
-                                data-user={JSON.stringify(user)}
-                                on:click={() => {
-                                    addUser(user)
-                                    resetSearch()
-                                }}
-                            >
-                                <img
-                                    src={"/api/user/profile/"+user.username}
-                                    alt="Profilbild von '{user.username}'"
-                                >
-                                <p>{user.username}</p>
-                            </button>
-                        {/each}
-                        {/if}
-                    {/if}
+                    <p>{user.username}</p>
+                    <button
+                        type="button"
+                        class="delete-user"
+                        on:click={() => {
+                            removeUser(user.username)
+                        }}
+                    >
+                        <Close />
+                    </button>
                 </div>
-            </div>
+            {/each}
+        </div>
         {/if}
+        <div
+            class="contact-input-container"
+            class:searching={searching}
+            style={!hasUsers? "margin-top:1rem;" : ""}
+        >
+            <input 
+                placeholder='Suchen...'
+                id='contact-name-input'
+                name="username"
+                type="text"
+                bind:this={input}
+                on:input={handleSearchInput}
+                on:focusin={(e) => {searchFocus = true}}
+                on:focusout={(e)=>{searchFocus = false}}
+                on:keydown={(e) => {
+                    if (e.code == "Escape" && searchFocus) {
+                        disableSearchResults()
+                    }
+                }}
+            />
+            <div class="search-container">
+                {#if Array.isArray($searchResults)}
+                    {#if $searchResults.length == 0}
+                    <p class="no-result">Keine Ergebnisse</p>
+                    {:else}
+                    {#each $searchResults as user}
+                        <button
+                            class="user-container"
+                            type="button"
+                            data-user={JSON.stringify(user)}
+                            on:click={() => {
+                                addUser(user)
+                                resetSearch()
+                            }}
+                        >
+                            <img
+                                src={"/api/user/profile/"+user.username}
+                                alt="Profilbild von '{user.username}'"
+                            >
+                            <p>{user.username}</p>
+                        </button>
+                    {/each}
+                    {/if}
+                {/if}
+            </div>
+        </div>
         
         <button
             class='contact-submit'
@@ -119,10 +124,10 @@
 </div>
 
 <script>
-    import close from "$lib/assets/icons/close-outline.svg"
+    import { writable } from "svelte/store";
     import Close from "$lib/icons/close.svelte"
     import Loader from "$lib/components/loader.svelte"
-    import { writable } from "svelte/store";
+    import close from "$lib/assets/icons/close-outline.svg"
 
     let ref
     let form
@@ -132,11 +137,14 @@
     let firstClick = true
     let popupClosed = false
     let contactType = "contact"
+    let hasUsers = false
 
     let searchFocus
     let searchTimeout
     let searchResults = writable([])
     let users = writable([])
+
+    $: hasUsers = $users.length > 0
 
     function handleContactType(e) {
         contactType = e.target.dataset.contact
@@ -146,10 +154,15 @@
         if (searchTimeout) {
             return
         }
-
+        
         searchTimeout = setTimeout(() => {
             searching = true
-            console.log(input.value)
+            console.log("handleSearchInput:", input.value, `(${input.value.length})`)
+            if (input.value.length == 0) {
+                resetSearch()
+                return
+            }
+
             fetch("/api/user/search?username="+input.value, {
                 method: "GET",
                 credentials: "include",
@@ -169,15 +182,31 @@
     }
 
     function resetSearch() {
+        input.value = ""
+        disableSearchResults()
+    }
+    
+    function disableSearchResults() {
         searching = false
         searchResults.set([])
+        searchTimeout = null
+    }   
+
+    function removeFocus() {
         document.activeElement.blur()
-        input.value = ""
     }
 
     function addUser(user) {
         $users.push(user)
-        console.log($users)
+        $users = $users
+    }
+
+    function removeUser(username) {
+        users.set(
+            $users.filter((user)=>{
+                return user.username != username
+            })
+        )
     }
 
     function closePopup() {
@@ -187,9 +216,6 @@
 
     async function handleSubmit(e) {
         e.preventDefault()
-        if (input.value === "") {
-            return
-        }
 
         try {
             const res = await fetch("/api/user/chats/new-chat", {
@@ -200,7 +226,7 @@
                     "Content-Type": "application/json",
                     "mode": "cors"
                 },
-                body: JSON.stringify({contactName: input.value})
+                body: JSON.stringify({users: $users})
             }).then(res => res.json())
             console.log(res)
             if (!res.error) {
@@ -221,30 +247,24 @@
     overflow: hidden;
     
     display: flex;
-    /* justify-content: center;
-    align-items: center; */
-
     top: 0;
     left: 0;
     opacity: 1;
-    /* z-index: 1000;
-    position: absolute; */
     will-change: opacity;
     animation: fadein 0.8s ease 1;
-    /* background-color: rgba(0, 0, 0, 0.324); */
 }
 
 .contact-form {
-    display: flex;
-    flex-direction: column;
-    /* background-color: rgb(13, 13, 13); */
-    padding: 2rem;
-    height: auto;
-    /* max-width: 25rem; */
-    position: relative;
-    animation: slidein 1 0.5s ease;
-    border-radius: 5px;
     width: 100%;
+    height: auto;
+    display: flex;
+    padding: 2rem;
+    max-width: 40rem;
+    position: relative;
+    border-radius: 5px;
+    flex-direction: column;
+    animation: slidein 1 0.5s ease;
+    margin: 0 auto;
 }
 
 .type-switcher-container {
@@ -333,7 +353,6 @@
 }
 
 .contact-input-container {
-    margin-top: 1rem;
     position: relative;
 }
 
@@ -458,5 +477,44 @@
         margin-top: 1rem;
         font-size: 1.5rem;
     }
+}
+
+.new-users-container {
+    display: flex;
+    padding: 0.5rem 0;
+    gap: 0.5rem;
+}
+
+.new-users-container .user {
+    display: flex;
+    height: 3rem;
+    flex: 1;
+    max-width: 10rem;
+    justify-content: space-between;
+    padding: 0.5rem;
+    overflow: hidden;
+    border-radius: 5px;
+    width: min-content;
+    align-items: center;
+    background-color: black;
+    border-radius: 5px;
+}
+
+.new-users-container .user img {
+    width: 2rem;
+    border-radius: 5px;
+}
+
+.new-users-container .user button {
+    color: rgb(255, 36, 36);
+    width: 2rem;
+    height: 100%;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.new-users-container .user p {
+    padding: 0 0.5rem;
 }
 </style>

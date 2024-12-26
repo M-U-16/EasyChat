@@ -1,5 +1,6 @@
+import { v4 } from "uuid"
 import { logger } from "@/src/logger"
-import { DbGet, DbRun } from "@/src/models/Db"
+import { DbAll, DbGet, DbRun } from "@/src/models/Db"
 import { Request, Response } from "express"
 const isPrivate = true
 
@@ -8,28 +9,28 @@ export async function createChat(req: Request, res: Response): Promise<any> {
     
     const user_id = req.user_id
     const username = req.username
-    const contactName = req.body.contactName
-    const roomName = contactName + "-" + username
+    const users: any[] = req.body.users
+    users.push({user_id: user_id, username: username})
+
+    logger.debug("createChat:", {users: users})
 
     //checks if user information is there
-    if (!contactName || !user_id) return res.json({
-        error: true,
-        message: "CONTACT_IS_REQUIRED"
-    })
+    if (!users) {
+        return res.json({
+            error: true,
+            message: "USERS_ARE_REQUIRED"
+        })
+    } else if (users.length == 1) {
+        return res.json({
+            error: true,
+            message: "USERS_ARE_EMPTY"
+        })
+    }
 
-    //get the id from new contact username
-    const contactInfo = await DbGet(
-        req.db, "select user_id, username from users where username=?",
-        [contactName]
-    )
-
-    if (!contactInfo) return res.json({
-        error: true,
-        message: "CONTACT_NOT_FOUND"
-    })
+    const roomName = v4()
 
     //check if rooom already exists
-    const checkRoom = await DbGet(req.db, "select * from rooms where room_name=?", [roomName])
+    const checkRoom = await DbGet(req.db, "SELECT * FROM rooms WHERE room_name=?", [roomName])
         .then(result => result)
     if (checkRoom) return res.json({error: true, message: "ROOM_ALREADY_EXISTS"})
 
@@ -52,10 +53,10 @@ export async function createChat(req: Request, res: Response): Promise<any> {
                     })
                 } catch(err) {
                     return reject(err)
-                }  
+                }
             })
         })
-        logger.debug("createChat: ", "'", room, "'")
+        logger.debug("createChat: ", {room: room})
 
         const stmt = req.db.prepare(
             "INSERT INTO participants (room_id, user_id) VALUES (?, ?)",
@@ -67,14 +68,10 @@ export async function createChat(req: Request, res: Response): Promise<any> {
             }
         )
 
-        /* console.log(user_id, contactInfo.user_id)
-        let participantList = [user_id, contactInfo.user_id]
-        logger.debug("createChat:", participantList)
-        participantList.forEach((participant) => {
-            stmt.run(room, participant)
-        }) */
-        stmt.run(room, user_id)
-        stmt.run(room, contactInfo.user_id)
+        users.forEach((user)=>{
+            logger.debug("createChat:", {room: room, id: user.user_id})
+            stmt.run(room, user.user_id)
+        })
 
         stmt.finalize()
     } catch(err) {

@@ -100,6 +100,12 @@
     $: error = errorMessage != ""
     export let onChange = () => {}
 
+    value.subscribe(function(value) {
+        if (!value) return
+        input.value = value
+        active = true
+    })
+
     function oninput(e) {
         value.set(input.value)
         onChange()

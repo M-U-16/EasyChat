@@ -22,19 +22,11 @@ import { auth } from "@/src/websocket/middleware/AuthSocket"
 import { ClientConnection } from "@/src/websocket/HandlerConnection"
 import { NewOnlineStorage } from "./src/websocket/OnlineUserStorage"
 
-// if listening on linux domain socket
-// delete old file if it exists to prevent
-// ERRADDRINUSE
-/* if (process.env.SOCKET_PATH) {
-    const path = process.env.SOCKET_PATH
-    if (fs.existsSync(path)) {
-        fs.unlinkSync(path)
-    }
-} */
-
 try {
-    check_env()
-    create_default(get_db_path())
+    await (async function() {
+        check_env()
+        await create_default(get_db_path())
+    })()
 } catch(err) {
     process.exit(1)
 }
@@ -119,6 +111,7 @@ io.of("/chat-server").on("connection", (socket: Socket) => {
     )
 })
 
+const SD_LISTEN_FDS_START = 3
 let listen_pid = parseInt(process.env.LISTEN_PID);
 if (!listen_pid) {
     listen_pid = 0
@@ -127,8 +120,6 @@ let listen_fds = parseInt(process.env.LISTEN_FDS);
 if (!listen_fds) {
     listen_fds = 0
 }
-const SD_LISTEN_FDS_START = 3
-
 if (listen_pid !== 0 && listen_pid !== process.pid) {
 	throw new Error(`received LISTEN_PID ${listen_pid} but current process id is ${process.pid}`);
 }
@@ -136,7 +127,7 @@ if (listen_fds > 1) {
     throw new Error(`only one socket is allowed for socket activation, but LISTEN_FDS was set to ${listen_fds}`);
 }
 
-const socket_activation = listen_pid === process.pid && listen_fds === 1;
+let socket_activation = listen_pid === process.pid && listen_fds === 1;
 
 try {
     if (socket_activation) {

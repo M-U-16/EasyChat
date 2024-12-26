@@ -9,8 +9,7 @@
         value={email}
         errorMessage={emailError}
         onChange={emailChange}
-        
-        />
+    />
         
     <Input
         placeholder="Password"
@@ -21,6 +20,21 @@
         onChange={passwordChange}
     />
     <SubmitButton />
+
+    <div class="test-buttons">
+        <button class="test-account" type="button" on:click={function() {
+            email.set("TestAccount1@email")
+            password.set("TestAccount1")
+        }}>
+            TestAccount1
+        </button>
+        <button class="test-account" type="button" on:click={function() {
+            email.set("TestAccount2@email")
+            password.set("TestAccount2")
+        }}>
+            TestAccount2
+        </button>
+    </div>
 </Form>
 
 <!-- <div class="debug">
@@ -36,6 +50,22 @@
         left: 0;
         width: 100%;
         height: 4rem;
+    }
+
+    .test-buttons {
+        gap: 0.5rem;
+        display: flex;
+        margin: 0.5rem 0 0 0;
+    }
+
+    .test-account {
+        flex: 1;
+        padding: 1rem;
+        cursor: pointer;
+        border-radius: 10px;
+        color: var(--highlight-blue);
+        background-color: transparent;
+        border: 2px solid var(--highlight-blue);
     }
 </style>
 

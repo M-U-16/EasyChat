@@ -10,7 +10,7 @@ import { logger } from "@/src/logger"
 //register a new User
 async function register(req: Request, res: Response): Promise<any> {
     if (!req.db) throw Error("req.db not provided")
-    logger.info("register: ", {body: req.body})
+    logger.debug("register: ", {body: req.body})
 
     const user: User = {
         username: req.body.username,

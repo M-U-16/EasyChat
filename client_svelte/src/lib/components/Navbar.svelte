@@ -11,7 +11,7 @@
 
     <div class="app_nav">
         <slot name="nav-button">
-            <HomeButton />
+            <!-- <HomeButton /> -->
         </slot>
         <Menu>
             <slot />

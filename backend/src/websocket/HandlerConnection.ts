@@ -47,7 +47,7 @@ export function ClientConnection(
         logger.info("user disconnected")
         _online.get_rooms(_user_id).then(rooms => {
             rooms.forEach(async(room) => {
-                console.debug("user offline broadcasting to:", room)
+                logger.debug("user offline broadcasting to:", {room: room})
                 _socket.broadcast.to(room.toString()).emit(
                     ":user_offline",
                     {room_id: room}
@@ -122,7 +122,7 @@ export function ClientConnection(
             }
 
             //sending message event to all clients
-            console.log(data.room_id, typeof(data.room_id))
+            //console.log(data.room_id, typeof(data.room_id))
             _socket.broadcast.to(data.room_id.toString()).emit(":new_message", message)
             callback(message)
 

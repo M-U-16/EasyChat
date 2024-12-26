@@ -7,15 +7,15 @@ export async function searchUsers(req: Request, res: Response) {
     if (!req.db) {
         throw Error("req.db not accessible")
     }
-        
+    
     const user = req.query.username
     const users = await DbAll(req.db,
-        "select username from users "+
+        "select username, user_id from users "+
         "where username like ? || '%' and username != ? limit 15",
         [user, req.username]
     )
     
-    res.send({users: users})
+    res.send({users: users, query: user})
 }
 
 export async function GetContacts(req: Request, res: Response): Promise<any> {
