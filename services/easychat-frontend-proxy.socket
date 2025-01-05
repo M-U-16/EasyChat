@@ -6,7 +6,6 @@ After=easychat-backend-proxy.socket
 [Socket]
 Accept=no
 RemoveOnStop=yes
-Service=easychat-frontend-proxy.service
 ListenStream=/tmp/easychat-frontend-proxy.sock
 
 [Install]
