@@ -1,0 +1,11 @@
+[Unit]
+Description=Proxy Socket for Easychat Backend
+
+[Socket]
+Accept=no
+RemoveOnStop=yes
+Service=easychat-frontend-proxy.service
+ListenStream=/tmp/easychat-backend-proxy.sock
+
+[Install]
+WantedBy=sockets.target

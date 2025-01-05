@@ -1,0 +1,16 @@
+[Unit]
+Description=Proxy for Easychat Frontend
+
+Requires=easychat-frontend.service
+After=easychat-frontend.service
+
+Requires=easychat-frontend.socket
+After=easychat-frontend.socket
+
+PartOf=easychat-frontend.service
+
+[Service]
+Type=notify
+ExecStart=/usr/lib/systemd/systemd-socket-proxyd \
+    --exit-idle-time="10 min" \
+    /tmp/easychat-frontend.sock

@@ -5,6 +5,7 @@ StartLimitBurst=3
 StartLimitIntervalSec=60
 StopWhenUnneeded=true
 
+
 [Service]
 ExecStart=/usr/bin/podman run --rm --name easychat-frontend_service \
     -e NODE_ENV=production \
@@ -14,5 +15,5 @@ ExecRestart=/usr/bin/podman restart easychat-frontend_service
 Restart=on-failure
 KillMode=process
 
-#[Install]
-#WantedBy=multi-user.target
+# [Install]
+# WantedBy=multi-user.target
