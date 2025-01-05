@@ -9,10 +9,8 @@ StopWhenUnneeded=true
 
 [Service]
 ExecStart=/usr/bin/podman run --rm --name easychat-backend_service \
-    -v easychat_data:/var/lib/easychat/data \
     -v easychat_logs:/var/lib/easychat/logs \
     -e NODE_ENV=production \
-    -e DATA_DIR=/var/lib/easychat/data \
     -e DATABASE_NAME=chat.sqlite3 \
     -e LOGGING_LEVEL=error \
     -e LOGGING_FILES_PATH=/var/lib/easychat/logs \

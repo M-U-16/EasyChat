@@ -8,7 +8,7 @@ RUN npm run build
 FROM node:20.18-slim
 RUN mkdir /home/chatapp
 WORKDIR /home/chatapp
-
+COPY package*.json .
 COPY schemas ./schemas
 COPY assets ./assets
 
