@@ -3,7 +3,6 @@ import { DbAll, DbGet } from "@/src/models/Db"
 import { getContacts } from "@/src/models/Contacts"
 import { logger } from "../logger"
 import { getGroups } from "../models/Groups"
-import { error } from "console"
 
 export async function searchUsers(req: Request, res: Response) {
     if (!req.db) {

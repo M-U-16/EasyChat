@@ -1,14 +1,12 @@
 import fs from "fs"
 import path from "path"
-import sqlite3 from "sqlite3"
 import child_process from "child_process"
 
 import { v4 } from "uuid"
 import { Request, Response } from "express"
 
 import { logger } from "@/src/logger"
-import { User } from "@/src/controllers/Auth"
-import { DbAll, DbGet, DbRun } from "@/src/models/Db"
+import { DbGet, DbRun } from "@/src/models/Db"
 
 /*
 { username: 'TestAccount2', user_id: 2 },
@@ -20,7 +18,7 @@ SELECT room_id FROM participants
 WHERE room_id IN (SELECT room_id FROM participants WHERE user_id=?)
 AND user_id=?`
 
-async function createGroup(name: string) {
+export function createGroup(name: string) {
     const group_profile = child_process.fork(
         "src/helpers/UserCreatePicture.js"
     )
@@ -135,7 +133,6 @@ export async function createChat(req: Request, res: Response): Promise<any> {
         )
 
         users.forEach((user)=>{
-            //logger.debug("createChat:", {room: room, id: user.user_id})
             stmt.run(room, user.user_id)
         })
 
@@ -148,11 +145,6 @@ export async function createChat(req: Request, res: Response): Promise<any> {
             message: "COULD_NOT_ADD_USER"
         })
     }
-
-    //check if rooom already exists
-    /* const checkRoom = await DbGet(req.db, "SELECT * FROM rooms WHERE room_name=?", [roomHash])
-    .then(result => result)
-    if (checkRoom) return res.json({error: true, message: "ROOM_ALREADY_EXISTS"}) */
 
     return res.json({error: false, message: null})
 }
