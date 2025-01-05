@@ -36,7 +36,7 @@ async function register(req: Request, res: Response): Promise<any> {
 
     profile_process.send({
         username: user.username,
-        userDir: user.dir
+        path: user.dir
     })
 
     // adds new user to db

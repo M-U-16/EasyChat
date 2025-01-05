@@ -91,10 +91,6 @@
 
     function closeMenu() {
         active = false
-        /* console.log(clientWidth)
-        if (clientWidth <= 600) {
-            active = false
-        } */
     }
 
 </script>

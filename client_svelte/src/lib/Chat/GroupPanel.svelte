@@ -1,7 +1,7 @@
 <button 
-    class='contact-panel no-select'
+    class="group-panel"
     class:active={active}
-    title={`Chat mit ${username} öffnen`}
+    title={`Gruppe öffnen`}
     on:click={()=>currentRoom.set(room_id)}
 >
     <div class="profile">
@@ -11,15 +11,11 @@
                     {newMessages}
                 </p>
             {/if}
-            <div
-                class="status"
-                class:active={status}
-            ></div>
-            <img class="no-select" src="/api/user/profile/{username}" alt="Profile Bild" />
+            <img class="no-select" src="/api/group/profile/{room_id}" alt="Profile Bild" />
         </div>
     </div>
     <div class="text-wrapper">
-        <h1>{username}</h1>
+        <h1>{name}</h1>
         {#if lastMessage.message}
         <div class="lastmessage">
             <h2>
@@ -32,19 +28,19 @@
             <p>Keine Nachrichten</p>
         </div>
         {/if}
-    </div>
+    </div>         
 </button>
 
 <script>
     import { getContext } from "svelte";
-    let active
-    let status = false
-    export let room_id
-    export let username
+    
+    let newMessages = 0
+    export let name
     export let lastMessage
-    export let newMessages = 0
+    export let room_id
 
-    const onlineMessenger = getContext("online-messenger")
+    let active
+    export let username
     const contactMessenger = getContext("contact-messenger")
     const currentRoom = getContext("currentRoom")
 
@@ -58,22 +54,9 @@
             lastMessage.message = data.message
         }
     })
-
-    onlineMessenger.subscribe(data => {
-        if (!data) return
-        if (room_id == data.room_id) {
-            if (data.status) {
-                status = true
-            } else {
-                status = false
-            }
-        }
-    })
-
 </script>
-
 <style>
-.contact-panel {
+.group-panel {
     --online-status-border-clr: var(--secondary-blue);
     
     height: 4.5rem;
@@ -90,16 +73,16 @@
     align-items: center;
 }
 
-.contact-panel.active,
-.contact-panel:hover {
+.group-panel.active,
+.group-panel:hover {
     background-color: rgb(0, 0, 0);
 }
 
 .text-wrapper h1 {
     color: white;
-    font-size: 1.2rem;
     text-align: start;
     margin-bottom: 0.2rem;
+    font-size: 1.2rem;
 }
 
 .profile {
@@ -140,22 +123,6 @@
     align-items: center;
 }
 
-.status {
-    width: 1rem;
-    height: 1rem;
-    border-radius: 50%;
-    position: absolute;
-    z-index: 2;
-    top: -2px;
-    right: -2px;
-    background-color: red;
-    border: 3px solid var(--online-status-border-clr);
-}
-
-.status.active {
-    background-color: rgb(0, 215, 0);
-}
-
 .lastmessage {
     gap: 0.3rem;
     display: grid;
@@ -183,7 +150,7 @@
     color: grey;
 }
 
-.contact-panel::after {
+.group-panel::after {
     content: "";
     position: absolute;
     width: 3px;
@@ -197,17 +164,17 @@
     transition: 0.3s ease;
 }
 
-.contact-panel.active::after,
-.contact-panel:hover::after {
+.group-panel.active::after,
+.group-panel:hover::after {
     opacity: 1;
 }
 
-.contact-panel:hover .lastmessage h2 {
+.group-panel:hover .lastmessage h2 {
     color: var(--highlight-blue);
 }
 
 @media screen and (max-width: 800px) {
-    .contact-panel {
+    .group-panel {
         grid-template-columns: 1fr;
         height: 4rem;
     }

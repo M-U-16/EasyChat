@@ -2,7 +2,7 @@ import sqlite3 from "sqlite3"
 import { DbAll, DbGet, getUsername } from "@/src/models/Db"
 import { logger } from "../logger";
 
-interface Message {
+export interface Message {
     you: boolean;
     user_id: number;
     message: string;
@@ -15,7 +15,9 @@ async function getChat(
     room_id: number,
     user_id: number
 ): Promise<Message[]|Error> {
-    if (!user_id || !room_id) return new Error("INVALID ARGUMENT")
+    if (!user_id || !room_id || room_id == -1) {
+        return new Error("INVALID_ARGUMENT")
+    } 
     logger.debug("getChat room_id:", {room_id: room_id})
     const messages = await DbAll(db,
         "SELECT * FROM messages WHERE room_id=?", [room_id]

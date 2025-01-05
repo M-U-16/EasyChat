@@ -19,7 +19,7 @@ export function DbGet(
     db:sqlite3.Database,
     query: string,
     query_var: any[] = [],
-):Promise<any> {
+):Promise<any|Error> {
     return new Promise((resolve, reject) => {
         db.get(query, query_var, (err: Error|null, row: any)=>{
             if (err) return reject(err)
@@ -44,8 +44,8 @@ export function DbRun(
 export function DbAll(
     db: sqlite3.Database,
     query: string, query_var: any[] = []
-): Promise<any[]> {
-    return new Promise<any[]>((resolve, reject) => {
+): Promise<any[]|Error> {
+    return new Promise<any[]|Error>((resolve, reject) => {
         db.all(query, query_var, (err: Error|null, rows: any[])=>{
             if (err) return reject(err)
             resolve(rows)

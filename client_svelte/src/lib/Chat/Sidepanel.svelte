@@ -1,6 +1,7 @@
 <div class="sidepanel">
     <Controls/>
     <Contacts />
+    <Groups />
 </div>
 
 <style>
@@ -15,15 +16,16 @@
     overflow: hidden;
     position: relative;
     display: grid;
-    grid-template-rows: auto 1fr;
+    align-content: start;
+    grid-template-rows: auto auto auto;
 }
+
 .sidepanel::-webkit-scrollbar {
     width: 0;
     height: 0;
     display: none;
 }
 
-/* SIDEPANEL MEDIA */
 @media screen and (max-width: 800px) {
     .sidepanel::-webkit-scrollbar {
         width: 0px;
@@ -42,4 +44,5 @@
 <script>
     import Contacts from "./Contacts.svelte";
     import Controls from "./Controls.svelte";
+    import Groups from "./Groups.svelte";
 </script>

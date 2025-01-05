@@ -22,6 +22,10 @@ export async function checkUser(db: sqlite3.Database, newUser: User): Promise<Ch
 
     try {
         const rows = await DbAll(db, sql, [newUser.username, newUser.email])
+        if (rows instanceof Error) {
+            throw rows
+        }
+        
         const counts = {
             "username": 0,
             "email": 0

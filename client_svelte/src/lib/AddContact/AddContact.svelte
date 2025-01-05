@@ -1,22 +1,13 @@
-<!-- <svelte:body on:click={(e)=>{
-    if (!form.contains(e.target) && !firstClick) {
-        closePopup()
-    }
-    firstClick = false
-}} />
- -->
-
 <div class='contact-overlay'>
     <form
         class='contact-form'
-        bind:this={form}
         on:submit={handleSubmit}
         class:slide-out={popupClosed}
         class:in-effect={!popupClosed}
     >
         <div class="top">
             <div class='contact-heading'>
-                {#if contactType == "contact"}
+                {#if isContact}
                     <h2>Neuer Kontakt</h2>
                 {:else}
                     <h2>Neue Gruppe</h2>
@@ -37,7 +28,7 @@
                     type="button"
                     on:click={handleContactType}
                     data-contact="contact"
-                    class:active={contactType=="contact"}
+                    class:active={isContact}
                 >Kontakt</button>
                 <button
                     type="button"
@@ -50,22 +41,10 @@
         {#if $users.length != 0}
         <div class="new-users-container">
             {#each $users as user (user.username)}
-                <div class="user">
-                    <img
-                        src={"/api/user/profile/"+user.username}
-                        alt="Profilbild von '{user.username}'"
-                    >
-                    <p>{user.username}</p>
-                    <button
-                        type="button"
-                        class="delete-user"
-                        on:click={() => {
-                            removeUser(user.username)
-                        }}
-                    >
-                        <Close />
-                    </button>
-                </div>
+                <User
+                    username={user.username}
+                    removeUser={removeUser}
+                />
             {/each}
         </div>
         {/if}
@@ -84,6 +63,7 @@
                 on:focusin={(e) => {searchFocus = true}}
                 on:focusout={(e)=>{searchFocus = false}}
                 on:keydown={(e) => {
+                    console.log(e.code == "Escape" && searchFocus)
                     if (e.code == "Escape" && searchFocus) {
                         disableSearchResults()
                     }
@@ -115,7 +95,17 @@
                 {/if}
             </div>
         </div>
-        
+
+        {#if !isContact}
+            <div class="group-input-container">
+                <input
+                    type="text"
+                    placeholder="Gruppen Name"
+                    bind:value={groupName}
+                >
+            </div>
+        {/if}
+                
         <button
             class='contact-submit'
             type='submit'
@@ -124,19 +114,17 @@
 </div>
 
 <script>
-    import { writable } from "svelte/store";
+    import { writable } from "svelte/store"
     import Close from "$lib/icons/close.svelte"
-    import Loader from "$lib/components/loader.svelte"
-    import close from "$lib/assets/icons/close-outline.svg"
+    import User from "./User.svelte"
+    export let toggle
 
     let ref
-    let form
     let input
-    export let toggle
+    let groupName
+    let isContact
     let searching = false
-    let firstClick = true
     let popupClosed = false
-    let contactType = "contact"
     let hasUsers = false
 
     let searchFocus
@@ -147,7 +135,7 @@
     $: hasUsers = $users.length > 0
 
     function handleContactType(e) {
-        contactType = e.target.dataset.contact
+        isContact = e.target.dataset.contact == "contact"
     }
 
     function handleSearchInput() {
@@ -226,8 +214,13 @@
                     "Content-Type": "application/json",
                     "mode": "cors"
                 },
-                body: JSON.stringify({users: $users})
+                body: JSON.stringify({
+                    users: $users,
+                    isContact: isContact,
+                    group_name: !isContact ? groupName : ""
+                })
             }).then(res => res.json())
+            
             console.log(res)
             if (!res.error) {
                 const event = new Event("update-contacts", {
@@ -485,36 +478,8 @@
     gap: 0.5rem;
 }
 
-.new-users-container .user {
-    display: flex;
-    height: 3rem;
-    flex: 1;
-    max-width: 10rem;
-    justify-content: space-between;
-    padding: 0.5rem;
-    overflow: hidden;
-    border-radius: 5px;
-    width: min-content;
-    align-items: center;
-    background-color: black;
-    border-radius: 5px;
+.group-input-container {
+    margin-top: 1rem;
 }
 
-.new-users-container .user img {
-    width: 2rem;
-    border-radius: 5px;
-}
-
-.new-users-container .user button {
-    color: rgb(255, 36, 36);
-    width: 2rem;
-    height: 100%;
-    border: none;
-    cursor: pointer;
-    background-color: transparent;
-}
-
-.new-users-container .user p {
-    padding: 0 0.5rem;
-}
 </style>

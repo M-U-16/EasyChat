@@ -7,7 +7,7 @@ import { DbGet } from "@/src/models/Db";
 import { logout } from "@/src/controllers/Auth"
 import { login } from "@/src/controllers/AuthLogin"
 import { chatRouter } from "@/src/routes/UserChat"
-import { searchUsers } from "@/src/controllers/User"
+import { GetGroups, searchUsers } from "@/src/controllers/User"
 import { isAuthorized } from "@/src/helpers/AuthJwt";
 import register from "@/src/controllers/AuthRegister"
 import validateToken from "@/src/middleware/ValidateToken"
@@ -38,12 +38,13 @@ router.get("/isLoggedIn", DbProvider, function(req: Request, res: Response): any
     }
 
 })
+
 router.get("/search", validateToken, DbProvider, searchUsers)
 router.get("/username", validateToken, (req: Request, res: Response) => {
     res.json({username: req.username})
 })
-router.get("/profile/:username", DbProvider, async(req: Request, res: Response): Promise<any> => {
 
+router.get("/profile/:username", DbProvider, async(req: Request, res: Response): Promise<any> => {
     const user = await DbGet(req.db,
         "select userDir from users where username=?",
         [req.params.username]
@@ -54,9 +55,9 @@ router.get("/profile/:username", DbProvider, async(req: Request, res: Response):
     
     const {userDir} = user
     const userpic = path.join(userDir, "profile.png")
-
     res.status(200).sendFile(userpic)
 })
 router.use("/chats", validateToken, chatRouter)
+router.get("/groups", validateToken, DbProvider, GetGroups)
 
 export { router as userRouter }

@@ -8,7 +8,9 @@ create table if not exists users (
 
 create table if not exists rooms (
 	room_id INTEGER primary key AUTOINCREMENT,
+    room_hash varchar(100),
     room_name varchar(100),
+    isContact boolean,
     private boolean
 );
 

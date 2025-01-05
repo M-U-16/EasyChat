@@ -1,9 +1,10 @@
 import "dotenv/config"
 
 import fs from "fs"
-import process from "process"
+import os from "os"
 import cors from "cors"
 import http from "http"
+import process from "process"
 import sqlite3 from "sqlite3"
 import express from "express"
 import bodyParser from "body-parser"
@@ -12,7 +13,6 @@ import { Server as SocketIoServer, Socket } from "socket.io"
 
 import { logger } from "@/src/logger"
 import {
-    check_env,
     create_default, get_db_path
 } from "@/src/models"
 
@@ -21,12 +21,44 @@ import { open_database } from "./src/models/Db"
 import { auth } from "@/src/websocket/middleware/AuthSocket"
 import { ClientConnection } from "@/src/websocket/HandlerConnection"
 import { NewOnlineStorage } from "./src/websocket/OnlineUserStorage"
+import path from "path"
 
 try {
     await (async function() {
-        check_env()
+        if (!process.env.DATA_DIR) {
+            logger.warn("No DATA_DIR using temporary directory.")
+            let dir_path = fs.mkdtempSync(path.join(os.tmpdir(), "easychat-"))
+            process.env.DATA_DIR = dir_path
+            process.env.RUNNING_ON_TEMP = "true"
+        }
+
+        logger.debug(get_db_path())
         await create_default(get_db_path())
     })()
+
+    let path_data_dir = path.join(
+        process.env.DATA_DIR,
+        "users"
+    )
+    if (!fs.existsSync(path_data_dir)) {
+        fs.mkdirSync(
+            path_data_dir,
+            {recursive: true}
+        )
+    }
+
+    let path_group_dir = path.join(
+        process.env.DATA_DIR,
+        "groups"
+    )
+
+    if (!fs.existsSync(path_group_dir)) {
+        fs.mkdirSync(
+            path_group_dir,
+            {recursive: true}
+        )
+    }
+    
 } catch(err) {
     process.exit(1)
 }
@@ -59,6 +91,14 @@ export const io = new SocketIoServer(server, {
 })
 
 function CloseServer() {
+    db.close()
+
+    if (process.env.RUNNING_ON_TEMP == "true") {
+        logger.info("removing temporary directory")
+        logger.debug(process.env.DATA_DIR)
+        fs.rmSync(process.env.DATA_DIR, {recursive: true, force:true})
+    }
+
     server.close(() => {
         if (process.env.SOCKET_PATH) {
             fs.unlinkSync(process.env.SOCKET_PATH)
@@ -105,7 +145,6 @@ io.of("/chat-server").on("connection", (socket: Socket) => {
     connections[socket.id] = ClientConnection(
         socket, db, OnlineUsers,
         function(id: string) {
-            //console.debug("Deleting Socket:", id)
             delete connections[id]
         }
     )
@@ -140,6 +179,6 @@ try {
         throw new Error("No UDS, FD or HOST and PORT pair!")
     }
 } catch(error) {
-    logger.error(error)
+    logger.error("index.ts:", {error: error})
     process.exit(1)
 }

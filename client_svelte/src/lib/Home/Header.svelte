@@ -9,7 +9,7 @@
           </span>
         </h1>
     </div>
-    <p>
+    <p class="text">
         ... ermöglicht es dir
         mit Freunden und Familie zu Chatten und in Kontakt zu bleiben.
     </p>
@@ -17,6 +17,10 @@
         <LoginButton />
         <RegisterButton />
     </div>
+
+    <p class="info">
+        Dies ist keine Richtige Anwendung und dient nur als Demo!
+    </p>
 </div>
 </header>
 
@@ -82,7 +86,7 @@
     top: 0;
     rotate: 20deg;
 }
-.app__landing-section p {
+.app__landing-section .text {
     font-size: 1.5rem;
     transform: translateY(-20px);
     width: 100%;
@@ -98,12 +102,22 @@
     display: flex;
     justify-content: space-between;
     max-width: 22rem;
-    /* margin-bottom: 2rem; */
     gap: 1rem;
 }
 
 .app__cta-container:last-child {
     margin: 0 !important;
+}
+
+.info {
+    color: white;
+    position: fixed;
+    font-size: 1rem;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgb(209, 69, 69);
+    padding: 0.2rem;
 }
 
 @media screen and (max-width: 750px) {

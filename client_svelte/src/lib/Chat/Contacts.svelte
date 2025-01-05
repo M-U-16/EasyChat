@@ -1,25 +1,20 @@
 <svelte:document on:update-contacts={getContacts}/>
-
 <nav class='contacts'>
-    <div
-        class='chat__contacts-container no-scroll'
-        id='chat-contacts-container'
-    >
-        {#if Array.isArray($contacts)}
-        {#each $contacts as contact}
-            <ContactPanel
+    {#if Array.isArray($contacts)}
+    {#each $contacts as contact}
+        <ContactPanel
             room_id={contact.room_id}
             username={contact.username}
             lastMessage={contact.lastMessage}
-            />
-        {/each}
-        {/if}
-    </div>
+        />
+    {/each}
+    {/if}
 </nav>
 
 <style>
     .contacts {
         width: 100%;
+        overflow: hidden;
     }
 </style>
 

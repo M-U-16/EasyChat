@@ -7,11 +7,11 @@
         <img src={plusIcon} alt="Benutzer Hinzufügen" />
     </button>
     <div class="chat-switcher"></div>
-    <div class="search-container">
+    <!-- <div class="search-container">
         <button title='Nach Kontakt Suchen' class='chat__search-btn'>
             <img src={searchIcon} alt="Suchen" />
         </button>
-    </div>
+    </div> -->
 </div>
 
 <script>
@@ -70,7 +70,7 @@
     scale: 1;
 }
 
-.search-container {
+/* .search-container {
     display: flex;
     justify-content: end;
     height: 4rem;
@@ -110,7 +110,7 @@
 
 .chat__search-btn:active img {
     scale: 0.8;
-}
+} */
 
 @media screen and (max-width: 800px) { 
     .chat__side-control-container {
@@ -128,7 +128,7 @@
         margin: 0.5rem 0rem 0.5rem 0rem;
     }
     
-    .search-container {
+    /* .search-container {
         height: auto;
         padding-right: 0;
         display: flex;
@@ -144,6 +144,6 @@
         width: 3rem;
         height: 3rem;
         margin: 0 0 1rem 0;
-    }
+    } */
 }
 </style>

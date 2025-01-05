@@ -62,28 +62,17 @@ export async function create_default(database_path: string) {
         "src/helpers/UserCreatePicture.js"
     ).send({
         username: user1.username,
-        userDir: user1.dir
+        path: user1.dir
     })
     
     child_process.fork(
         "src/helpers/UserCreatePicture.js"
     ).send({
         username: user2.username,
-        userDir: user2.dir
+        path: user2.dir
     })
 
     db.close()
-}
-
-export function check_env() {
-    if (
-        !process.env.DATA_DIR ||
-        !process.env.DATABASE_NAME
-    ) { 
-        const error = new Error("needed environment variables not found")
-        logger.error("check_env:", {error: error})
-        throw error
-    }
 }
 
 async function create_tables(db: sqlite3.Database) {

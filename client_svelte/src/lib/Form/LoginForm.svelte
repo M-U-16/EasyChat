@@ -1,6 +1,6 @@
 <Form
     action={submit}
-    title="Login"
+    title="Anmelden"
 >
     <Input
         placeholder="Email"

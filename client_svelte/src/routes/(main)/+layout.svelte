@@ -6,10 +6,9 @@
         ><Register /></MenuItem>
         <MenuItem
             path="/login"
-            content="Login"
+            content="Anmelden"
         ><Login /></MenuItem>
     </Navbar>
-    <!-- <div class="navbar-placeholder"></div> -->
     <slot />
 </div>
 
